@@ -5,8 +5,7 @@
 }
 
 .app-content {
-  background-color: gray;
-  height: 100vh;
+  width: 100%;
 }
 
 header {
@@ -27,25 +26,4 @@ body::after {
   width: 100%;
   display: block;
   background: url("./assets/images/rainbowstripe.jpg") repeat-x;
-}
-
-.header-bottom {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
-  padding-bottom: 30px;
-  display: block;
-  z-index: -1;
-}
-
-.header-bottom::after {
-  box-shadow: 0 0 0 100px #fff;
-  border-radius: 100%;
-  position: absolute;
-  height: 190px;
-  content: '';
-  right: -20%;
-  left: -20%;
 }
