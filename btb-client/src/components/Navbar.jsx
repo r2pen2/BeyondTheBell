@@ -24,7 +24,7 @@ import logo from "../assets/images/logo176.png";
 export function Socials() {
 
   return (
-    <header className="w-100 d-flex align-items-center flex-column gap-2 mb-2">
+    <header className="w-100 d-flex align-items-center flex-column gap-2 mb-2 socials">
       <div className="d-flex flex-row align-items-center justify-content-end gap-4">
         <div className="gap-1 d-flex flex-row align-items-center">
           <LocalPhoneIcon sx={{color: "#b9b9b9", fontSize: 20 }}/>

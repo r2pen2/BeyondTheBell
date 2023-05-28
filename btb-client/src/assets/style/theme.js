@@ -46,6 +46,12 @@ export const theme = createTheme({
       secondaryShadow: blue500,
 
       btbOrange: orange600,
+      btbOrange200: orange200,
+      btbOrange300: orange300,
+      btbOrange400: orange400,
+      btbOrange500: orange500,
+      btbOrange600: orange600,
+      btbOrange700: orange700,
       textSecondary: lightGray,
     },
     space: {},

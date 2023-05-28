@@ -8,11 +8,41 @@ export default function HomePage() {
   return (
     <div className="d-flex flex-column">
       <section className="home-image d-flex flex-column w-100 align-items-center justify-content-center">
-        <div className="d-flex flex-row align-items-center gap-2">
+        <Text 
+          h2
+          color="white"
+          css={{ 
+            textShadow: "0px 0px 5px black",
+          }}
+        >
+          Welcome to
+        </Text>
+        <Text 
+          h1
+          css={{ 
+            fontSize: "6em",
+            filter: "drop-shadow(2px 2px 5px black)",
+            textGradient: "45deg, $yellow600 -20%, $btbOrange600 100%",
+            width: "50%",
+          }}
+        >
+          Beyond The Bell Educational Services
+        </Text>
+        <Text 
+          h1
+          color="white"
+          css={{ 
+            textShadow: "0px 0px 5px black",
+          }}
+        >
+          Teacher supported, small group, in-person learning!
+        </Text>
+        <div className="d-flex flex-row align-items-center gap-5 mt-5">
           <Button
             bordered
             rounded
             color="gradient"
+            size="lg"
           >
             About Us
           </Button>
@@ -20,19 +50,11 @@ export default function HomePage() {
             color="primary"
             rounded
             shadow
+            size="lg"
           >
             Contact Us!
           </Button>
         </div>
-        <Text 
-          h1
-          css={{ 
-            "-webkit-text-stroke": "1px black",
-            textGradient: "45deg, $yellow600 -20%, $red600 100%",
-          }}
-        >
-          Teacher supported, small group, in-person learning!
-        </Text>
       </section>
       <section className="d-flex flex-row">
           <div>
