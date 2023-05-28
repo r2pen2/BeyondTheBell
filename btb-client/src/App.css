@@ -20,7 +20,7 @@ header::before {
   background: url("./assets/images/rainbowstripe.jpg") repeat-x;
 }
 
-body::after {
+footer::before {
   content: '';
   height: 4px;
   width: 100%;

@@ -114,7 +114,7 @@ export function NavbarContent() {
           <Dropdown.Item
             key="about"
             showFullDescription
-            description="See why parents love Beyond The Bell!"
+            description="Learn what Beyond The Bell is all about!"
             icon={<NotificationsIcon />}
           >
             About Beyond The Bell
@@ -122,7 +122,7 @@ export function NavbarContent() {
           <Dropdown.Item
             key="testimonials"
             showFullDescription
-            description="See why parents love BTB!"
+            description="See why parents love Beyond The Bell!"
             icon={<ThumbUpIcon />}
           >
             Testimonials

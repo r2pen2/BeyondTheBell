@@ -6,6 +6,7 @@ import logoBlack from "./assets/images/logoBlack.png";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import HomePage from "./routes/HomePage";
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
             <Route path="*" element={<HomePage />} />
           </Routes>
         </Router>
+        <Footer />
       </div>
     </div>
   );

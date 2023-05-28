@@ -1,12 +1,16 @@
 .fill-line {
-    margin-left: 10px;
     height: 0px;
     flex: 1;
+    width: 100%;
     border: 1px dotted lightgrey;
 }
 
 .fill-line.margin-right {
     margin-right: 10px;
+}
+
+.fill-line.margin-left {
+    margin-left: 10px;
 }
 
 .fill-line.line-style-solid {

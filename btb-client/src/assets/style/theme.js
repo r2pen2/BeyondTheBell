@@ -47,7 +47,7 @@ export const theme = createTheme({
 
       btbOrange: orange600,
       btbOrange200: orange200,
-      btbOrange300: orange300,
+      btbOrange300: orange200,
       btbOrange400: orange400,
       btbOrange500: orange500,
       btbOrange600: orange600,
