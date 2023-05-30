@@ -45,3 +45,11 @@ footer {
 .footer-content {
   position: relative;
 }
+
+.bg-blue {
+  background-color: #388383;
+}
+
+.bg-orange {
+  background-color: #E7762A;
+}

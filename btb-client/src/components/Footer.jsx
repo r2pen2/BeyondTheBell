@@ -70,8 +70,9 @@ export default function Footer() {
             </Text>
           </div>
         </div>
+        <div className="fill-line mb-3" />
         <Text size="$sm">
-          Copyright © 2022 Beyond the Bell Educational Services
+          Copyright © 2023 Beyond the Bell Educational Services
         </Text>
       </div>
     </footer>

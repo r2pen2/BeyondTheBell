@@ -33,6 +33,7 @@ export const theme = createTheme({
       primarySolidContrast: white,
       primaryShadow: orange500,
 
+      text: "#666666",
       
       secondaryLight: blue200,
       secondaryLightHover: blue300,

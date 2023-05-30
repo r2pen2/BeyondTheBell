@@ -65,70 +65,18 @@ export function Socials() {
   )
 }
 
-export function NavbarContent() {
+const navbarItemFontSize = "20px";
 
-  const navbarItemFontSize = "20px";
+export function NavbarContent() {
 
   return (
     <NextUINavbar.Content hideIn="xs" enableCursorHighlight >
-      <Dropdown isBordered>
-        <NextUINavbar.Item
-          css={{
-            fontSize: navbarItemFontSize
-          }}
-        >
-          <Dropdown.Button
-            auto
-            light
-            css={{
-              px: 0,
-              dflex: "center",
-              svg: { pe: "none" },
-            }}
-            iconRight={<ExpandMoreIcon />}
-            ripple={false}
-          >
-            Who We Are
-          </Dropdown.Button>
-        </NextUINavbar.Item>
-        <Dropdown.Menu
-          aria-label="BTB About"
-          css={{
-            $$dropdownMenuWidth: "340px",
-            $$dropdownItemHeight: "70px",
-            "& .nextui-dropdown-item": {
-              py: "$4",
-              // dropdown item left icon
-              svg: {
-                color: "$secondary",
-                mr: "$4",
-              },
-              // dropdown item title
-              "& .nextui-dropdown-item-content": {
-                w: "100%",
-                fontWeight: "$semibold",
-              },
-            },
-          }}
-        >
-          <Dropdown.Item
-            key="about"
-            showFullDescription
-            description="Learn what Beyond The Bell is all about!"
-            icon={<NotificationsIcon />}
-          >
-            About Beyond The Bell
-          </Dropdown.Item>
-          <Dropdown.Item
-            key="testimonials"
-            showFullDescription
-            description="See why parents love Beyond The Bell!"
-            icon={<ThumbUpIcon />}
-          >
-            Testimonials
-          </Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
+      <NextUINavbar.Link 
+        href="about-btb"
+        itemCss={{fontSize: navbarItemFontSize}}
+      >
+        Who We Are
+      </NextUINavbar.Link>
       <NextUINavbar.Link 
         href="our-services"
         itemCss={{fontSize: navbarItemFontSize}}
@@ -150,3 +98,63 @@ export function NavbarContent() {
     </NextUINavbar.Content>
   )
 }
+
+const dd = <Dropdown isBordered>
+  <NextUINavbar.Item
+    css={{
+      fontSize: navbarItemFontSize
+    }}
+  >
+    <Dropdown.Button
+      auto
+      light
+      css={{
+        px: 0,
+        dflex: "center",
+        svg: { pe: "none" },
+      }}
+      iconRight={<ExpandMoreIcon />}
+      ripple={false}
+    >
+      Who We Are
+    </Dropdown.Button>
+  </NextUINavbar.Item>
+  <Dropdown.Menu
+    aria-label="BTB About"
+    css={{
+      $$dropdownMenuWidth: "340px",
+      $$dropdownItemHeight: "70px",
+      "& .nextui-dropdown-item": {
+        py: "$4",
+        // dropdown item left icon
+        svg: {
+          color: "$secondary",
+          mr: "$4",
+        },
+        // dropdown item title
+        "& .nextui-dropdown-item-content": {
+          w: "100%",
+          fontWeight: "$semibold",
+        },
+      },
+    }}
+  >
+    <Dropdown.Item
+      key="about"
+      showFullDescription
+      description="Learn what Beyond The Bell is all about!"
+      icon={<NotificationsIcon />}
+      href="/about-btb"
+    >
+      About Beyond The Bell
+    </Dropdown.Item>
+    <Dropdown.Item
+      key="testimonials"
+      showFullDescription
+      description="See why parents love Beyond The Bell!"
+      icon={<ThumbUpIcon />}
+    >
+      Testimonials
+    </Dropdown.Item>
+  </Dropdown.Menu>
+</Dropdown>;
