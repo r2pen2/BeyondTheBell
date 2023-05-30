@@ -35,7 +35,7 @@ export default function HomePage() {
             textShadow: "0px 0px 5px black",
           }}
         >
-          Teacher supported, small group, in-person learning!
+          Academic enrichment, tutoring, and educational <br/> support programs for today’s learners.
         </Text>
         <div className="d-flex flex-row align-items-center gap-5 mt-5">
           <Button

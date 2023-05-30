@@ -27,3 +27,21 @@ footer::before {
   display: block;
   background: url("./assets/images/rainbowstripe.jpg") repeat-x;
 }
+
+footer {
+  overflow: hidden;
+  position: relative;
+}
+
+.footer-background {
+  opacity: 0.1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: auto;
+}
+
+.footer-content {
+  position: relative;
+}
