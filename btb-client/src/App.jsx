@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import HomePage from "./routes/HomePage";
 import Footer from './components/Footer';
 import About from './routes/About';
+import Services from './routes/Services';
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           <Routes>
             <Route path="*" element={<HomePage />} />
             <Route path="/about-btb" element={<About />} />
+            <Route path="/our-services" element={<Services />} />
           </Routes>
         </Router>
         <Footer />

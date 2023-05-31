@@ -34,7 +34,8 @@ export const theme = createTheme({
       primaryShadow: orange500,
 
       text: "#666666",
-      
+      success: "#A6C437",
+
       secondaryLight: blue200,
       secondaryLightHover: blue300,
       secondaryLightActive: blue400,
