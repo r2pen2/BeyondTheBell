@@ -61,7 +61,7 @@ export default function HomePage() {
             <Text h2>
               Class offerings at BTB December & January!
             </Text>
-            <Text p>
+            <Text>
               Our classes are AWESOME! Small groups, certified special and regular educators, inclusive and FUN! Join us this winter and find out why kids love BTB. questions@beyondthebelleducation.com or 508.316.4751
             </Text>
             <ClassOffering title="Friendship Club" schedule="Tuesdays @ 5-6pm (currently full)" >

@@ -5,7 +5,7 @@ import "../assets/style/pageHeader.css";
 
 export default function PageHeader({text}) {
   return (
-    <section className="page-header">
+    <section className="page-header w-100">
       <Text h1 color="white">
         {text}
       </Text>

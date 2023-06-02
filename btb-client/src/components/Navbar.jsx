@@ -24,7 +24,7 @@ import logo from "../assets/images/logo176.png";
 export function Socials() {
 
   return (
-    <header className="w-100 d-flex align-items-center flex-column gap-2 mb-2 socials">
+    <section className="w-100 d-flex align-items-center flex-column gap-2 socials m-5">
       <div className="d-flex flex-row align-items-center justify-content-end gap-4">
         <div className="gap-1 d-flex flex-row align-items-center">
           <LocalPhoneIcon sx={{color: "#b9b9b9", fontSize: 20 }}/>
@@ -61,7 +61,7 @@ export function Socials() {
           </a>
         </div>
       </div>
-    </header>
+    </section>
   )
 }
 
@@ -69,27 +69,46 @@ const navbarItemFontSize = "20px";
 
 export function NavbarContent() {
 
+  function checkLinkActive(route) {
+    const location = window.location.pathname;
+    if (route === "home" && window.location.pathname.length < 1) {
+      return true;
+    }
+    return location.includes(route);
+  }
+
   return (
-    <NextUINavbar.Content hideIn="xs" enableCursorHighlight >
+    <NextUINavbar.Content hideIn="xs" enableCursorHighlight activeColor="primary" >
       <NextUINavbar.Link 
+        isActive={checkLinkActive("home")}
+        href="home"
+        itemCss={{fontSize: navbarItemFontSize}}
+      >
+        Home
+      </NextUINavbar.Link>
+      <NextUINavbar.Link 
+        isActive={checkLinkActive("about-btb")}
         href="about-btb"
         itemCss={{fontSize: navbarItemFontSize}}
       >
         Who We Are
       </NextUINavbar.Link>
       <NextUINavbar.Link 
+        isActive={checkLinkActive("our-services")}
         href="our-services"
         itemCss={{fontSize: navbarItemFontSize}}
       >
         Services
       </NextUINavbar.Link>
       <NextUINavbar.Link 
+        isActive={checkLinkActive("schedule-your-service")}
         href="schedule-your-service"
         itemCss={{fontSize: navbarItemFontSize, color: "#a31a60", fontWeight: "bold"}}
       >
         Schedule Your Service
       </NextUINavbar.Link>
       <NextUINavbar.Link 
+        isActive={checkLinkActive("contact-btb")}
         href="contact-btb"
         itemCss={{fontSize: navbarItemFontSize}}
       >

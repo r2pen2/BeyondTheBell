@@ -9,18 +9,19 @@ import HomePage from "./routes/HomePage";
 import Footer from './components/Footer';
 import About from './routes/About';
 import Services from './routes/Services';
+import Contact from './routes/Contact';
 
 function App() {
   return (
     <div className="App d-flex flex-column align-items-center w-100">
-      <Socials />
       <div className="app-content">
         <Navbar 
           height="80px"
           variant="sticky"
           css={{
-            marginBottom: -80
+            marginBottom: -80,
           }}
+          maxWidth="xl"
         >
           <Navbar.Brand>
             <Image
@@ -40,6 +41,7 @@ function App() {
             <Route path="*" element={<HomePage />} />
             <Route path="/about-btb" element={<About />} />
             <Route path="/our-services" element={<Services />} />
+            <Route path="/contact-btb" element={<Contact />} />
           </Routes>
         </Router>
         <Footer />
