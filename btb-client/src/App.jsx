@@ -1,5 +1,5 @@
 import './App.css';
-import { Socials, NavbarContent } from './components/Navbar';
+import { NavbarContent, Socials } from './components/Navbar';
 import { Navbar, Image, Text } from "@nextui-org/react";
 import logoBlack from "./assets/images/logoBlack.png";
 
@@ -18,9 +18,6 @@ function App() {
         <Navbar 
           height="80px"
           variant="sticky"
-          css={{
-            marginBottom: -80,
-          }}
           maxWidth="xl"
         >
           <Navbar.Brand>
@@ -34,14 +31,16 @@ function App() {
               Beyond The Bell
             </Text>
           </Navbar.Brand>
-          <NavbarContent />
+          <div className="d-flex flex-column align-items-end h-100 justify-content-center">
+            <NavbarContent />
+          </div>
         </Navbar>
         <Router>
           <Routes>
             <Route path="*" element={<HomePage />} />
-            <Route path="/about-btb" element={<About />} />
-            <Route path="/our-services" element={<Services />} />
-            <Route path="/contact-btb" element={<Contact />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/contact" element={<Contact />} />
           </Routes>
         </Router>
         <Footer />
