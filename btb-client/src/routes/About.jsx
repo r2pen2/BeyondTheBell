@@ -67,7 +67,7 @@ export default function About() {
             </Text>
           </div>
           <div className="col-lg-6 d-md-none d-lg-block" >
-            <img src={ourMethods} alt="our-methods" style={{maxHeight: "40vw", width: "50vw", objectFit: "square"}}/>
+            <img src={ourMethods} alt="our-methods" style={{maxHeight: "40vw", width: "50vw", objectFit: "cover"}}/>
           </div>
         </div>
       </section>
