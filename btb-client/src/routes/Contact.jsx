@@ -29,7 +29,7 @@ export default function Contact() {
 function ContactForm() {
   return (
     <div className="gap-2 d-flex flex-column align-items-start justify-content-center">
-      <div className="container-fluid d-flex flex-column gap-2">
+      <div className="container-fluid d-flex flex-column">
         <div className="row">
           <Text h1 align="start">
             We Would Love To Hear From You!
@@ -38,24 +38,24 @@ function ContactForm() {
             Do you want to see how you can take the next step in supporting your child’s educational growth? Drop us a line with any questions. We’re here to help!
           </Text>
         </div>
-        <div className="row">
+        <div className="row pt-2">
           <Input clearable bordered label="Your Name" fullWidth css={{display: "flex", alignItems: "start"}} />
         </div>
         <div className="row">
-          <div className="col-lg-6 col-md-12">
+          <div className="col-lg-6 col-md-12 pt-2">
             <Input clearable bordered label="Your phone" fullWidth css={{display: "flex", alignItems: "start"}} />
           </div>      
-          <div className="col-lg-6 col-md-12">
+          <div className="col-lg-6 col-md-12 pt-2">
             <Input clearable bordered label="Your email" fullWidth css={{display: "flex", alignItems: "start"}} />
           </div>      
         </div>
-        <div className="row">
+        <div className="row pt-2">
           <Input clearable bordered label="Preferred contact method" fullWidth css={{display: "flex", alignItems: "start"}} />
         </div>
-        <div className="row">
+        <div className="row pt-2">
           <Input clearable bordered label="City, State" fullWidth css={{display: "flex", alignItems: "start"}} />
         </div>
-        <div className="row">
+        <div className="row pt-2">
           <Textarea bordered label="How can we help?" placeholder="Tell us what you're looking for." fullWidth css={{display: "flex", alignItems: "start"}} />
         </div>
       </div>
