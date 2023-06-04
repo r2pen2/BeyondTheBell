@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Button, Image, Spacer, Text } from "@nextui-org/react";
+import { Button, Card, Spacer, Text } from "@nextui-org/react";
 
 import "../assets/style/about.css"
 import PageHeader from '../components/PageHeader';
@@ -13,9 +13,9 @@ export default function About() {
   return (
     <div className="d-flex flex-column">
       <PageHeader text="About Beyond the Bell" />
-      <section>
-        <div className="d-flex flex-row justify-content-center align-items-center gap-5 mt-5 mb-5">
-          <div className="d-flex flex-column w-50">
+      <section className="container-fluid p-5">
+        <div className="row">
+          <div className="col-lg-6 col-md-12 about-text">
             <Text h1 color="primary">
               Developing All Learners
             </Text>
@@ -29,28 +29,33 @@ export default function About() {
               The bonds your child will make with our educators will lead to improved school performance and increased confidence, while your child becomes happier at school. Completing homework at BTB may even relieve the burden that homework struggles can put on your entire family.
             </Text>
           </div>
-          <img src={homeworkSpace} alt="about-us-homework-space" />
-        </div>
-      </section>
-      <section>
-        <div className="d-flex flex-row justify-content-center align-items-center gap-5 mt-5 mb-5">
-          <img src={nancyMager} alt="nancy-mager" />
-          <div className="d-flex flex-column w-50">
-            <Text h1 color="primary">
-              Meet the Director - Nancy Mager
-            </Text>
-            <Text size="$lg">
-              <strong>Nancy Mager</strong> has always loved kids, and her passion is understanding each child’s motivation, strengths and struggles. Nancy has a Bachelor's degree in psychology from Boston University and a Master’s degree in special education from Simmons College. She’s spent the last 25 years working in the field of special education, with a strong interest in autism spectrum disorders and mental health. Professionally, Nancy has worked as a classroom teacher, behavioral and educational consultant, student advocate, adjunct college instructor, and most recently as the Director of Education for a non-profit.
-            </Text>
-            <Text size="$lg">
-              Nancy has been trained extensively in the practices and philosophy of Applied Behavior Analysis (ABA), Social Thinking©, the Picture Exchange Communication System© (PECS), multiple assistive technology programs, TEACCH Autism (University of North Carolina), STARS Autism (Naperville, IL), Moving Traditions; It’s a Girls Thing©, and crisis prevention.
-            </Text>
+          <div className="col-lg-6 col-md-12" >
+            <img src={homeworkSpace} alt="about-us-homework-space" style={{width: "100%", height: "auto"}} />
           </div>
         </div>
       </section>
-      <section>
-        <div className="d-flex flex-row justify-content-center align-items-center gap-5 mt-5 mb-5 bg-blue">
-          <div className="d-flex flex-column w-50 p-5">
+      <div className="rainbow-line" />
+      <section className="container-fluid p-5">
+        <div className="row d-flex flex-row justify-content-center align-items-center">
+          <div className="col-lg-3 col-md-6">
+            <img src={nancyMager} alt="nancy-mager" className="my-5" />
+          </div>
+          <div className="col-lg-6 col-md-12 about-text">
+              <Text h1 color="primary">
+                Meet the Director - Nancy Mager
+              </Text>
+              <Text size="$lg">
+                <strong>Nancy Mager</strong> has always loved kids, and her passion is understanding each child’s motivation, strengths and struggles. Nancy has a Bachelor's degree in psychology from Boston University and a Master’s degree in special education from Simmons College. She’s spent the last 25 years working in the field of special education, with a strong interest in autism spectrum disorders and mental health. Professionally, Nancy has worked as a classroom teacher, behavioral and educational consultant, student advocate, adjunct college instructor, and most recently as the Director of Education for a non-profit.
+              </Text>
+              <Text size="$lg">
+                Nancy has been trained extensively in the practices and philosophy of Applied Behavior Analysis (ABA), Social Thinking©, the Picture Exchange Communication System© (PECS), multiple assistive technology programs, TEACCH Autism (University of North Carolina), STARS Autism (Naperville, IL), Moving Traditions; It’s a Girls Thing©, and crisis prevention.
+              </Text>
+          </div>
+        </div>
+      </section>
+      <section className="container-fluid bg-blue">
+        <div className="row">
+          <div className="col-lg-6 col-md-12 about-text">
             <Text h1 color="white">
               Our Methods
             </Text>
@@ -61,7 +66,9 @@ export default function About() {
               The bonds your child will make with our educators will lead to improved school performance and increased confidence, while your child becomes happier at school. Completing homework at BTB may even relieve the burden that homework struggles can put on your entire family.
             </Text>
           </div>
-          <img src={ourMethods} alt="our-methods" style={{height: "50vw", width: "50vw", objectFit: "cover"}}/>
+          <div className="col-lg-6 d-md-none d-lg-block" >
+            <img src={ourMethods} alt="our-methods" style={{maxHeight: "40vw", width: "50vw", objectFit: "square"}}/>
+          </div>
         </div>
       </section>
       <section>
