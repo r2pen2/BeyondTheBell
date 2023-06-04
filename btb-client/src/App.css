@@ -53,3 +53,12 @@ footer {
 .bg-orange {
   background-color: #E7762A;
 }
+
+.navbar-brand-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 10px;
+}
