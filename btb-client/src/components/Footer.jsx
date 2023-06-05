@@ -50,22 +50,22 @@ export default function Footer() {
             </div>
             <div className="col-md-12 col-lg-3 d-flex flex-column align-items-center">
               <Text>
-                <Link color="primary">
+                <Link block color="primary">
                   Who We Are
                 </Link>
               </Text>
               <Text>
-                <Link color="primary">
+                <Link block color="primary">
                   Services
                 </Link>
               </Text>
               <Text>
-                <Link color="primary">
+                <Link block color="primary">
                   Services Your Service
                 </Link>
               </Text>
               <Text>
-                <Link color="primary">
+                <Link block color="primary">
                   Contact Us
                 </Link>
               </Text>

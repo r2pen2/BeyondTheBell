@@ -71,21 +71,21 @@ export default function About() {
           </div>
         </div>
       </section>
-      <section>
-        <div className="d-flex flex-column justify-content-center align-items-center gap-5 mt-5 mb-5">
-          <Text h1 color="primary">
-            Our Learning Center
-          </Text>
-          <div className="d-flex flex-row justify-content-center align-items-center p-5 gap-5">          
-            <img src={wall} alt="our-methods" style={{height: "35vw", width: "35vw", objectFit: "cover"}}/>
-            <div className="w-25 d-flex flex-column">
-              <Text size="$lg">
-                Beyond The Bell offers a broad spectrum of services including school day support for remote learning plans, a menu of academic electives, individual tutoring in all subjects, plus afterschool small group homework help and project support. We also offer parent coaching, educational and behavioral consultation, student advocacy and professional development for educators.
-              </Text>
-              <Text size="$lg">
-                BTB is located at 3 Man-Mar Drive, Unit 14, in Plainville, Massachusetts, just minutes from Route 1, I-95, and I-495. Our facility is located a short walk or drive from quality restaurants, the popular An Unlikely Story bookstore, and much more.
-              </Text>
-            </div>
+      <section className="container-fluid p-5">
+        <div className="row">
+          <div className="col-lg-6 col-md-12" >
+            <img src={wall} alt="about-us-homework-space" style={{width: "auto", height: "100%"}} />
+          </div>
+          <div className="col-lg-6 col-md-12 about-text">
+            <Text h1 color="primary">
+              Our Learning Center
+            </Text>
+            <Text size="$lg">
+              Beyond The Bell offers a broad spectrum of services including school day support for remote learning plans, a menu of academic electives, individual tutoring in all subjects, plus afterschool small group homework help and project support. We also offer parent coaching, educational and behavioral consultation, student advocacy and professional development for educators.
+            </Text>
+            <Text size="$lg">
+              BTB is located at 3 Man-Mar Drive, Unit 14, in Plainville, Massachusetts, just minutes from Route 1, I-95, and I-495. Our facility is located a short walk or drive from quality restaurants, the popular An Unlikely Story bookstore, and much more.
+            </Text>
           </div>
         </div>
       </section>
