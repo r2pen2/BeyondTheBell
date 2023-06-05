@@ -199,8 +199,8 @@ export default function About() {
               The bonds your child will make with our educators will lead to improved school performance and increased confidence, while your child becomes happier at school. Completing homework at BTB may even relieve the burden that homework struggles can put on your entire family.
             </Text>
           </div>
-          <div className="col-lg-6 d-md-none d-lg-block" >
-            <img src={ourMethods} alt="our-methods" style={{maxHeight: "40vw", width: "50vw", objectFit: "cover"}}/>
+          <div className="col-lg-6 d-md-none d-lg-flex" >
+            <img src={ourMethods} alt="our-methods" style={{height: "100%", width: "50vw", objectFit: "cover"}}/>
           </div>
         </div>
       </section>

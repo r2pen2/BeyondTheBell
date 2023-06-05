@@ -15,7 +15,7 @@ export default function Footer() {
     <footer>
       <img src={footerBackground} className="footer-background" alt="footer-background" />
       <div className="footer-content w-100" >
-        <div className="container-fluid mt-3 mb-3">
+        <div className="container-fluid mt-3 mb-3 d-flex flex-column align-items-center">
           <div className="row d-flex flex-row w-100 align-items-center gap-5 justify-content-center">
             <div className="col-md-12 col-lg-3 d-flex flex-column align-items-center">
               <img src={logo} alt="logo-transparent" className="m-2" style={{width: 150, height: 150}}/>
