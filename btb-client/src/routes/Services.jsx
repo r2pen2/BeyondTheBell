@@ -32,7 +32,7 @@ export default function Services() {
             <div className="fill-line dotted" />
             <div className="container-fluid">
               <div className="row">
-                <div className="col-lg-6 col-md-12 d-flex flex-column p-5 gap-2">
+                <div className="col-xxl-6 col-xl-12 d-flex flex-column p-5 gap-2">
                   <Text h1 color="primary">
                     After School at BTB
                   </Text>
@@ -43,27 +43,39 @@ export default function Services() {
                     The BTB After School Program is a place where all students are welcome. Your child’s potential will be unleashed when our enthusiastic teachers connect with your child and partner with both of you in reaching his or her goals. Our low student-to-teacher ratios, creative programming, and modern youthful space will be a place where every child is, and feels, accepted.
                   </Text>
                 </div>
-                <div className="col-lg-6 col-md-12">
+                <div className="col-xxl-6 col-xl-12">
                   <img src={afterSchool} alt="after-school" className="service-image"/>
                 </div>
               </div>
               <div className="row">
-                <div className="col">
-                  <Text h2 color="primary">
-                    Why Sign Up?
-                  </Text>
-                  <SignUpReason>
-                    1 on 1 tutoring in all academic subjects including math, reading, science, and social studies
-                  </SignUpReason>
-                  <SignUpReason>
-                    Tutoring in executive functioning, study skills, social behavior mapping or any area that requires individual instruction
-                  </SignUpReason>
-                  <SignUpReason>
-                    Educators provide data confirming your child’s progress and participation
-                  </SignUpReason>
-                  <SignUpReason>
-                    Regular communication with parents and teachers (if appropriate)
-                  </SignUpReason>
+                <div className="col p-5">
+                  <div className="container-fluid">
+                    <Text h2 color="primary">
+                      Why Sign Up?
+                    </Text>
+                    <div className="row">
+                      <div className="col-xl-6 col-lg-12">
+                        <SignUpReason>
+                          1 on 1 tutoring in all academic subjects including math, reading, science, and social studies
+                        </SignUpReason>
+                      </div>
+                      <div className="col-xl-6 col-lg-12">
+                        <SignUpReason>
+                          Tutoring in executive functioning, study skills, social behavior mapping or any area that requires individual instruction
+                        </SignUpReason>
+                      </div>
+                      <div className="col-xl-6 col-lg-12">
+                        <SignUpReason>
+                          Educators provide data confirming your child’s progress and participation
+                        </SignUpReason>
+                      </div>
+                      <div className="col-xl-6 col-lg-12">
+                        <SignUpReason>
+                          Regular communication with parents and teachers (if appropriate)
+                        </SignUpReason>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -78,7 +90,7 @@ export default function Services() {
             <div className="fill-line dotted" />
             <div className="container-fluid">
               <div className="row">
-                <div className="col-lg-6 col-md-12 d-flex flex-column p-5 gap-2">
+                <div className="col-xxl-6 col-xl-12 d-flex flex-column p-5 gap-2">
                   <Text h1 color="primary">
                     1 on 1 Tutoring at BTB
                   </Text>
@@ -88,21 +100,35 @@ export default function Services() {
                   <Text>
                     Beyond The Bell provides carefully organized, one-hour tutoring sessions in all areas of academics. Students engaging with BTB tutoring services receive the necessary assistance in subjects like math, reading, science, and social studies.
                   </Text>
-                  <Text h2 color="primary">
-                    Why Sign Up?
-                  </Text>
-                  <SignUpReason>
-                    Homework support from experienced educators and certified teachers
-                  </SignUpReason>
-                  <SignUpReason>
-                    A “chillaxing” zone (with hammock swings, bean bags, fidgets, noise cancelling headphones, Chromebook laptops and iPads to access Google Classroom and other resources)
-                  </SignUpReason>
-                  <SignUpReason>
-                    Study spots (including cozy study carrels, comfy chairs, the work bar, and adjustable height project tables)
-                  </SignUpReason>
                 </div>
-                <div className="col-lg-6 col-md-12">
+                <div className="col-xxl-6 col-xl-12">
                   <img src={tutoring} alt="private-tutoring" className="service-image"/>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col p-5">
+                  <div className="container-fluid">
+                    <Text h2 color="primary">
+                      Why Sign Up?
+                    </Text>
+                    <div className="row">
+                      <div className="col-xl-6 col-lg-12">
+                        <SignUpReason>
+                          Homework support from experienced educators and certified teachers
+                        </SignUpReason>
+                      </div>
+                      <div className="col-xl-6 col-lg-12">
+                        <SignUpReason>
+                          A “chillaxing” zone (with hammock swings, bean bags, fidgets, noise cancelling headphones, Chromebook laptops and iPads to access Google Classroom and other resources)
+                        </SignUpReason>
+                      </div>
+                      <div className="col-xl-6 col-lg-12">
+                        <SignUpReason>
+                          Study spots (including cozy study carrels, comfy chairs, the work bar, and adjustable height project tables)
+                        </SignUpReason>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -117,7 +143,7 @@ export default function Services() {
             <div className="fill-line dotted" />
             <div className="container-fluid">
               <div className="row">
-                <div className="col-lg-6 col-md-12 d-flex flex-column p-5 gap-2">
+                <div className="col-xxl-6 col-xl-12 d-flex flex-column p-5 gap-2">
                   <Text h1 color="primary">
                     Wilson Tutoring at BTB
                   </Text>
@@ -127,48 +153,70 @@ export default function Services() {
                   <Text>
                     This system is very effective for those who have been unable to learn to read due to language based learning disabilities like dyslexia. Our Dyslexia Therapist will combine Wilson instruction and silent reading of high interest books to facilitate real progress in the area of literacy. Using the Wilson diagnostic assessments, we will be able to follow your student's progress through out the program.
                   </Text>
-                  <Text h2 color="primary">
-                    Why Sign Up?
-                  </Text>
-                  <div className="d-flex flex-row">
-                    <div>
-                      <SignUpReason>
-                        Word structure, in depth, for automatic decoding and spelling
-                      </SignUpReason>
-                      <SignUpReason>
-                        Word recognition and spelling of high frequency words, including irregular words
-                      </SignUpReason>
-                      <SignUpReason>
-                        Word-learning skills
-                      </SignUpReason>
-                      <SignUpReason>
-                        Sentence-level text reading with ease, expression, and understanding
-                      </SignUpReason>
-                      <SignUpReason>
-                        Listening comprehension with age-appropriate narrative and informational text
-                      </SignUpReason>
-                    </div>
-                    <div>
-                      <SignUpReason>
-                        Reading comprehension with narrative and expository text of increasing levels of difficulty
-                      </SignUpReason>
-                      <SignUpReason>
-                        Narrative and informational text structures
-                      </SignUpReason>
-                      <SignUpReason>
-                        Organization of information for oral or written expression
-                      </SignUpReason>
-                      <SignUpReason>
-                        Proofreading skills
-                      </SignUpReason>
-                      <SignUpReason>
+                </div>
+                <div className="col-xxl-6 col-xl-12">
+                  <img src={dyslexia} alt="wilson-tutoring" className="service-image"/>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col p-5">
+                  <div className="container-fluid">
+                    <Text h2 color="primary">
+                      Why Sign Up?
+                    </Text>
+                    <div className="row">
+                      <div className="col-xxl-4 col-xl-6 col-lg-12">
+                        <SignUpReason>
+                          Word structure, in depth, for automatic decoding and spelling
+                        </SignUpReason>
+                      </div>
+                      <div className="col-xxl-4 col-xl-6 col-lg-12">
+                        <SignUpReason>
+                          Word recognition and spelling of high frequency words, including irregular words
+                        </SignUpReason>
+                      </div>
+                      <div className="col-xxl-4 col-xl-6 col-lg-12">
+                        <SignUpReason>
+                          Word-learning skills
+                        </SignUpReason>
+                      </div>
+                      <div className="col-xxl-4 col-xl-6 col-lg-12">
+                        <SignUpReason>
+                          Sentence-level text reading with ease, expression, and understanding
+                        </SignUpReason>
+                      </div>
+                      <div className="col-xxl-4 col-xl-6 col-lg-12">
+                        <SignUpReason>
+                          Listening comprehension with age-appropriate narrative and informational text
+                        </SignUpReason>
+                      </div>
+                      <div className="col-xxl-4 col-xl-6 col-lg-12">
+                        <SignUpReason>
+                          Reading comprehension with narrative and expository text of increasing levels of difficulty
+                        </SignUpReason>
+                      </div>
+                      <div className="col-xxl-4 col-xl-6 col-lg-12">
+                        <SignUpReason>
+                          Narrative and informational text structures
+                        </SignUpReason>
+                      </div>
+                      <div className="col-xxl-4 col-xl-6 col-lg-12">
+                        <SignUpReason>
+                          Organization of information for oral or written expression
+                        </SignUpReason>
+                      </div>
+                      <div className="col-xxl-4 col-xl-6 col-lg-12">
+                        <SignUpReason>
+                          Proofreading skills
+                        </SignUpReason>
+                      </div>
+                      <div className="col-xxl-4 col-xl-6 col-lg-12">
+                        <SignUpReason>
                         Self-monitoring for word recognition accuracy and comprehension
-                      </SignUpReason>
+                        </SignUpReason>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="col-lg-6 col-md-12">
-                  <img src={dyslexia} alt="wilson-tutoring" className="service-image"/>
                 </div>
               </div>
             </div>
@@ -181,25 +229,16 @@ export default function Services() {
 
 function SignUpReason(props) {
   return (
-    <div className="d-flex flex-row align-items-center p-2">
-      <Card isHoverable>
-        <div className="d-lg-none d-md-flex flex-column align-items-center p-2">
-          <Card.Body>
+    <div className="d-flex flex-row align-items-center p-2 h-100">
+      <Card isHoverable css={{height: "100%"}}>
+        <Card.Body>
+          <div className="d-flex flex-row align-items-center h-100 gap-2">
+            <CheckIcon fontSize="12px" htmlColor={btbOrange} />
             <Text>
               {props.children}
             </Text>
-          </Card.Body>
-        </div>
-        <div className="d-lg-flex d-md-none">
-          <Card.Body>
-            <div className="d-flex flex-row align-items-center gap-2">
-              <CheckIcon fontSize="12px" htmlColor={btbOrange} />
-              <Text>
-                {props.children}
-              </Text>
-            </div>
-          </Card.Body>
-        </div>
+          </div>
+        </Card.Body>
       </Card>
     </div>
   )
