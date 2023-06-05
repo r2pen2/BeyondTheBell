@@ -148,7 +148,7 @@ export default function About() {
       <PageHeader text="About Beyond the Bell" />
       <section className="container-fluid p-5">
         <div className="row">
-          <div className="col-lg-6 col-md-12 about-text">
+          <div className="col-xxl-6 col-xl-12 about-text">
             <Text h1 color="primary">
               Developing All Learners
             </Text>
@@ -162,18 +162,18 @@ export default function About() {
               The bonds your child will make with our educators will lead to improved school performance and increased confidence, while your child becomes happier at school. Completing homework at BTB may even relieve the burden that homework struggles can put on your entire family.
             </Text>
           </div>
-          <div className="col-lg-6 col-md-12" >
-            <img src={homeworkSpace} alt="about-us-homework-space" style={{width: "100%", height: "auto"}} />
+          <div className="col-xxl-6 col-xl-12" >
+            <img src={homeworkSpace} alt="about-us-homework-space" style={{width: "100%", height: "100%", maxWidth: "80vw" ,objectFit: "cover"}} />
           </div>
         </div>
       </section>
       <div className="rainbow-line" />
       <section className="container-fluid p-5">
         <div className="row d-flex flex-row justify-content-center align-items-center">
-          <div className="col-lg-3 col-md-6">
-            <img src={nancyMager} alt="nancy-mager" className="my-5" />
+          <div className="col-xxl-3 col-xl-6">
+            <img src={nancyMager} alt="nancy-mager" />
           </div>
-          <div className="col-lg-6 col-md-12 about-text">
+          <div className="col-xxl-6 col-xl-12 about-text">
               <Text h1 color="primary">
                 Meet the Director - Nancy Mager
               </Text>
@@ -188,7 +188,7 @@ export default function About() {
       </section>
       <section className="container-fluid bg-blue">
         <div className="row">
-          <div className="col-lg-6 col-md-12 about-text">
+          <div className="col-xl-6 col-;g-12 about-text">
             <Text h1 color="white">
               Our Methods
             </Text>
@@ -199,17 +199,17 @@ export default function About() {
               The bonds your child will make with our educators will lead to improved school performance and increased confidence, while your child becomes happier at school. Completing homework at BTB may even relieve the burden that homework struggles can put on your entire family.
             </Text>
           </div>
-          <div className="col-lg-6 d-md-none d-lg-flex" >
+          <div className="col-xl-6 d-none d-xl-flex" >
             <img src={ourMethods} alt="our-methods" style={{height: "100%", width: "50vw", objectFit: "cover"}}/>
           </div>
         </div>
       </section>
       <section className="container-fluid p-5">
         <div className="row">
-          <div className="col-lg-6 col-md-12" >
-            <img src={wall} alt="about-us-homework-space" style={{width: "auto", height: "100%"}} />
+          <div className="col-xl-6 col-lg-12" >
+            <img src={wall} alt="about-us-homework-space" style={{width: "auto", height: "100%", objectFit: "cover"}} />
           </div>
-          <div className="col-lg-6 col-md-12 about-text">
+          <div className="col-xl-6 col-lg-12 about-text">
             <Text h1 color="primary">
               Our Learning Center
             </Text>
