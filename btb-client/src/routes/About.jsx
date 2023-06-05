@@ -1,15 +1,148 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-import { Button, Card, Spacer, Text } from "@nextui-org/react";
+import { Button, Card, Modal, Spacer, Text, Tooltip } from "@nextui-org/react";
 
 import "../assets/style/about.css"
-import PageHeader from '../components/PageHeader';
+import { PageHeader, OrangeBar } from '../components/Bar';
 import homeworkSpace from "../assets/images/about-us-homework-space2.jpg"
 import nancyMager from "../assets/images/nancy-mager.jpg"
 import ourMethods from "../assets/images/our-methods.jpeg"
 import wall from "../assets/images/about-our-center-wall3.jpg"
+import { AfterSchoolIcon, ContractIcon, ScholarshipIcon, SchoolDaysIcon, iconFills } from '../components/Icons';
+
+import LaunchIcon from '@mui/icons-material/Launch';
+import { afterSchoolFormLink, scholarshipLink, schoolContractLink, schoolDayFormLink } from '../api/links';
 
 export default function About() {
+
+  const [modalOpen, setModalOpen] = useState(false);
+  
+  function handleModalItemPress(href) {
+    window.open(href, "_blank");
+    // setModalOpen(false);
+  }
+
+  function VerticalModalContent() {
+
+    function VerticalModalItem({icon, title, formType, href}) {
+      return (
+        <Card 
+          isHoverable 
+          isPressable
+          variant="bordered" 
+          css={{marginTop: "1rem"}} 
+          onPress={() => handleModalItemPress(href)}
+        >
+          <Card.Body>
+            <div className="d-flex flex-row align-items-center justify-content-space-between">
+              {icon}
+              <div className="d-flex flex-column align-items-start justify-content-center w-100">
+                <Text b>
+                  {title}
+                </Text>
+                {`Click to open ${formType}`}
+              </div>
+              <LaunchIcon />
+            </div>
+          </Card.Body>
+        </Card>
+      )
+    }
+
+    return (
+      <div className="d-xl-none d-lg-flex flex-column">
+          <VerticalModalItem
+            icon={<SchoolDaysIcon marginRight="1rem" fill={iconFills.orange} size={"3rem"} />}
+            title="School Days at BTB"
+            formType="application"
+            href={schoolDayFormLink}
+          />
+          <VerticalModalItem
+            icon={<AfterSchoolIcon marginRight="1rem" fill={iconFills.red} size={"3rem"} />}
+            title="After School at BTB"
+            formType="application"
+            href={afterSchoolFormLink}
+          />
+        <VerticalModalItem
+            icon={<ContractIcon marginRight="1rem" fill={iconFills.blue} size={"3rem"} />}
+            title="2020/21 School Year"
+            formType="contract"
+            href={schoolContractLink}
+          />
+          <VerticalModalItem
+            icon={<ScholarshipIcon marginRight="1rem" fill={iconFills.green} size={"3rem"} />}
+            title="The Little Fiddle Scholarship"
+            formType="application"
+            href={scholarshipLink}
+          />
+      </div>
+    )
+  }
+
+
+  function GridModalContent() {
+
+    function GridModalItem({icon, title, formType, href}) {
+      return (
+        <Card 
+          isHoverable 
+          isPressable
+          variant="bordered" 
+          css={{
+            margin: ".5rem",
+          }}        
+          onPress={() => handleModalItemPress(href)}
+        >
+          <Card.Body>
+            <div className="d-flex flex-row align-items-center justify-content-space-between">
+              {icon}
+              <div className="d-flex flex-column align-items-start justify-content-center w-100">
+                <Text b>
+                  {title}
+                </Text>
+                {`Click to open ${formType}`}
+              </div>
+              <LaunchIcon />
+            </div>
+          </Card.Body>
+        </Card>
+      )
+    }
+
+    return (
+      <div className="d-xl-flex d-none flex-column">
+        <div className="d-flex flex-row align-items-center justify-content-center w-100">
+          <GridModalItem
+            icon={<SchoolDaysIcon marginRight="1rem" fill={iconFills.orange} size={"3rem"} />}
+            title="School Days at BTB"
+            formType="application"
+            href={schoolDayFormLink}
+          />
+          <GridModalItem
+            icon={<AfterSchoolIcon marginRight="1rem" fill={iconFills.red} size={"3rem"} />}
+            title="After School at BTB"
+            formType="application"
+            href={afterSchoolFormLink}
+          />
+        </div>
+        <div className="d-flex flex-row align-items-center justify-content-center w-100">
+        <GridModalItem
+            icon={<ContractIcon marginRight="1rem" fill={iconFills.blue} size={"3rem"} />}
+            title="2020/21 School Year"
+            formType="contract"
+            href={schoolContractLink}
+          />
+          <GridModalItem
+            icon={<ScholarshipIcon marginRight="1rem" fill={iconFills.green} size={"3rem"} />}
+            title="The Little Fiddle Scholarship"
+            formType="application"
+            href={scholarshipLink}
+          />
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="d-flex flex-column">
       <PageHeader text="About Beyond the Bell" />
@@ -90,15 +223,40 @@ export default function About() {
         </div>
       </section>
       <section>
-        <div className="d-flex flex-column justify-content-center align-items-center gap-5 mt-5 p-5 bg-orange">
+        <OrangeBar secondaryImage>
           <Text h1 color="white">
             Ready to support your child’s learning?
           </Text>
-          <Button size="xl" bordered color="gradient" shadow>
+          <Button size="xl" bordered color="gradient" shadow onClick={() => setModalOpen(true)}>
             Schedule A Session
           </Button>
-        </div>
+        </OrangeBar>
       </section>
+      <Modal
+        closeButton
+        width="50vw"
+        aria-labelledby="modal-title"
+        open={modalOpen}
+        blur
+        onClose={() => setModalOpen(false)}
+      >
+        <Modal.Header>
+          <Text h3 id="modal-title">
+            Select a service to open the form in a new tab.
+          </Text>
+        </Modal.Header>
+        <Modal.Body>
+          <GridModalContent />
+          <VerticalModalContent />
+        </Modal.Body>
+        <Modal.Footer>
+          <div className="d-flex flex-row align-items-center justify-content-center w-100">
+            <Button auto flat color="error" onPress={() => setModalOpen(false)} >
+                Close
+            </Button>
+          </div>
+        </Modal.Footer>
+      </Modal>
     </div>
   )
 }

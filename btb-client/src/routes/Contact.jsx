@@ -3,7 +3,7 @@ import React from 'react'
 import { Button, Collapse, Grid, Input, Link, Spacer, Text, Textarea } from "@nextui-org/react";
 
 import "../assets/style/services.css"
-import PageHeader from '../components/PageHeader';
+import { PageHeader, } from '../components/Bar';
 import homeworkSpace from "../assets/images/about-us-homework-space2.jpg"
 import afterSchool from "../assets/images/after-school.jpg"
 import dyslexia from "../assets/images/wilson-reading-tutoring.jpg"
