@@ -61,10 +61,9 @@ export default function HomePage() {
             fontSize: "6em",
             filter: "drop-shadow(2px 2px 5px black)",
             textGradient: "45deg, $yellow600 -20%, $btbOrange600 100%",
-            width: "50%",
           }}
         >
-          Beyond The Bell Educational Services
+          Beyond The Bell <br /> Educational Services
         </Text>
         <Text 
           h1

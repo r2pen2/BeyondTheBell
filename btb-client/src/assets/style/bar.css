@@ -1,5 +1,5 @@
 .orange-bar {
-  background: linear-gradient(rgba(255,79,15, 0.95), rgba(255,79,15, 0.95)), url("../images/about-company-history2.jpeg");
+  background: linear-gradient(rgba(255,79,15, 0.90), rgba(255,79,15, 0.90)), url("../images/gradient/hexagons.svg");
   background-size: cover;
   height: 250px;
   display: flex;

@@ -96,7 +96,7 @@ export default function About() {
         </div>
       </section>
       <section>
-        <OrangeBar secondaryImage>
+        <OrangeBar>
           <Text h1 color="white">
             Ready to support your child’s learning?
           </Text>

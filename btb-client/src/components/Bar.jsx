@@ -5,7 +5,7 @@ import "../assets/style/bar.css";
 
 export function PageHeader({text}) {
   return (
-    <section className="orange-bar w-100">
+    <section className="orange-bar">
       <Text h1 color="white">
         {text}
       </Text>
