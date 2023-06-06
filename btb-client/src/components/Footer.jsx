@@ -42,22 +42,22 @@ export default function Footer() {
             </div>
             <div className="col-lg-12 col-xl-3 d-flex flex-column align-items-center">
               <Text>
-                <Link block color="primary">
+                <Link block color="primary" href="/home">
+                  Home
+                </Link>
+              </Text>
+              <Text>
+                <Link block color="primary" href="/about">
                   Who We Are
                 </Link>
               </Text>
               <Text>
-                <Link block color="primary">
+                <Link block color="primary" href="/services">
                   Services
                 </Link>
               </Text>
               <Text>
-                <Link block color="primary">
-                  Services Your Service
-                </Link>
-              </Text>
-              <Text>
-                <Link block color="primary">
+                <Link block color="primary" href="contact">
                   Contact Us
                 </Link>
               </Text>
