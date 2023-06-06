@@ -39,14 +39,6 @@ export default function Footer() {
               <Text size="$xl">
                 Other hours available by appointment
               </Text>
-              <Button
-                color="primary"
-                rounded
-                shadow
-                size="xl"
-              >
-                Schedule A Session
-              </Button>
             </div>
             <div className="col-lg-12 col-xl-3 d-flex flex-column align-items-center">
               <Text>

@@ -1,5 +1,5 @@
 .home-image {
-  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)), url("../images/stock/home-slide1.jpg");
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url("../images/stock/writing.jpg");
   height: 730px;
   background-size: cover;
 }
