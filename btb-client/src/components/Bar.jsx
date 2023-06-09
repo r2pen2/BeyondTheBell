@@ -12,10 +12,6 @@ export function PageHeader({text, sections}) {
       function handleClick() {
         if (section.openCollapse) {
           section.openCollapse();
-          setTimeout(() => {
-            window.location.hash = "";
-            window.location.hash = `#${section.id}`;
-          }, 100);
         } else {
           window.location.hash = "";
           window.location.hash = `#${section.id}`;

@@ -29,6 +29,10 @@ export default function Services() {
             id: "after-school-programs",
             openCollapse: () => {
               setAfterSchoolOpen(true);
+              setTimeout(() => {
+                window.location.hash = "";
+                window.location.hash = `after-school-programs`;
+              }, 100);
             }
           },
           {
@@ -36,6 +40,10 @@ export default function Services() {
             id: "1-on-1-tutoring",
             openCollapse: () => {
               setTutoringOpen(true);
+              setTimeout(() => {
+                window.location.hash = "";
+                window.location.hash = `1-on-1-tutoring`;
+              }, 100);
             }
           },
           {
@@ -43,6 +51,10 @@ export default function Services() {
             id: "dyslexia-therapy",
             openCollapse: () => {
               setDyslexiaOpen(true);
+              setTimeout(() => {
+                window.location.hash = "";
+                window.location.hash = `dyslexia-therapy`;
+              }, 100);
             }
           },
         ]}
