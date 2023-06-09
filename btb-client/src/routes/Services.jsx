@@ -16,7 +16,23 @@ import { AfterSchoolIcon, BookIcon, PencilIcon, iconFills } from '../components/
 export default function Services() {
   return (
     <div className="d-flex flex-column">
-      <PageHeader text="Our Services" />
+      <PageHeader 
+        text="Our Services"
+        sections={[
+          {
+            title: "After School Programs",
+            id: "after-school-programs"
+          },
+          {
+            title: "1 on 1 Tutoring",
+            id: "1-on-1-tutoring"
+          },
+          {
+            title: "Dyslexia Therapy",
+            id: "dyslexia-therapist"
+          },
+        ]}
+      />
       <section className="d-flex flex-column align-items-center w-100">
         <Collapse.Group splitted css={{width: "80%"}} accordion={false}>
           <Collapse 
