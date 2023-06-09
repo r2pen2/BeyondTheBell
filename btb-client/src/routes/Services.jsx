@@ -4,18 +4,14 @@ import { Button, Card, Collapse, Grid, Link, Spacer, Text } from "@nextui-org/re
 
 import "../assets/style/services.css"
 import { PageHeader, } from '../components/Bar';
-import homeworkSpace from "../assets/images/about-us-homework-space2.jpg"
 import afterSchool from "../assets/images/after-school.jpg"
 import dyslexia from "../assets/images/wilson-reading-tutoring.jpg"
 import tutoring from "../assets/images/tutoring-placeholder.jpg"
-import SchoolIcon from '@mui/icons-material/School';
 import { btbOrange } from '../assets/style/colors';
-import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import CheckIcon from '@mui/icons-material/Check';
 
 import EditIcon from '@mui/icons-material/Edit';
 import { AfterSchoolIcon, BookIcon, PencilIcon, iconFills } from '../components/Icons';
-import { AfterSchoolFormCard } from '../components/Forms';
 
 export default function Services() {
   return (
@@ -27,7 +23,7 @@ export default function Services() {
             title="After School Programs" 
             bordered 
             shadow
-            subtitle="Explore after-school enrichment at BTB"
+            subtitle="Explore social skills and executive functioning programs after-school at BTB"
             contentLeft={<AfterSchoolIcon fill={iconFills.orange} />}
           >
             <div className="fill-line dotted" />

@@ -86,7 +86,7 @@ export default function HomePage() {
           </Button>
         </div>
       </section>
-      <PageHeader text="See our offerings for December and January!" />
+      <PageHeader text="What's Happening Now at Beyond the Bell" />
       <section className="d-flex flex-column align-items-center">
         <Collapse.Group css={{width: "80%"}} splitted>
           <ClassOffering title="Friendship Club" schedule="Tuesdays @ 5-6pm (currently full)" >

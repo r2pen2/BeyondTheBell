@@ -35,6 +35,7 @@ export const theme = createTheme({
 
       text: "#666666",
       success: "#A6C437",
+      white: "#ffffff",
 
       secondaryLight: blue200,
       secondaryLightHover: blue300,

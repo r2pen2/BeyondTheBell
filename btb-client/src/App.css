@@ -47,16 +47,8 @@ footer {
 }
 
 .bg-blue {
-  background-color: #388383;
-}
-
-.bg-blue-gradient {
   background-image: url("./assets/images/gradient/blueToPurple.svg");
   background-size: cover;
-}
-
-.bg-orange {
-  background-color: #E7762A;
 }
 
 .bg-orange-gradient {
@@ -71,4 +63,8 @@ footer {
   justify-content: center;
   cursor: pointer;
   padding: 10px;
+}
+
+section {
+  scroll-margin-top: 80px;
 }

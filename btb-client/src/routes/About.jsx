@@ -6,7 +6,7 @@ import "../assets/style/about.css"
 import { PageHeader, OrangeBar } from '../components/Bar';
 import homeworkSpace from "../assets/images/about-us-homework-space2.jpg"
 import nancyMager from "../assets/images/nancy-mager.jpg"
-import ourMethods from "../assets/images/our-methods.jpeg"
+import ourMethods from "../assets/images/they-feast.jpeg"
 import wall from "../assets/images/about-our-center-wall3.jpg"
 
 
@@ -18,8 +18,28 @@ export default function About() {
 
   return (
     <div className="d-flex flex-column">
-      <PageHeader text="About Beyond the Bell" />
-      <section className="container-fluid p-5">
+      <PageHeader 
+        text="About Beyond the Bell"
+        sections={[
+          {
+            title: "Developing All Learners",
+            id: "developing-all-learners"
+          },
+          {
+            title: "Meet The Team",
+            id: "meet-the-team"
+          },
+          {
+            title: "Our Methods",
+            id: "our-methods"
+          },
+          {
+            title: "Our Learning Center",
+            id: "our-learning-center"
+          },
+        ]}
+      />
+      <section className="container-fluid p-5" id="developing-all-learners">
         <div className="row">
           <div className="col-xxl-6 col-xl-12 about-text">
             <Text h1 color="primary">
@@ -41,7 +61,7 @@ export default function About() {
         </div>
       </section>
       <div className="rainbow-line" />
-      <section className="container-fluid p-5">
+      <section className="container-fluid p-5" id="meet-the-team">
         <div className="row d-flex flex-row justify-content-center align-items-center">
           <div className="col-xxl-3 col-xl-6">
             <img src={nancyMager} alt="nancy-mager" />
@@ -59,7 +79,7 @@ export default function About() {
           </div>
         </div>
       </section>
-      <section className="container-fluid bg-blue">
+      <section className="container-fluid bg-blue" id="our-methods">
         <div className="row">
           <div className="col-xl-6 col-;g-12 about-text">
             <Text h1 color="white">
@@ -73,11 +93,11 @@ export default function About() {
             </Text>
           </div>
           <div className="col-xl-6 d-none d-xl-flex" >
-            <img src={ourMethods} alt="our-methods" style={{height: "100%", width: "50vw", objectFit: "cover"}}/>
+            <img src={ourMethods} alt="our-methods" style={{height: "100%", width: "50vw", objectFit: "fill"}}/>
           </div>
         </div>
       </section>
-      <section className="container-fluid p-5">
+      <section className="container-fluid p-5 section-header" id="our-learning-center">
         <div className="row">
           <div className="col-xl-6 col-lg-12" >
             <img src={wall} alt="about-us-homework-space" style={{width: "auto", height: "100%", objectFit: "cover"}} />
