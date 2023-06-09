@@ -3,3 +3,11 @@
   height: 730px;
   background-size: cover;
 }
+
+.testimonial-img {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  filter: drop-shadow(2px 2px 10px black);
+  margin-bottom: 2rem;
+}

@@ -1,11 +1,15 @@
 import React, { useState } from 'react'
 
-import { Button, Collapse, Text, Card, Modal, Link } from "@nextui-org/react";
+import { Button, Collapse, Text, Card, Modal, Link, Tooltip } from "@nextui-org/react";
 
 import { OrangeBar, PageHeader } from "../components/Bar"
 
 import "../assets/style/homepage.css"
 import { FormModal } from '../components/Forms';
+
+import female1 from "../assets/images/testimonials/female1.jpg";
+import female2 from "../assets/images/testimonials/female2.jpg";
+import male2 from "../assets/images/testimonials/male2.jpg";
 
 import hulaFrog from "../assets/images/hulafrog-2020.jpg"
 
@@ -122,18 +126,21 @@ export default function HomePage() {
               <Testimonial 
                 preview="Thank you so much for the time and dedication you have invested into my daughter. She started off the year timid and reserved due to her dyslexia and fear of being singled out, but has truly blossomed from your interactions."
                 author="Allison — Parent"
+                imageSource={female1}
               >
                 "Thank you so much for the time and dedication you have invested in my daughter. She started off the year timid and reserved due to her dyslexia, for fear of being singled out, but has truly blossomed from your interactions. She now has less anxiety and is able to participate in the classroom. Additionally, her self confidence has spread to other areas. She is constantly making new friends and looks forward to attending school daily. Your knowledge and experience in the Wilson Reading System © has paid dividends to her capabilities."
               </Testimonial>
               <Testimonial 
                 preview="Jennifer was an excellent tutor who cared very much about my daughter's progress and worked creatively to keep her motivated and engaged."
                 author="Melissa — Parent"
+                imageSource={female2}
               >
                 "Jennifer was an excellent tutor who cared very much about my daughter’s progress and worked creatively to keep her motivated and engaged. My daughter and I felt very comfortable with Jennifer from the start, as she is experienced, professional and warm. My daughter made marked progress in her sessions and actually seemed to enjoy them (although she would never admit it). We highly recommend Jennifer!"
               </Testimonial>
               <Testimonial 
                 preview="I would be hard pressed to find someone who not only loves working with kids as much as Nancy Mager does, but who truly adores and excels at teaching diverse learners."
                 author="Andy — Parent"
+                imageSource={male2}
               >
                 “I would be hard pressed to find someone who not only loves working with kids as much as Nancy Mager does, but who truly adores and excels at teaching diverse learners. Having worked with her both in a professional educational setting and in our personal lives, I have seen time and time again how mindful, compassionate and effective Nancy’s teaching style is."
               </Testimonial>
@@ -152,7 +159,10 @@ export default function HomePage() {
     }
   
     return (
-      <div className="col-xl-4 col-lg-12 p-2">
+      <Tooltip 
+        content="Click to Expand" 
+        className="col-xl-4 col-lg-12 p-2"
+      >
         <Card 
           isPressable 
           isHoverable 
@@ -161,9 +171,10 @@ export default function HomePage() {
             height: "100%"
             }}
             onPress={handleTestimonialPress}
-          >
+        >
           <Card.Body>
-              <div className="text-center d-flex flex-column align-items-center gap-2">
+              <div className="text-center d-flex flex-column align-items-center justify-content-between h-100">
+                <img src={props.imageSource} alt="testimonial-img" className="testimonial-img"/>
                 <Text size="$lg">
                   "{props.preview}"
                 </Text>
@@ -171,14 +182,9 @@ export default function HomePage() {
                   {props.author}
                 </Text>
               </div>
-            <div className="d-flex flex-column text-center align-items-center justify-content-space-between h-100">
-              <Button shadow onClick={handleTestimonialPress}>
-                Click to Expand
-              </Button>
-            </div>
           </Card.Body>
         </Card>
-      </div>
+      </Tooltip>
     )
   }
 }
