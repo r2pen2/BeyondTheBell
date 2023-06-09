@@ -25,11 +25,13 @@ export function PageHeader({text, sections}) {
       <Text h1 color="white">
         {text}
       </Text>
-      <div className="container">
-        <div className="row">
-          { renderButtons() }
+      { sections && (
+        <div className="container">
+          <div className="row d-flex flex-row justify-content-center">
+            { renderButtons() }
+          </div>
         </div>
-      </div>
+      ) }
     </section>
   )
 }
