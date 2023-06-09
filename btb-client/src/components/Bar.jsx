@@ -8,9 +8,23 @@ export function PageHeader({text, sections}) {
   function renderButtons() {
     if (!sections) { return; }
     return sections.map((section, index) => {
+
+      function handleClick() {
+        if (section.openCollapse) {
+          section.openCollapse();
+          setTimeout(() => {
+            window.location.hash = "";
+            window.location.hash = `#${section.id}`;
+          }, 100);
+        } else {
+          window.location.hash = "";
+          window.location.hash = `#${section.id}`;
+        }
+      }
+
       return (
         <div className="col-lg-3 col-md-12 d-flex flex-column align-items-center">
-          <Link block key={index} color="white" href={"#" + section.id} size="md">
+          <Link block key={index} color="white" size="md" onClick={handleClick}>
             <Text color="white">
               {section.title}
             </Text>

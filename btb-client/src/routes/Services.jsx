@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { Button, Card, Collapse, Grid, Link, Spacer, Text } from "@nextui-org/react";
 
@@ -14,6 +14,11 @@ import EditIcon from '@mui/icons-material/Edit';
 import { AfterSchoolIcon, BookIcon, PencilIcon, iconFills } from '../components/Icons';
 
 export default function Services() {
+
+  const [afterSchoolOpen, setAfterSchoolOpen] = useState(false);
+  const [tutoringOpen, setTutoringOpen] = useState(false);
+  const [dyslexiaOpen, setDyslexiaOpen] = useState(false);
+
   return (
     <div className="d-flex flex-column">
       <PageHeader 
@@ -21,15 +26,24 @@ export default function Services() {
         sections={[
           {
             title: "After School Programs",
-            id: "after-school-programs"
+            id: "after-school-programs",
+            openCollapse: () => {
+              setAfterSchoolOpen(true);
+            }
           },
           {
             title: "1 on 1 Tutoring",
-            id: "1-on-1-tutoring"
+            id: "1-on-1-tutoring",
+            openCollapse: () => {
+              setTutoringOpen(true);
+            }
           },
           {
             title: "Dyslexia Therapy",
-            id: "dyslexia-therapist"
+            id: "dyslexia-therapy",
+            openCollapse: () => {
+              setDyslexiaOpen(true);
+            }
           },
         ]}
       />
@@ -39,8 +53,11 @@ export default function Services() {
             title="After School Programs" 
             bordered 
             shadow
+            expanded={afterSchoolOpen}
+            onClick={() => setAfterSchoolOpen(!afterSchoolOpen)}
             subtitle="Explore social skills and executive functioning programs after-school at BTB"
             contentLeft={<AfterSchoolIcon fill={iconFills.orange} />}
+            id="after-school-programs"
           >
             <div className="fill-line dotted" />
             <div className="container-fluid">
@@ -97,8 +114,11 @@ export default function Services() {
             title="1 on 1 Tutoring" 
             bordered 
             shadow
+            expanded={tutoringOpen}
+            onClick={() => setTutoringOpen(!tutoringOpen)}
             subtitle="Dive into individualized learning at BTB"
             contentLeft={<PencilIcon fill={iconFills.red} />}
+            id="1-on-1-tutoring"
           >
             <div className="fill-line dotted" />
             <div className="container-fluid">
@@ -150,8 +170,11 @@ export default function Services() {
             title="Dyslexia Therapist/Wilson Tutoring" 
             bordered 
             shadow
+            expanded={dyslexiaOpen}
+            onClick={() => setDyslexiaOpen(!dyslexiaOpen)}
             subtitle="Uncover Tailored Dyslexia Support at BTB"
             contentLeft={<BookIcon fill={iconFills.blue} />}
+            id="dyslexia-therapy"
           >
             <div className="fill-line dotted" />
             <div className="container-fluid">
