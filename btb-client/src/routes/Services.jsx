@@ -86,7 +86,7 @@ export default function Services() {
                   </Text>
                 </div>
                 <div className="col-xxl-6 col-xl-12">
-                  <img src={afterSchool} alt="after-school" className="service-image"/>
+                  <img src={afterSchool} alt="after-school" className="service-image img-shadow"/>
                 </div>
               </div>
               <div className="row">
@@ -147,7 +147,7 @@ export default function Services() {
                   </Text>
                 </div>
                 <div className="col-xxl-6 col-xl-12">
-                  <img src={tutoring} alt="private-tutoring" className="service-image"/>
+                  <img src={tutoring} alt="private-tutoring" className="service-image img-shadow"/>
                 </div>
               </div>
               <div className="row">
@@ -203,7 +203,7 @@ export default function Services() {
                   </Text>
                 </div>
                 <div className="col-xxl-6 col-xl-12">
-                  <img src={dyslexia} alt="wilson-tutoring" className="service-image"/>
+                  <img src={dyslexia} alt="wilson-tutoring" className="service-image img-shadow"/>
                 </div>
               </div>
               <div className="row">
