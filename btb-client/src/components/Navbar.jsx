@@ -22,7 +22,6 @@ export function NavbarPages() {
 
   function checkLinkActive(route) {
     const location = window.location.pathname;
-    console.log(location);
     if (route === "home" && window.location.pathname.length < 2) {
       return true;
     }
