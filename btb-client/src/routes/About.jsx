@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 
 import { Button, Card, Modal, Text, } from "@nextui-org/react";
 
@@ -9,64 +9,12 @@ import nancyMager from "../assets/images/nancy-mager.jpg"
 import ourMethods from "../assets/images/they-feast.jpeg"
 import wall from "../assets/images/about-our-center-wall3.jpg"
 
-import davidKim from "../assets/images/staff/davidKim.jpg"
-import jasonBrown from "../assets/images/staff/jasonBrown.jpg"
-import jessicaReynolds from "../assets/images/staff/jessicaReynolds.jpg"
-import lisaMartinez from "../assets/images/staff/lisaMartinez.jpg"
-import matthewBroderick from "../assets/images/staff/matthewBroderick.jpg"
-import rachelGarcia from "../assets/images/staff/rachelGarcia.jpg"
-
 import { FormModal } from "../components/Forms";
-import { btbOrange } from '../assets/style/colors';
-
-
-
-const teamMembers = [
-  {
-    order: 1,
-    name: "Jessica Reynolds",
-    position: "English Tutor",
-    image: jessicaReynolds,
-    bio: "Jessica is an English tutor with a Master's in English Literature. She is passionate about teaching and has been working with students for 7 years. Her focus is on improving students' writing skills and helping them appreciate literature. Jessica believes that good communication skills are essential for success in any field. Outside of the tutoring center, she is an avid reader and loves to write short stories."
-  },
-  {
-    order: 2,
-    name: "David Kim",
-    position: "Science Tutor",
-    image: davidKim,
-    bio: "David is a Science Tutor, specializing in Physics and Chemistry. He has a Master's degree in Chemical Engineering. His scientific background allows him to make science engaging and relatable to students. David has a talent for breaking down complicated concepts into easy-to-understand language. When he’s not teaching, David enjoys tinkering with electronics and playing the guitar."
-  },
-  {
-    order: 6,
-    name: "Lisa Martinez",
-    position: "Administrative Assistant",
-    image: lisaMartinez,
-    bio: "Lisa is the Administrative Assistant and a crucial part of the team. She has been with BTB for 3 years, ensuring that operations run efficiently. Her organizational skills and attention to detail keep the center in top shape. Lisa is usually the first point of contact for parents and students, and she’s known for her warm and friendly demeanor. In her leisure time, she enjoys painting and taking nature walks."
-  },
-  {
-    order: 5,
-    name: "Matthew Broderick",
-    position: "Math Tutor",
-    image: matthewBroderick,
-    bio: "Matthew Broderick, renowned for his illustrious career in acting, has joined Beyond The Bell as a Math Tutor. Surprising to many, Matthew has a deep-seated love for mathematics and decided to make a career change to pursue this passion. With his charisma and ability to perform, he makes learning math an incredibly engaging experience for students. He believes in making a difference in the lives of the youth and takes immense joy in witnessing their progress. When not tutoring, he sometimes reminisces about his acting days and shares exciting stories with students and staff."
-  },
-  {
-    order: 4,
-    name: "Jason Brown",
-    position: "SAT/ACT Prep Tutor",
-    image: jasonBrown,
-    bio: "Jason is specialized in SAT and ACT prep, and has been a tutor for over 6 years. He has a degree in Psychology, which he utilizes to understand students' learning patterns and adapt his teaching methods. Jason is passionate about equipping students with the strategies and confidence needed to excel in standardized tests. He is also a basketball enthusiast and coaches a local youth team in his spare time."
-  },
-  {
-    order: 3,
-    name: "Rachel Garcia",
-    position: "Academic Advisor",
-    image: rachelGarcia,
-    bio: "Rachel serves as an Academic Advisor at the center. With a background in Counseling, she plays a vital role in helping students plan their educational path. She believes that proper guidance is essential for students to make informed decisions regarding their academic and career goals. Rachel is also an advocate for mental health and conducts workshops for stress management."
-  }
-]
+import { staffContext } from '../api/context';
 
 export default function About() {
+
+  const { staffData } = useContext(staffContext);
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -241,7 +189,12 @@ export default function About() {
 
   function renderTeam() {
 
-    const sortedTeamMembers = teamMembers.sort((a, b) => a.order - b.order);
+    if (!staffData) {
+      console.log("Please")
+      return;
+    }
+
+    const sortedTeamMembers = staffData.sort((a, b) => a.order - b.order);
   
     return sortedTeamMembers.map((teamMember, index) => {
   
@@ -260,7 +213,7 @@ export default function About() {
           >
             <Card.Body className="d-flex flex-column gap-2 align-items-center w-100 justify-content-center">
               <img src={teamMember.image} alt={teamMember.name} className="img-shadow img-round" style={{width: "10rem", height: "10rem"}}/>
-              <div className="w-100 d-md-none d-lg-flex flex-row gap-2 justify-content-center">
+              <div className="w-100 d-md-none d-lg-flex flex-row gap-2 justify-content-center text-center align-items-center">
                 <Text size="$lg" css={{fontWeight: "bold"}} >
                   {teamMember.name}
                 </Text>

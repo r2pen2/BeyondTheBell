@@ -7,19 +7,26 @@ import { OrangeBar, PageHeader } from "../components/Bar"
 import "../assets/style/homepage.css"
 import { FormModal } from '../components/Forms';
 
-import female1 from "../assets/images/testimonials/female1.jpg";
-import female2 from "../assets/images/testimonials/female2.jpg";
-import male2 from "../assets/images/testimonials/male2.jpg";
 
 import hulaFrog from "../assets/images/hulafrog-2020.jpg"
+import { useContext } from 'react';
+import { testimonialContext , offeringContext} from '../api/context';
 
 export default function HomePage() {
 
   const [formModalOpen, setFormModalOpen] = useState(false);
   const [testimonialModalOpen, setTestimonialMenuOpen] = useState(false);
 
-  const [currentTestimonialText, setCurrentTestimonialText] = useState("");
-  const [currentTestimonialAuthor, setCurrentTestimonialAuthor] = useState("");
+  const [currentTestimonial, setCurrentTestimonial] = useState({
+    preview: "",
+    authorDesc: "",
+    image: null,
+    message: "",
+  });
+  
+  const {offeringData} = useContext(offeringContext);
+
+  const {testimonialData} = useContext(testimonialContext)
 
   return (
     <div className="d-flex flex-column">
@@ -31,13 +38,20 @@ export default function HomePage() {
         onClose={() => setTestimonialMenuOpen(false)}
       >
         <Modal.Body>
-          <div className="d-flex flex-column align-items-center text-center">
-            <Text size="$lg">
-              {currentTestimonialText}
-            </Text>
-            <Text>
-              {currentTestimonialAuthor}
-            </Text>
+          <div className="container-fluid">
+            <div className="row d-flex flex-row align-items-center justify-content-center">
+              <div className="col-lg-4 col-md-12">
+                <img src={currentTestimonial.image} alt={currentTestimonial.authorDesc} className="img-shadow"/>
+              </div>
+              <div className="col-lg-8 p-3 col-md-12 d-flex flex-column justify-content-center text-center">
+                <Text size="$lg">
+                  "{currentTestimonial.message}"
+                </Text>
+                <Text>
+                  {currentTestimonial.authorDesc}
+                </Text>
+              </div>
+            </div>
           </div>
         </Modal.Body>
         <Modal.Footer>
@@ -93,28 +107,7 @@ export default function HomePage() {
       <PageHeader text="What's Happening Now at Beyond the Bell" />
       <section className="d-flex flex-column align-items-center">
         <Collapse.Group css={{width: "80%"}} splitted>
-          <ClassOffering title="Friendship Club" schedule="Tuesdays @ 5-6pm (currently full)" >
-            Like a playdate with a social coach, our Friendship Clubs are full of fun! Small cohorts of children work together to improve social communication and develop long-lasting meaningful friendships, using games and hands-on, interest-based activities.
-          </ClassOffering>
-          <ClassOffering title="No More Drama" schedule="Tuesdays @ 5-6pm and 6-7pm" >
-            This social skills, female empowerment group will help your daughter gain confidence, empathy and important life skills like conflict resolution and perspective-taking. Lots of laughter and discussion, along with crafts, games, and hands-on activities to we process tricky social situations and plan for social success. Led by Dr. Elyse Rast.
-            Please note: this class is only for students identifying as female. Grades 2-5 and 6-9  
-          </ClassOffering>
-          <ClassOffering title='Intro to "Adulting"' schedule="Thursdays @ 5:30-6:30pm" >
-            Middle school and early high school students get a hand acing their many new responsibilities. These include: cell phone and online etiquette, flexibility, time management, organization, planning and prioritizing tasks, goal setting and more. Grades 6-9.
-          </ClassOffering>
-          <ClassOffering title="Let's get Messy" schedule="Wednesdays @ 5-6pm" >
-            What is it about playing with goop that is so much fun? Each session of LGM will include different messy, mushy, squishy activities. Come prepared to make a mess with us! Sensory games and oozy substances are sure to delight!
-          </ClassOffering>
-          <ClassOffering title="Friday Night Hangouts" schedule="Tuesdays, Wednesdays, and Thursdays @ 3-5pm" >
-            Take the stress out of homework and let the educators of BTB help your kids get it done.
-          </ClassOffering>
-          <ClassOffering title="Math Monsters" schedule="Wednesdays @ 4-5pm" >
-            Does your child love math? Fear it? Hate it? This engaging class will make the most timid of number-crunchers become math enthusiasts! With math games and hands-on activities, your kids will be begging for more!
-          </ClassOffering>
-          <ClassOffering title="Book Club" schedule="Tuesdays @ 4-5pm" >
-            Dr. Elyse Rast will explore engaging and meaningful picture books with your children. Each week, there will be a new book paired with a lively discussion, related activities, and games. Whether you have a reluctant reader or a voracious one, exploring picture books is a proven way to engage with learners of all ages while improving fluency and understanding of themes, character, plot development and more. BTB’s Book Club makes reading fun and enjoyable, and may even have your child asking to stop at the library on your way home! Independent readers-5th grade.
-          </ClassOffering>
+          { renderOfferings() }
         </Collapse.Group>
       </section>
       <section className="bg-orange p-5">
@@ -123,39 +116,41 @@ export default function HomePage() {
           </Text>
           <div className="container-fluid my-5" >
             <div className="row">
-              <Testimonial 
-                preview="Thank you so much for the time and dedication you have invested into my daughter. She started off the year timid and reserved due to her dyslexia and fear of being singled out, but has truly blossomed from your interactions."
-                author="Allison — Parent"
-                imageSource={female1}
-              >
-                "Thank you so much for the time and dedication you have invested in my daughter. She started off the year timid and reserved due to her dyslexia, for fear of being singled out, but has truly blossomed from your interactions. She now has less anxiety and is able to participate in the classroom. Additionally, her self confidence has spread to other areas. She is constantly making new friends and looks forward to attending school daily. Your knowledge and experience in the Wilson Reading System © has paid dividends to her capabilities."
-              </Testimonial>
-              <Testimonial 
-                preview="Jennifer was an excellent tutor who cared very much about my daughter's progress and worked creatively to keep her motivated and engaged."
-                author="Melissa — Parent"
-                imageSource={female2}
-              >
-                "Jennifer was an excellent tutor who cared very much about my daughter’s progress and worked creatively to keep her motivated and engaged. My daughter and I felt very comfortable with Jennifer from the start, as she is experienced, professional and warm. My daughter made marked progress in her sessions and actually seemed to enjoy them (although she would never admit it). We highly recommend Jennifer!"
-              </Testimonial>
-              <Testimonial 
-                preview="I would be hard pressed to find someone who not only loves working with kids as much as Nancy Mager does, but who truly adores and excels at teaching diverse learners."
-                author="Andy — Parent"
-                imageSource={male2}
-              >
-                “I would be hard pressed to find someone who not only loves working with kids as much as Nancy Mager does, but who truly adores and excels at teaching diverse learners. Having worked with her both in a professional educational setting and in our personal lives, I have seen time and time again how mindful, compassionate and effective Nancy’s teaching style is."
-              </Testimonial>
+              { renderTestimonials() }
             </div>
           </div>
       </section>
     </div>
   )
 
+  function renderOfferings() {
+    return offeringData.map((o, index) => {
+      return (
+        <ClassOffering title={o.title} schedule={o.schedule} >
+          {o.description}
+        </ClassOffering>
+      )
+    })
+  }
+
+  function renderTestimonials() {
+    return testimonialData.map((t, index) => {
+      return (
+        <Testimonial 
+          key={index}
+          testimonial={t}
+        >
+          "{t.message}"
+        </Testimonial>
+      )
+    })
+  }
+
   function Testimonial(props) {
 
     function handleTestimonialPress() {
       setTestimonialMenuOpen(true);
-      setCurrentTestimonialAuthor(props.author);
-      setCurrentTestimonialText(props.children);
+      setCurrentTestimonial(props.testimonial);
     }
   
     return (
@@ -174,12 +169,12 @@ export default function HomePage() {
         >
           <Card.Body>
               <div className="text-center d-flex flex-column align-items-center justify-content-between h-100">
-                <img src={props.imageSource} alt="testimonial-img" className="testimonial-img"/>
+                <img src={props.testimonial.image} alt="testimonial-img" className="testimonial-img"/>
                 <Text size="$lg">
-                  "{props.preview}"
+                  "{props.testimonial.preview}"
                 </Text>
                 <Text>
-                  {props.author}
+                  {props.testimonial.authorDesc}
                 </Text>
               </div>
           </Card.Body>

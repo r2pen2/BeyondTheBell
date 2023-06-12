@@ -19,7 +19,7 @@ export function PageHeader({text, sections}) {
       }
 
       return (
-        <div className="col-lg-3 col-md-12 d-flex flex-column align-items-center">
+        <div key={index} className="col-lg-3 col-md-12 d-flex flex-column align-items-center">
           <Link block key={index} color="white" size="md" onClick={handleClick}>
             <Text color="white">
               {section.title}
