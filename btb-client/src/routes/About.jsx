@@ -40,8 +40,8 @@ export default function About() {
         <Modal.Body>
           <div className="container-fluid">
             <div className="row d-flex flex-row align-items-center justify-content-center">
-              <div className="col-lg-4 col-md-12">
-                <img src={currentTeamMember.image} alt={currentTeamMember.name} className="img-shadow"/>
+              <div className="col-lg-4 col-md-12 d-flex flex-row justify-content-center">
+                <img src={currentTeamMember.image} alt={currentTeamMember.name} className="img-shadow" style={{maxHeight: "50vw"}}/>
               </div>
               <div className="col-lg-8 p-3 col-md-12 d-flex flex-column justify-content-center">
                 <div className="w-100 d-flex flex-row gap-2 justify-content-center">

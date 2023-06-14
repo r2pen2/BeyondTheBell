@@ -58,6 +58,11 @@ footer {
   background-position: center -600px;
 }
 
+.line-underneath {
+  border-width: 2px;
+  border-bottom: rgb(255,79,15);
+}
+
 .bg-orange-gradient {
   background-image: url("./assets/images/gradient/yellowToOrange.svg");
   background-size: cover;
