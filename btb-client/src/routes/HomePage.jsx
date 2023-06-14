@@ -19,7 +19,7 @@ export default function HomePage() {
 
   const [currentTestimonial, setCurrentTestimonial] = useState({
     preview: "",
-    authorDesc: "",
+    authorDescription: "",
     image: null,
     message: "",
   });
@@ -41,14 +41,14 @@ export default function HomePage() {
           <div className="container-fluid">
             <div className="row d-flex flex-row align-items-center justify-content-center">
               <div className="col-lg-4 col-md-12">
-                <img src={currentTestimonial.image} alt={currentTestimonial.authorDesc} className="img-shadow"/>
+                <img src={currentTestimonial.image} alt={currentTestimonial.authorDescription} className="img-shadow"/>
               </div>
               <div className="col-lg-8 p-3 col-md-12 d-flex flex-column justify-content-center text-center">
                 <Text size="$lg">
                   "{currentTestimonial.message}"
                 </Text>
                 <Text>
-                  {currentTestimonial.authorDesc}
+                  {currentTestimonial.authorDescription}
                 </Text>
               </div>
             </div>
@@ -104,13 +104,16 @@ export default function HomePage() {
           </Button>
         </div>
       </section>
-      <PageHeader text="What's Happening Now at Beyond the Bell" />
-      <section className="d-flex flex-column align-items-center">
-        <Collapse.Group css={{width: "80%"}} splitted>
+      <div className="rainbow-line" />
+      <section className="container-fluid d-flex flex-column align-items-center p-5">  
+        <Text h1 color="primary">
+          What's Happening Now At BTB
+        </Text>
+        <div className="row w-75 d-flex flex-row justify-content-center">
           { renderOfferings() }
-        </Collapse.Group>
+        </div>
       </section>
-      <section className="bg-orange p-5">
+      <section className="bg-blue p-5">
           <Text h1 color="white">
             What Parents Are Saying
           </Text>
@@ -126,9 +129,7 @@ export default function HomePage() {
   function renderOfferings() {
     return offeringData.map((o, index) => {
       return (
-        <ClassOffering title={o.title} schedule={o.schedule} >
-          {o.description}
-        </ClassOffering>
+        <ClassOffering key={index} offering={o} />
       )
     })
   }
@@ -174,7 +175,7 @@ export default function HomePage() {
                   "{props.testimonial.preview}"
                 </Text>
                 <Text>
-                  {props.testimonial.authorDesc}
+                  {props.testimonial.authorDescription}
                 </Text>
               </div>
           </Card.Body>
@@ -184,18 +185,28 @@ export default function HomePage() {
   }
 }
 
-function ClassOffering(props) {
+function ClassOffering({offering}) {
   return (
-    <Collapse
-      title={props.title}
-      bordered 
-      shadow
-      subtitle={props.schedule}
-    >
-      <div className="fill-line" />
-      <Text align="left">
-        {props.children}
-      </Text>
-    </Collapse>
+    <div className="col-xxl-3 col-xl-4 col-md-6 p-3">
+      <Card isHoverable isPressable css={{minHeight: "100%"}} className="d-flex flex-column justify-content-between">
+        <Card.Image
+          src={offering.image}
+          objectFit='fill'
+          width="100%"
+          alt={offering.title}
+        />
+        <Card.Footer className="d-flex flex-column align-items-center gap-2 p-2">
+          <Text b>          
+            {offering.title}
+          </Text>
+          <Text size="$sm" color="textSecondary">          
+            {offering.schedule}
+          </Text>
+          <Button bordered size="md">
+            Read More
+          </Button>
+        </Card.Footer>
+      </Card>
+    </div>
   )
 }

@@ -12,17 +12,61 @@ import About from './routes/About';
 import Services from './routes/Services';
 import Contact from './routes/Contact';
 import ThankYou from './routes/ThankYou';
-import { useState } from 'react';
-import { exampleOfferings, exampleStaff, exampleTestimonials } from './api/exampleData';
+import { useEffect, useState } from 'react';
+
+import { collection, onSnapshot } from 'firebase/firestore';
+import { firestore } from './api/firebase';
 
 
 function App() {
 
   const [currentUserData, setCurrentUserData] = useState(null);
-  const [testimonialData, setTestimonialData] = useState(exampleTestimonials);
-  const [offeringData, setOfferingData] = useState(exampleOfferings);
-  const [staffData, setStaffData] = useState(exampleStaff);
+  const [testimonialData, setTestimonialData] = useState([]);
+  const [offeringData, setOfferingData] = useState([]);
+  const [staffData, setStaffData] = useState([]);
   
+  useEffect(() => {
+    fetchStaff();
+    fetchOfferings();
+    fetchTestimonails();
+  }, [])
+
+  function fetchStaff() {
+    const collectionRef = collection(firestore, "staff");
+    // Add listener
+    onSnapshot((collectionRef), (snap) => {
+      let newStaff = [];
+      for (const doc of snap.docs) {
+        newStaff.push(doc.data());
+      }
+      setStaffData(newStaff);
+    })
+  }
+
+  function fetchOfferings() {
+    const collectionRef = collection(firestore, "offerings");
+    // Add listener
+    onSnapshot((collectionRef), (snap) => {
+      let newOfferings = [];
+      for (const doc of snap.docs) {
+        newOfferings.push(doc.data());
+      }
+      setOfferingData(newOfferings);
+    })
+  }
+
+  function fetchTestimonails() {
+    const collectionRef = collection(firestore, "testimonials");
+    // Add listener
+    onSnapshot((collectionRef), (snap) => {
+      let newTestimonials = [];
+      for (const doc of snap.docs) {
+        newTestimonials.push(doc.data());
+      }
+      setTestimonialData(newTestimonials);
+    })
+  }
+
   return (
     <currentUserContext.Provider value={{currentUserData, setCurrentUserData}} >
     <testimonialContext.Provider value={{testimonialData, setTestimonialData}} >
