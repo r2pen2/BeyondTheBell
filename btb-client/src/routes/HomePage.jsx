@@ -4,6 +4,8 @@ import { Button, Collapse, Text, Card, Modal, Link, Tooltip } from "@nextui-org/
 
 import { OrangeBar, PageHeader } from "../components/Bar"
 
+import Carousel from "react-material-ui-carousel";
+
 import "../assets/style/homepage.css"
 import { FormModal } from '../components/Forms';
 
@@ -32,7 +34,7 @@ export default function HomePage() {
     <div className="d-flex flex-column">
       <Modal 
         closeButton
-        width="50vw"
+        width="80vw"
         open={testimonialModalOpen}
         blur
         onClose={() => setTestimonialMenuOpen(false)}
@@ -40,8 +42,8 @@ export default function HomePage() {
         <Modal.Body>
           <div className="container-fluid">
             <div className="row d-flex flex-row align-items-center justify-content-center">
-              <div className="col-lg-4 col-md-12">
-                <img src={currentTestimonial.image} alt={currentTestimonial.authorDescription} className="img-shadow"/>
+              <div className="col-lg-4 col-md-12 d-flex flex-row justify-content-center">
+                <img src={currentTestimonial.image} alt={currentTestimonial.authorDescription} className="img-shadow" style={{maxHeight: "50vw"}}/>
               </div>
               <div className="col-lg-8 p-3 col-md-12 d-flex flex-column justify-content-center text-center">
                 <Text size="$lg">
@@ -63,13 +65,14 @@ export default function HomePage() {
         </Modal.Footer>
       </Modal>
       <FormModal open={formModalOpen} setOpen={setFormModalOpen} />
-      <section className="home-image d-flex flex-column w-100 align-items-center justify-content-center">
+      <section className="home-image d-flex flex-column w-100 align-items-center justify-content-center p-5">
         <Text 
           h2
           color="white"
           css={{ 
             textShadow: "0px 0px 5px black",
           }}
+          className="d-lg-inline d-none"
         >
           Welcome to
         </Text>
@@ -81,7 +84,7 @@ export default function HomePage() {
             textGradient: "45deg, $yellow600 -20%, $btbOrange600 100%",
           }}
         >
-          Beyond The Bell <br /> Educational Services
+          Beyond The Bell <br /> <span className='d-none d-xxl-inline'>Educational Services</span>
         </Text>
         <Text 
           h1
@@ -89,6 +92,7 @@ export default function HomePage() {
           css={{ 
             textShadow: "0px 0px 5px black",
           }}
+          className="d-none d-md-inline"
         >
           Academic enrichment, tutoring, and educational <br/> support programs for today’s learners.
         </Text>
@@ -109,8 +113,23 @@ export default function HomePage() {
         <Text h1 color="primary">
           What's Happening Now At BTB
         </Text>
-        <div className="row w-75 d-flex flex-row justify-content-center">
-          { renderOfferings() }
+        <div className="d-xxl-flex d-none w-100 align-items-center flex-row justify-content-center">
+          <Carousel animation="slide" navButtonsAlwaysVisible className="w-100" autoPlay={false}>
+            { renderOfferings(4) }  
+          </Carousel>
+        </div>
+        <div className="d-xl-flex d-xxl-none d-none w-100 align-items-center flex-row justify-content-center">
+          <Carousel animation="slide" navButtonsAlwaysVisible className="w-100" autoPlay={false}>
+            { renderOfferings(3) }  
+          </Carousel>
+        </div>
+        <div className="d-lg-flex d-xl-none d-none w-100 align-items-center flex-row justify-content-center">
+          <Carousel animation="slide" navButtonsAlwaysVisible className="w-100" autoPlay={false}>
+            { renderOfferings(2) }  
+          </Carousel>
+        </div>
+        <div className="d-flex flex-column d-lg-none align-items-center w-100">
+          { renderOfferingsList() }
         </div>
       </section>
       <section className="bg-blue p-5">
@@ -126,10 +145,68 @@ export default function HomePage() {
     </div>
   )
 
-  function renderOfferings() {
+  function renderOfferingsList() {
     return offeringData.map((o, index) => {
       return (
-        <ClassOffering key={index} offering={o} />
+        <Card
+          isPressable
+          isHoverable
+          key={"ol-" + index}
+          css={{
+            height: "200px",
+            width: "100%",
+          }}
+          className="w-100 p-2 m-2 d-flex flex-row align-items-center justify-content-between"
+        >
+          <img src={o.image} alt={o.title} style={{height: "100%", objectFit:"cover"}} className="img-shadow"/>
+          <div className="d-flex w-100 flex-column px-2 text-center justify-content-center">
+            <Text b>
+              {o.title}
+            </Text>
+            <Text>
+              {o.schedule}
+            </Text>
+            <div className="d-flex flex-row w-100 justify-content-center">
+              <Button bordered size="md" style={{minHeight:"2rem", maxWidth: "50%"}}>
+                Read More
+              </Button>
+            </div>
+          </div>
+        </Card>
+      )
+    })
+  }
+
+  function renderOfferings(itemsPerCarousel) {
+
+    function splitArray(inputArray, chunkSize) {
+      let result = [];
+      for (var i = 0; i < inputArray.length; i += chunkSize) {
+          result.push(inputArray.slice(i, i + chunkSize));
+      }
+      return result;
+    }
+
+    const offeringPages = splitArray(offeringData, itemsPerCarousel);
+    
+    function renderPage(op) {
+
+
+      const col = 12/op.length;
+
+      return op.map((o, index) => {
+        console.log(col)
+        return <ClassOffering col={col} offering={o} key={`o-${index}`}/>
+      })
+    }
+
+    return offeringPages.map((op, index) => {
+      return (
+        <div className="w-100 d-flex flex-row justify-content-center">
+          <div className="row line-underneath" style={{minHeight: "600px"}} key={`op-${index}`}>
+            { renderPage(op) }
+          </div>
+        </div>
       )
     })
   }
@@ -157,21 +234,20 @@ export default function HomePage() {
     return (
       <Tooltip 
         content="Click to Expand" 
-        className="col-xl-4 col-lg-12 p-2"
+        className="col-xl-4 col-lg-12 p-3"
       >
         <Card 
           isPressable 
           isHoverable 
           css={{
-            padding: "2rem", 
             height: "100%"
             }}
             onPress={handleTestimonialPress}
         >
           <Card.Body>
               <div className="text-center d-flex flex-column align-items-center justify-content-between h-100">
-                <img src={props.testimonial.image} alt="testimonial-img" className="testimonial-img"/>
-                <Text size="$lg">
+                <img src={props.testimonial.image} alt="testimonial-img" className="testimonial-img d-none d-lg-inline"/>
+                <Text>
                   "{props.testimonial.preview}"
                 </Text>
                 <Text>
@@ -185,27 +261,28 @@ export default function HomePage() {
   }
 }
 
-function ClassOffering({offering}) {
+function ClassOffering({offering, col}) {
   return (
-    <div className="col-xxl-3 col-xl-4 col-md-6 p-3">
-      <Card isHoverable isPressable css={{minHeight: "100%"}} className="d-flex flex-column justify-content-between">
+    <div className={`col-${col} p-3`} style={{height: "500px"}}>
+      <Card isHoverable isPressable css={{height: "500px"}} className="d-flex flex-column justify-content-between">
         <Card.Image
           src={offering.image}
           objectFit='fill'
           width="100%"
           alt={offering.title}
+          height="100%"
         />
-        <Card.Footer className="d-flex flex-column align-items-center gap-2 p-2">
+        <div className="d-flex flex-column align-items-center gap-2 p-2">
           <Text b>          
             {offering.title}
           </Text>
           <Text size="$sm" color="textSecondary">          
             {offering.schedule}
           </Text>
-          <Button bordered size="md">
+          <Button bordered size="md" style={{minHeight:"2rem"}}>
             Read More
           </Button>
-        </Card.Footer>
+        </div>
       </Card>
     </div>
   )
