@@ -1,5 +1,5 @@
 import { Grid, Text, Link, Button } from '@nextui-org/react'
-import React from 'react'
+import React, {useContext} from 'react'
 import logo from "../assets/images/logoTransparent.png";
 import footerBackground from "../assets/images/footerBackground.png";
 
@@ -9,8 +9,51 @@ import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
 import LanguageIcon from '@mui/icons-material/Language';
 
 import { btbOrange } from '../assets/style/colors';
+import { currentUserContext } from '../api/context';
+import { signOut } from 'firebase/auth';
+import { signInWithGoogle } from '../api/firebase';
+import { firestore } from '../api/firebase';
+import { getDoc, doc, setDoc } from 'firebase/firestore';
 
 export default function Footer() {
+
+  const {currentUserData, setCurrentUserData} = useContext(currentUserContext);
+
+  function handleSignInClick() {
+    if (currentUserData) {
+      signOut();
+    } else {
+      signInWithGoogle().then(authUser => {
+        console.log(authUser)
+        if (authUser) {
+          const uid = authUser.uid;
+          const docRef = doc(firestore, "users", uid);
+          getDoc(docRef).then((docSnap) => {
+            if (docSnap.exists()) {
+              const userData = docSnap.data();
+              setCurrentUserData(userData);
+            } else {
+              // User does not exist
+              const newUser = {
+                testimonials: false,
+                offerings: false,
+                staff: false,
+                displayName: authUser.displayName,
+                email: authUser.email,
+                op: false,
+              }
+              setDoc(doc(firestore, "users", authUser.uid), newUser).then(res => {
+                setCurrentUserData(newUser);
+              });
+            }
+          })
+        } else {
+          setCurrentUserData(null);
+        }
+      });
+    }
+  }
+
   return (
     <footer>
       <img src={footerBackground} className="footer-background" alt="footer-background" />
@@ -22,10 +65,10 @@ export default function Footer() {
               <Text h2>
                 Beyond the Bell Education
               </Text>
-              <Text size="$xl">
+              <Text>
                 3 Man-Mar Drive #14 <br /> Plainville, MA 02762
               </Text>
-              <Text size="$xl">
+              <Text>
                 questions@beyondthebelleducation.com <br /> (508) 316-4751
               </Text>
             </div>
@@ -33,10 +76,10 @@ export default function Footer() {
               <Text h2>
                 Hours
               </Text>
-              <Text size="$xl">
+              <Text>
                 Monday - Friday 8am to 6pm
               </Text>
-              <Text size="$xl">
+              <Text>
                 Other hours available by appointment
               </Text>
             </div>
@@ -65,9 +108,15 @@ export default function Footer() {
           </div>
         </div>
         <div className="fill-line mb-3" />
-        <Text size="$sm">
-          Copyright © 2023 Beyond the Bell Educational Services
-        </Text>
+        <div className="d-flex flex-column gap-2 m-2 align-items-center">
+          <Text size="$sm">
+            Copyright © 2023 Beyond the Bell Educational Services
+          </Text>
+          { currentUserData && <Text>Logged in as {currentUserData.displayName}</Text>}
+          <Button light onClick={handleSignInClick}>
+            {currentUserData ? "Log Out" : "Admin Login"}
+          </Button>
+        </div>
       </div>
     </footer>
   )

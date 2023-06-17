@@ -151,7 +151,7 @@ export default function About() {
             </Text>
           </div>
           <div className="col-xl-6 d-none d-xl-flex" >
-            <img src={ourMethods} className="img-shadow" alt="our-methods" style={{padding: "1rem", height: "100%", width: "50vw", objectFit: "fill"}}/>
+            <img src={ourMethods} className="img-shadow" alt="our-methods" style={{padding: "1rem", height: "100%", width: "50vw", objectFit: "cover"}}/>
           </div>
         </div>
       </section>

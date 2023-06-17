@@ -1,6 +1,5 @@
 import './App.css';
 import { Navbar } from './components/Navbar';
-import { Image, Text } from "@nextui-org/react";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
@@ -14,8 +13,8 @@ import Contact from './routes/Contact';
 import ThankYou from './routes/ThankYou';
 import { useEffect, useState } from 'react';
 
-import { collection, onSnapshot } from 'firebase/firestore';
-import { firestore } from './api/firebase';
+import { collection, doc, getDoc, onSnapshot } from 'firebase/firestore';
+import { firestore, auth } from './api/firebase';
 
 
 function App() {
@@ -66,6 +65,7 @@ function App() {
       setTestimonialData(newTestimonials);
     })
   }
+
 
   return (
     <currentUserContext.Provider value={{currentUserData, setCurrentUserData}} >
