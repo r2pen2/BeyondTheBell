@@ -114,19 +114,19 @@ export default function HomePage() {
           What's Happening Now At BTB
         </Text>
         <div className="d-xxl-flex d-none w-100 align-items-center flex-row justify-content-center">
-          <Carousel animation="slide" navButtonsAlwaysVisible className="w-100" autoPlay={false}>
+          <BTBCarousel>
             { renderOfferings(4) }  
-          </Carousel>
+          </BTBCarousel>
         </div>
         <div className="d-xl-flex d-xxl-none d-none w-100 align-items-center flex-row justify-content-center">
-          <Carousel animation="slide" navButtonsAlwaysVisible className="w-100" autoPlay={false}>
+          <BTBCarousel>
             { renderOfferings(3) }  
-          </Carousel>
+          </BTBCarousel>
         </div>
         <div className="d-lg-flex d-xl-none d-none w-100 align-items-center flex-row justify-content-center">
-          <Carousel animation="slide" navButtonsAlwaysVisible className="w-100" autoPlay={false}>
+          <BTBCarousel>
             { renderOfferings(2) }  
-          </Carousel>
+          </BTBCarousel>
         </div>
         <div className="d-flex flex-column d-lg-none align-items-center w-100">
           { renderOfferingsList() }
@@ -137,13 +137,33 @@ export default function HomePage() {
             What Parents Are Saying
           </Text>
           <div className="container-fluid my-5" >
-            <div className="row">
-              { renderTestimonials() }
+            <div className="d-xxl-flex d-none w-100 align-items-center flex-row justify-content-center">
+              <BTBCarousel>
+                { renderTestimonials(3) }  
+              </BTBCarousel>
+            </div>
+            <div className="d-lg-flex d-xxl-none d-none w-100 align-items-center flex-row justify-content-center">
+              <BTBCarousel>
+                { renderTestimonials(2) }  
+              </BTBCarousel>
+            </div>
+            <div className="d-md-flex d-lg-none d-none w-100 align-items-center flex-row justify-content-center">
+              <BTBCarousel>
+                { renderTestimonials(1) }
+              </BTBCarousel>
             </div>
           </div>
       </section>
     </div>
   )
+
+  function BTBCarousel(props) {
+    return (
+      <Carousel swipe={false} animation="slide" navButtonsAlwaysVisible className="w-100" autoPlay={false}>
+        {props.children}
+      </Carousel>
+    )
+  }
 
   function renderOfferingsList() {
     return offeringData.map((o, index) => {
@@ -179,14 +199,6 @@ export default function HomePage() {
 
   function renderOfferings(itemsPerCarousel) {
 
-    function splitArray(inputArray, chunkSize) {
-      let result = [];
-      for (var i = 0; i < inputArray.length; i += chunkSize) {
-          result.push(inputArray.slice(i, i + chunkSize));
-      }
-      return result;
-    }
-
     const offeringPages = splitArray(offeringData, itemsPerCarousel);
     
     function renderPage(op) {
@@ -202,7 +214,7 @@ export default function HomePage() {
     return offeringPages.map((op, index) => {
       return (
         <div className="w-100 d-flex flex-row justify-content-center" key={`op-${index}`}>
-          <div className="row line-underneath" style={{minHeight: "600px"}}>
+          <div className="row line-underneath px-5" style={{minHeight: "600px"}}>
             { renderPage(op) }
           </div>
         </div>
@@ -210,20 +222,42 @@ export default function HomePage() {
     })
   }
 
-  function renderTestimonials() {
-    return testimonialData.map((t, index) => {
+  function renderTestimonials(itemsPerCarousel) {
+
+    const testimonialPages = splitArray(testimonialData, itemsPerCarousel);
+    
+    function renderPage(tp) {
+
+
+      const col = 12/tp.length;
+
+      return tp.map((t, index) => {
+        return <Testimonial testimonial={t} col={col} key={`o-${index}`}/>
+      })
+    }
+
+    return testimonialPages.map((tp, index) => {
       return (
-        <Testimonial 
-          key={index}
-          testimonial={t}
-        >
-          "{t.message}"
-        </Testimonial>
+        <div className="w-100 d-flex flex-row justify-content-center" key={`tp-${index}`}>
+          <div className="row line-underneath px-5" style={{minHeight: "600px"}}>
+            { renderPage(tp) }
+          </div>
+        </div>
       )
     })
   }
 
+  function splitArray(inputArray, chunkSize) {
+    let result = [];
+    for (var i = 0; i < inputArray.length; i += chunkSize) {
+        result.push(inputArray.slice(i, i + chunkSize));
+    }
+    return result;
+  }
+
   function Testimonial(props) {
+
+    console.log(props.testimonial)
 
     function handleTestimonialPress() {
       setTestimonialMenuOpen(true);
@@ -233,19 +267,19 @@ export default function HomePage() {
     return (
       <Tooltip 
         content="Click to Expand" 
-        className="col-xl-4 col-lg-12 p-3"
+        className={`col-${props.col} p-3`}
       >
         <Card 
           isPressable 
           isHoverable 
           css={{
-            height: "100%"
+            height: "100%",
             }}
             onPress={handleTestimonialPress}
         >
           <Card.Body>
               <div className="text-center d-flex flex-column align-items-center justify-content-between h-100">
-                <img src={props.testimonial.image} alt="testimonial-img" className="testimonial-img d-none d-lg-inline"/>
+                <img src={props.testimonial.image} alt="testimonial-img" className="testimonial-img"/>
                 <Text>
                   "{props.testimonial.preview}"
                 </Text>
