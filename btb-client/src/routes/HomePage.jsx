@@ -195,15 +195,14 @@ export default function HomePage() {
       const col = 12/op.length;
 
       return op.map((o, index) => {
-        console.log(col)
         return <ClassOffering col={col} offering={o} key={`o-${index}`}/>
       })
     }
 
     return offeringPages.map((op, index) => {
       return (
-        <div className="w-100 d-flex flex-row justify-content-center">
-          <div className="row line-underneath" style={{minHeight: "600px"}} key={`op-${index}`}>
+        <div className="w-100 d-flex flex-row justify-content-center" key={`op-${index}`}>
+          <div className="row line-underneath" style={{minHeight: "600px"}}>
             { renderPage(op) }
           </div>
         </div>

@@ -19,7 +19,6 @@ import { firestore, auth } from './api/firebase';
 
 function App() {
 
-  const [currentUserData, setCurrentUserData] = useState(null);
   const [testimonialData, setTestimonialData] = useState([]);
   const [offeringData, setOfferingData] = useState([]);
   const [staffData, setStaffData] = useState([]);
@@ -68,14 +67,13 @@ function App() {
 
 
   return (
-    <currentUserContext.Provider value={{currentUserData, setCurrentUserData}} >
+    <div className="App d-flex flex-column align-items-center w-100">
+    <Router>
     <testimonialContext.Provider value={{testimonialData, setTestimonialData}} >
     <offeringContext.Provider value={{offeringData, setOfferingData}} >
     <staffContext.Provider value={{staffData, setStaffData}} >
-    <div className="App d-flex flex-column align-items-center w-100">
       <div className="app-content">
         <Navbar />
-        <Router>
           <Routes>
             <Route path="*" element={<HomePage />} />
             <Route path="/about" element={<About />} />
@@ -83,14 +81,13 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/thank-you" element={<ThankYou />} />
           </Routes>
-        </Router>
         <Footer />
       </div>
-    </div>
     </staffContext.Provider>
     </offeringContext.Provider>
     </testimonialContext.Provider>
-    </currentUserContext.Provider>
+    </Router>
+    </div>
   );
 }
 
