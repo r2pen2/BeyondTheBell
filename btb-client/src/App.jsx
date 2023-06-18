@@ -35,7 +35,9 @@ function App() {
     onSnapshot((collectionRef), (snap) => {
       let newStaff = [];
       for (const doc of snap.docs) {
-        newStaff.push(doc.data());
+        const staffWithId = doc.data();
+        staffWithId["id"] = doc.id;
+        newStaff.push(staffWithId);
       }
       setStaffData(newStaff);
     })
@@ -47,7 +49,9 @@ function App() {
     onSnapshot((collectionRef), (snap) => {
       let newOfferings = [];
       for (const doc of snap.docs) {
-        newOfferings.push(doc.data());
+        const offeringWithId = doc.data();
+        offeringWithId["id"] = doc.id;
+        newOfferings.push(offeringWithId);
       }
       setOfferingData(newOfferings);
     })
@@ -59,7 +63,9 @@ function App() {
     onSnapshot((collectionRef), (snap) => {
       let newTestimonials = [];
       for (const doc of snap.docs) {
-        newTestimonials.push(doc.data());
+        const testimonialWithId = doc.data();
+        testimonialWithId["id"] = doc.id;
+        newTestimonials.push(testimonialWithId);
       }
       setTestimonialData(newTestimonials);
     })

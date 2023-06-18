@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import { Button, Collapse, Text, Card, Modal, Link, Tooltip } from "@nextui-org/react";
+import { Button, Collapse, Text, Card, Modal, Link, Tooltip, Textarea } from "@nextui-org/react";
+
 
 import { OrangeBar, PageHeader } from "../components/Bar"
 
@@ -10,25 +11,51 @@ import "../assets/style/homepage.css"
 import { FormModal } from '../components/Forms';
 
 
-import hulaFrog from "../assets/images/hulafrog-2020.jpg"
 import { useContext } from 'react';
 import { testimonialContext , offeringContext} from '../api/context';
+import { auth, firestore } from '../api/firebase';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { TextField } from '@mui/material';
 
 export default function HomePage() {
 
   const [formModalOpen, setFormModalOpen] = useState(false);
   const [testimonialModalOpen, setTestimonialMenuOpen] = useState(false);
 
+  const [testimonialEdit, setTestimonialEdit] = useState(false);
+
+  const [userCanEditTestimonials, setUserCanEditTestimonials] = useState(false)
+  const [userCanEditOfferings, setUserCanEditOfferings] = useState(false)
+
+  useEffect(() => {
+    if (auth.currentUser) {
+      const docRef = doc(firestore, "users", auth.currentUser.uid);
+      getDoc(docRef).then((doc) => {
+        if (doc.exists()) {
+          const data = doc.data();
+          setUserCanEditTestimonials(data.testimonials);
+          setUserCanEditOfferings(data.offerings);
+        }
+      })
+    }
+  })
+
   const [currentTestimonial, setCurrentTestimonial] = useState({
     preview: "",
     authorDescription: "",
     image: null,
     message: "",
+    id: "",
   });
   
   const {offeringData} = useContext(offeringContext);
 
   const {testimonialData} = useContext(testimonialContext)
+
+  function closeTestimonialModal() {
+    setTestimonialMenuOpen(false);
+    setTestimonialEdit(false);
+  }
 
   return (
     <div className="d-flex flex-column">
@@ -37,28 +64,12 @@ export default function HomePage() {
         width="80vw"
         open={testimonialModalOpen}
         blur
-        onClose={() => setTestimonialMenuOpen(false)}
+        onClose={closeTestimonialModal}
       >
-        <Modal.Body>
-          <div className="container-fluid">
-            <div className="row d-flex flex-row align-items-center justify-content-center">
-              <div className="col-lg-4 col-md-12 d-flex flex-row justify-content-center">
-                <img src={currentTestimonial.image} alt={currentTestimonial.authorDescription} className="img-shadow" style={{maxHeight: "50vw"}}/>
-              </div>
-              <div className="col-lg-8 p-3 col-md-12 d-flex flex-column justify-content-center text-center">
-                <Text size="$lg">
-                  "{currentTestimonial.message}"
-                </Text>
-                <Text>
-                  {currentTestimonial.authorDescription}
-                </Text>
-              </div>
-            </div>
-          </div>
-        </Modal.Body>
+        <TestimonialModal />
         <Modal.Footer>
           <div className="d-flex flex-row align-items-center justify-content-center w-100">
-            <Button auto flat color="error" onPress={() => setTestimonialMenuOpen(false)} >
+            <Button auto flat color="error" onPress={closeTestimonialModal} >
                 Close
             </Button>
           </div>
@@ -165,6 +176,54 @@ export default function HomePage() {
     )
   }
 
+  function TestimonialModal() {
+    
+    const [tempMessage, setTempMessage] = useState(currentTestimonial.message)
+
+    function handleTestimonialMessageChange(e) {
+      setTempMessage(e.target.value);
+    }
+
+    function saveChanges() {
+      const docRef = doc(firestore, "testimonials", currentTestimonial.id);
+      const newData = {...currentTestimonial};
+      newData.message = tempMessage;
+      setDoc(docRef, newData);
+      setTestimonialEdit(false);
+      setTestimonialMenuOpen(false);
+    }
+
+    return (
+      <Modal.Body>
+      <div className="container-fluid">
+        <div className="row d-flex flex-row align-items-center justify-content-center">
+          <div className="col-lg-4 col-md-12 d-flex flex-row justify-content-center">
+            <img src={currentTestimonial.image} alt={currentTestimonial.authorDescription} className="img-shadow" style={{maxHeight: "50vw"}}/>
+          </div>
+          <div className="col-lg-8 p-3 col-md-12 d-flex flex-column justify-content-center text-center">
+            { !testimonialEdit && 
+              <Text size="$lg">
+                "{tempMessage}"
+              </Text>
+            }
+            { testimonialEdit &&
+              <Textarea bordered value={tempMessage} onChange={handleTestimonialMessageChange}/>
+            }
+            <Text>
+              {currentTestimonial.authorDescription}
+            </Text>
+            { testimonialEdit &&
+              <Button flat auto color="success" onClick={saveChanges}>
+                Save Changes
+              </Button>
+            }
+          </div>
+        </div>
+      </div>
+    </Modal.Body>
+    )
+  }
+
   function renderOfferingsList() {
     return offeringData.map((o, index) => {
       return (
@@ -257,13 +316,26 @@ export default function HomePage() {
 
   function Testimonial(props) {
 
-    console.log(props.testimonial)
-
     function handleTestimonialPress() {
       setTestimonialMenuOpen(true);
       setCurrentTestimonial(props.testimonial);
     }
   
+    function editTestimonial() {
+      handleTestimonialPress();
+      setTestimonialEdit(true);
+    }
+
+    function EditButton() {
+      return (
+        <Card.Footer className="d-flex flex-row justify-content-center w-100">
+          <Button onClick={editTestimonial}>
+            Edit
+          </Button>
+        </Card.Footer>
+      )
+    }
+
     return (
       <Tooltip 
         content="Click to Expand" 
@@ -288,6 +360,7 @@ export default function HomePage() {
                 </Text>
               </div>
           </Card.Body>
+          { userCanEditTestimonials && <EditButton /> }
         </Card>
       </Tooltip>
     )
