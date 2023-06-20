@@ -181,7 +181,7 @@ export default function HomePage() {
         <Text 
           h1
           css={{
-            fontSize: "2rem",
+            fontSize: "3rem",
             filter: "drop-shadow(2px 2px 5px black)",
             textGradient: "45deg, $yellow600 -20%, $btbOrange600 100%",
           }}
@@ -222,7 +222,10 @@ export default function HomePage() {
       </section>
       <div className="rainbow-line" />
       <section className="container-fluid d-flex flex-column align-items-center py-5">  
-        <Text h1 color="primary">
+        <Text h1 color="primary" className="d-none d-md-inline">
+          What's Happening Now At BTB
+        </Text>
+        <Text h3 color="primary" className="d-inline d-md-none">
           What's Happening Now At BTB
         </Text>
         <div className="d-xxl-flex d-none w-100 align-items-center flex-row justify-content-center">
@@ -246,7 +249,10 @@ export default function HomePage() {
         { userCanEditOfferings && <AddOfferingButton /> }
       </section>
       <section className="bg-blue px-1 py-5">
-          <Text h1 color="white">
+          <Text h1 color="white" className="d-none d-md-inline">
+            What Parents Are Saying
+          </Text>
+          <Text h3 color="white" className="d-md-inline d-none">
             What Parents Are Saying
           </Text>
           <div className="container-fluid my-5" >
