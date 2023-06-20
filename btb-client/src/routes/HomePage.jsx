@@ -715,19 +715,15 @@ export default function HomePage() {
     
     function renderPage(op) {
 
-      const col = 12/op.length;
-
       return op.map((o, index) => {
-        return <ClassOffering col={col} offering={o} key={`o-${index}`}/>
+        return <ClassOffering offering={o} key={`o-${index}`}/>
       })
     }
 
     return offeringPages.map((op, index) => {
       return (
-        <div className="w-100 d-flex flex-row justify-content-center" key={`op-${index}`}>
-          <div className="row line-underneath px-5" style={{minHeight: "600px"}}>
-            { renderPage(op) }
-          </div>
+        <div className="w-100 d-flex flex-row justify-content-center gap-2 px-5" style={{minHeight: "600px"}} key={`op-${index}`}>
+          { renderPage(op) }
         </div>
       )
     })
@@ -739,20 +735,15 @@ export default function HomePage() {
     
     function renderPage(tp) {
 
-
-      const col = 12/tp.length;
-
       return tp.map((t, index) => {
-        return <Testimonial testimonial={t} col={col} key={`o-${index}`}/>
+        return <Testimonial testimonial={t} key={`o-${index}`}/>
       })
     }
 
     return testimonialPages.map((tp, index) => {
       return (
-        <div className="w-100 d-flex flex-row justify-content-center" key={`tp-${index}`}>
-          <div className="row line-underneath px-5" style={{minHeight: "600px"}}>
+        <div className="w-100 d-flex flex-row justify-content-center gap-2 line-underneath px-5" key={`tp-${index}`}>
             { renderPage(tp) }
-          </div>
         </div>
       )
     })
@@ -791,7 +782,8 @@ export default function HomePage() {
     return (
       <Tooltip 
         content="Click to Expand" 
-        className={`col-${props.col} p-3`}
+        className={`p-3`}
+        style={{flex: 1, minHeight: "600px"}}
       >
         <Card 
           isPressable 
@@ -877,7 +869,7 @@ export default function HomePage() {
     )
   }
   
-function ClassOffering({offering, col}) {
+function ClassOffering({offering}) {
 
   function handleOfferingPress() {
     setOfferingModalOpen(true);
@@ -900,7 +892,7 @@ function ClassOffering({offering, col}) {
   }
 
   return (
-    <div className={`col-${col} p-3`} style={{height: "500px"}}>
+    <div className={`p-3`} style={{height: "500px", flex: 1}}>
       <Card isHoverable isPressable css={{height: "500px"}} className="d-flex flex-column justify-content-between" onClick={handleOfferingPress}>
         <Card.Image
           src={serverURL + offering.image}
