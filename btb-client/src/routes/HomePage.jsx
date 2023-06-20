@@ -156,7 +156,7 @@ export default function HomePage() {
         </Modal.Footer>
       </Modal>
       <FormModal open={formModalOpen} setOpen={setFormModalOpen} />
-      <section className="home-image d-flex flex-column w-100 align-items-center justify-content-center p-5">
+      <section className="home-image d-flex flex-column w-100 align-items-center justify-content-center py-5 px-2">
         <Text 
           h2
           color="white"
@@ -174,8 +174,20 @@ export default function HomePage() {
             filter: "drop-shadow(2px 2px 5px black)",
             textGradient: "45deg, $yellow600 -20%, $btbOrange600 100%",
           }}
+          className="d-none d-md-inline"
         >
           Beyond The Bell <br /> <span className='d-none d-xxl-inline'>Educational Services</span>
+        </Text>
+        <Text 
+          h1
+          css={{ 
+            fontSize: "4em",
+            filter: "drop-shadow(2px 2px 5px black)",
+            textGradient: "45deg, $yellow600 -20%, $btbOrange600 100%",
+          }}
+          className="d-inline d-md-none"
+        >
+          Beyond The Bell
         </Text>
         <Text 
           h1
@@ -183,7 +195,6 @@ export default function HomePage() {
           css={{ 
             textShadow: "0px 0px 5px black",
           }}
-          className="d-none d-md-inline"
         >
           Academic enrichment, tutoring, and educational <br/> support programs for today’s learners.
         </Text>
@@ -200,7 +211,7 @@ export default function HomePage() {
         </div>
       </section>
       <div className="rainbow-line" />
-      <section className="container-fluid d-flex flex-column align-items-center p-5">  
+      <section className="container-fluid d-flex flex-column align-items-center py-5">  
         <Text h1 color="primary">
           What's Happening Now At BTB
         </Text>
@@ -224,7 +235,7 @@ export default function HomePage() {
         </div>
         { userCanEditOfferings && <AddOfferingButton /> }
       </section>
-      <section className="bg-blue p-5">
+      <section className="bg-blue px-1 py-5">
           <Text h1 color="white">
             What Parents Are Saying
           </Text>
@@ -234,12 +245,12 @@ export default function HomePage() {
                 { renderTestimonials(3) }  
               </BTBCarousel>
             </div>
-            <div className="d-lg-flex d-xxl-none d-none w-100 align-items-center flex-row justify-content-center">
+            <div className="d-md-flex d-xxl-none d-none w-100 align-items-center flex-row justify-content-center">
               <BTBCarousel>
                 { renderTestimonials(2) }  
               </BTBCarousel>
             </div>
-            <div className="d-md-flex d-lg-none d-none w-100 align-items-center flex-row justify-content-center">
+            <div className="d-md-none d-flex w-100 align-items-center flex-row justify-content-center">
               <BTBCarousel>
                 { renderTestimonials(1) }
               </BTBCarousel>
@@ -252,7 +263,7 @@ export default function HomePage() {
 
   function BTBCarousel(props) {
     return (
-      <Carousel swipe={false} animation="slide" navButtonsAlwaysVisible className="w-100" autoPlay={false}>
+      <Carousel swipe={false}  animation="slide" navButtonsAlwaysVisible className="w-100 px-3" autoPlay={false}>
         {props.children}
       </Carousel>
     )
@@ -367,7 +378,7 @@ export default function HomePage() {
       <Modal.Body>
       <div className="container-fluid">
         <div className="row d-flex flex-row align-items-center justify-content-center">
-          <div className="col-lg-4 col-md-12 gap-3 d-flex flex-column align-items-center">
+          <div className="col-lg-4 col-sm-12 gap-3 d-flex flex-column align-items-center">
           { tempImageURL ? 
             <img 
               src={tempImageURL} 
@@ -412,9 +423,14 @@ export default function HomePage() {
               </div>
             }
           </div>
-          <div className="col-lg-8 p-3 gap-3 col-md-12 d-flex flex-column justify-content-center text-center">
+          <div className="col-lg-8 p-3 gap-3 col-sm-12 d-flex flex-column justify-content-center text-center">
             { !testimonialEdit && 
-              <Text size="$lg">
+              <Text className="d-inline d-lg-none">
+              "{tempMessage}"
+              </Text>
+            }
+            { !testimonialEdit && 
+              <Text className="d-none d-lg-inline" size="$lg">
                 "{tempMessage}"
               </Text>
             }
@@ -425,15 +441,20 @@ export default function HomePage() {
               <Textarea label="Testimonial Preview" placeholder="This is the shortened preview that shows up on the homepage" bordered value={tempPreview ? tempPreview : ""} onChange={handleTestimonialPreviewChange}/>
             }
             { !testimonialEdit && 
-              <Text>
+              <Text className="d-inline d-lg-none">
+                {currentTestimonial.authorDescription}
+              </Text>
+            }
+            { !testimonialEdit && 
+              <Text className="d-none d-lg-inline" size="$lg">
                 {currentTestimonial.authorDescription}
               </Text>
             }
             { testimonialEdit &&
               <div className="container-fluid">
                 <div className="row">
-                  <TextField className="p-1 col-xl-6 col-md-12" label="Author Description" placeholder="Enter a description of the testimonial's author" bordered value={tempAuthorDesc ? tempAuthorDesc : ""} onChange={handleTestimonialAuthorDescChange}/>
-                  <TextField className="p-1 col-xl-6 col-md-12" label="Order" placeholder="Enter this testimonial's order value" bordered value={tempOrder ? tempOrder : ""} onChange={handleTestimonialOrderChange}/>
+                  <TextField className="p-1 col-xl-6 col-sm-12" label="Author Description" placeholder="Enter a description of the testimonial's author" bordered value={tempAuthorDesc ? tempAuthorDesc : ""} onChange={handleTestimonialAuthorDescChange}/>
+                  <TextField className="p-1 col-xl-6 col-sm-12" label="Order" placeholder="Enter this testimonial's order value" bordered value={tempOrder ? tempOrder : ""} onChange={handleTestimonialOrderChange}/>
                 </div>
               </div>
             }
@@ -565,7 +586,7 @@ export default function HomePage() {
       <Modal.Body>
       <div className="container-fluid">
         <div className="row d-flex flex-row align-items-center justify-content-center">
-          <div className="col-lg-4 col-md-12 gap-3 d-flex flex-column align-items-center">
+          <div className="col-lg-4 col-sm-12 gap-3 d-flex flex-column align-items-center">
           { tempImageURL ? 
             <img 
               src={tempImageURL} 
@@ -610,7 +631,7 @@ export default function HomePage() {
               </div>
             }
           </div>
-          <div className="col-lg-8 p-3 gap-3 col-md-12 d-flex flex-column justify-content-center text-center">
+          <div className="col-lg-8 p-3 gap-3 col-sm-12 d-flex flex-column justify-content-center text-center">
             { !offeringEdit && 
               <Text b size="$lg">
                 {tempTitle}
@@ -686,18 +707,19 @@ export default function HomePage() {
             width: "100%",
           }}
           className="m-2"
+          onPress={userCanEditOfferings ? editOffering : handleOfferingPress}
         >
           <Card.Body className="w-100 p-2 d-flex flex-row align-items-center justify-content-between" style={{overflowY: "hidden"}}>
-            <img src={serverURL + o.image} alt={o.title} style={{width: "30%", minHeight: "100%", objectFit:"cover"}} className="img-shadow"/>
+            <img src={serverURL + o.image} alt={o.title} style={{width: "40%", minHeight: "100%", objectFit:"cover"}} className="img-shadow"/>
             <div className="d-flex w-100 flex-column px-2 text-center justify-content-center">
-              <Text b>
+              <Text b size="$sm">
                 {o.title}
               </Text>
-              <Text>
+              <Text size="$sm">
                 {o.schedule}
               </Text>
               <div className="d-flex flex-row w-100 justify-content-center align-items-center">
-                <Button bordered size="md" style={{minHeight:"2rem", maxWidth: "50%"}}>
+                <Button bordered size="sm" style={{minHeight:"2rem", maxWidth: "50%"}}>
                   Read More
                 </Button>
               </div>
@@ -729,7 +751,7 @@ export default function HomePage() {
     })
   }
 
-  function renderTestimonials(itemsPerCarousel) {
+  function renderTestimonials(itemsPerCarousel, noMargin) {
 
     const testimonialPages = splitArray(testimonialData.sort((a, b) => a.order - b.order), itemsPerCarousel);
     
@@ -742,7 +764,7 @@ export default function HomePage() {
 
     return testimonialPages.map((tp, index) => {
       return (
-        <div className="w-100 d-flex flex-row justify-content-center gap-2 line-underneath px-5" key={`tp-${index}`}>
+        <div className="w-100 d-flex flex-row justify-content-center gap-2 line-underneath px-1" key={`tp-${index}`}>
             { renderPage(tp) }
         </div>
       )
@@ -794,13 +816,20 @@ export default function HomePage() {
             onPress={handleTestimonialPress}
         >
           <Card.Body>
-              <div className="text-center d-flex flex-column align-items-center justify-content-between h-100">
-                <img src={serverURL + props.testimonial.image} alt="testimonial-img" className="testimonial-img" style={{objectFit: "cover"}}/>
-                <Text>
+              <div className="text-center d-flex flex-column align-items-center justify-content-center h-100 w-100">
+                <img src={serverURL + props.testimonial.image} alt="testimonial-img" className="d-md-none d-xs-inline testimonial-img" style={{objectFit: "cover"}}/>
+                <img src={serverURL + props.testimonial.image} alt="testimonial-img" className="d-none d-md-inline testimonial-img" style={{width: "10rem", height: "10rem", objectFit: "cover"}}/>
+                <Text className="d-inline d-lg-none">
                   "{props.testimonial.preview}"
                 </Text>
-                <Text>
-                  {props.testimonial.authorDescription}
+                <Text className="d-none d-lg-inline" size="$lg">
+                  "{props.testimonial.preview}"
+                </Text>
+                <Text className="d-inline d-lg-none">
+                  "{props.testimonial.authorDescription}"
+                </Text>
+                <Text className="d-none d-lg-inline" size="$lg">
+                  "{props.testimonial.authorDescription}"
                 </Text>
               </div>
           </Card.Body>

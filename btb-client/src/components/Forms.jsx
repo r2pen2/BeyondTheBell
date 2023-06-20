@@ -17,6 +17,7 @@ function FormCard({icon, title, formType, href}) {
       isPressable
       variant="bordered" 
       onPress={() => handleFormCardPress(href)}
+      css={{flex:1}}
     >
       <Card.Body>
         <div className="d-flex flex-row align-items-center justify-content-space-between">
@@ -83,7 +84,7 @@ export function FormModal({open, setOpen}) {
   function VerticalModalContent() {
 
     return (
-      <div className="d-xl-none d-lg-flex flex-column">
+      <div className="d-flex flex-column">
         <div className="mt-2">
           <SchoolDaysFormCard />
         </div>
@@ -130,19 +131,20 @@ export function FormModal({open, setOpen}) {
   return (
     <Modal
       closeButton
-      width="50vw"
+      css={{
+        maxWidth: "75vw"
+      }}
       aria-labelledby="modal-title"
       open={open}
       blur
       onClose={() => setOpen(false)}
     >
       <Modal.Header>
-        <Text h3 id="modal-title">
+        <Text h3 size="$md" id="modal-title">
           Select a service to open the form in a new tab.
         </Text>
       </Modal.Header>
       <Modal.Body>
-        <GridModalContent />
         <VerticalModalContent />
       </Modal.Body>
       <Modal.Footer>
