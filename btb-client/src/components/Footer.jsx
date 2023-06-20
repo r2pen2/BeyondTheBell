@@ -17,12 +17,19 @@ import { getDoc, doc, setDoc } from 'firebase/firestore';
 
 export default function Footer() {
 
+  const [currentSignIn, setCurrentSignIn] = useState(null);
+
+  useEffect(() => {
+    setCurrentSignIn(auth.currentUser);
+  })
 
   function handleSignInClick() {
     if (auth.currentUser) {
-      signOut();
+      signOut(auth);
+      setCurrentSignIn(null);
     } else {
       signInWithGoogle().then(authUser => {
+        setCurrentSignIn(authUser);
         if (authUser) {
           const uid = authUser.uid;
           const docRef = doc(firestore, "users", uid);
@@ -104,7 +111,7 @@ export default function Footer() {
             Copyright © 2023 Beyond the Bell Educational Services
           </Text>
           <Button light onClick={handleSignInClick}>
-            {auth.currentUser ? "Log Out" : "Admin Login"}
+            {currentSignIn ? `Signed in as ${currentSignIn.displayName}` : "Admin Login"}
           </Button>
         </div>
       </div>
