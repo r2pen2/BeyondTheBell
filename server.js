@@ -30,7 +30,7 @@ app.use(express.static(__dirname + "/server/static/"));
 
 
 // Serve React build
-app.use(express.static(__dirname + "/bbt-client/build"));
+app.use(express.static(__dirname + "/btb-client/build"));
 
 app.get("/images/*", (req, res) => {
     res.sendFile(__dirname + req._parsedOriginalUrl.path);
