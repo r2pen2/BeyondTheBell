@@ -5,6 +5,10 @@ import { Button, Collapse, Text, Card, Modal, Link, Tooltip, Textarea } from "@n
 
 import { OrangeBar, PageHeader } from "../components/Bar"
 
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+
+import AddIcon from '@mui/icons-material/Add';
+
 import Carousel from "react-material-ui-carousel";
 
 import "../assets/style/homepage.css"
@@ -14,7 +18,7 @@ import { FormModal } from '../components/Forms';
 import { useContext } from 'react';
 import { testimonialContext , offeringContext} from '../api/context';
 import { auth, firestore } from '../api/firebase';
-import { deleteDoc, doc, getDoc, setDoc } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDoc, setDoc } from 'firebase/firestore';
 import { IconButton, TextField } from '@mui/material';
 import { PencilIcon } from '../components/Icons';
 
@@ -189,6 +193,7 @@ export default function HomePage() {
         <div className="d-flex flex-column d-lg-none align-items-center w-100">
           { renderOfferingsList() }
         </div>
+        { userCanEditOfferings && <AddOfferingButton /> }
       </section>
       <section className="bg-blue p-5">
           <Text h1 color="white">
@@ -211,6 +216,7 @@ export default function HomePage() {
               </BTBCarousel>
             </div>
           </div>
+        { userCanEditOfferings && <AddTestimonialButton /> }
       </section>
     </div>
   )
@@ -242,12 +248,36 @@ export default function HomePage() {
     }
 
     function saveChanges() {
-      const docRef = doc(firestore, "testimonials", currentTestimonial.id);
+      let newErrorMessage = "Error: missing fields ( "; 
+      let errorFound = false;
+      if (!tempMessage) {
+        newErrorMessage += "message "
+        errorFound = true;
+      }
+      if (!tempPreview) {
+        newErrorMessage += "preview "
+        errorFound = true;
+      }
+      if (!tempAuthorDesc) {
+        newErrorMessage += "authorDescription "
+        errorFound = true;
+      }
+      newErrorMessage += ")";
+      if (errorFound) {
+        setErrorMessage(newErrorMessage);
+        return;
+      }
       const newData = {...currentTestimonial};
-      newData.message = tempMessage;
       newData.authorDescription = tempAuthorDesc;
+      newData.message = tempMessage;
       newData.preview = tempPreview;
-      setDoc(docRef, newData);
+      if (currentTestimonial.id) {        
+        const docRef = doc(firestore, "testimonials", currentTestimonial.id);
+        setDoc(docRef, newData);
+      } else {
+        const collectionRef = collection(firestore, "testimonials");
+        addDoc(collectionRef, newData)
+      }
       setTestimonialEdit(false);
       setTestimonialModalOpen(false);
     }
@@ -262,24 +292,43 @@ export default function HomePage() {
       setTestimonialEdit(false);
       setTestimonialModalOpen(false);
     }
+    
+    function uploadImage() {
+      console.log("Uploading image...");
+    }
+
+    const [errorMessage, setErrorMessage] = useState(null);
 
     return (
       <Modal.Body>
       <div className="container-fluid">
         <div className="row d-flex flex-row align-items-center justify-content-center">
           <div className="col-lg-4 col-md-12 gap-3 d-flex flex-column align-items-center">
-            <img src={currentTestimonial.image} alt={currentTestimonial.authorDescription} className="img-shadow" style={{maxHeight: "50vw"}}/>
-            { testimonialEdit && !deleteWarningVisible &&
+          { currentTestimonial.image ? 
+            <img src={currentTestimonial.image} alt={currentTestimonial.authorDescription ? currentOffering.authorDescription : "add-testimonial"} className="img-shadow" style={{maxHeight: "50vw"}}/>
+            :
+            <Card isPressable isHoverable onClick={uploadImage}>
+              <Card.Body className="d-flex flex-column align-items-center">
+                <Text>
+                  Upload an image
+                </Text>
+                <IconButton>
+                  <AddAPhotoIcon />
+                </IconButton>
+              </Card.Body>
+            </Card>
+          }
+            { testimonialEdit && !deleteWarningVisible && currentTestimonial.id &&
               <Button flat auto color="error" onClick={() => setDeleteWarningVisible(true)}>
                 Delete Testimonial
               </Button>
             }
-            { testimonialEdit && deleteWarningVisible &&
+            { testimonialEdit && deleteWarningVisible && currentTestimonial.id &&
               <Text>
                 Are you sure you want to delete this testimonial?
               </Text>
             }
-            { testimonialEdit && deleteWarningVisible &&
+            { testimonialEdit && deleteWarningVisible && currentTestimonial.id &&
               <div className="w-100 d-flex flex-row justify-content-around align-items-center">
                 <Button flat auto color="success" onClick={() => setDeleteWarningVisible(false)}>
                   Cancel
@@ -315,6 +364,11 @@ export default function HomePage() {
                 Save Changes
               </Button>
             }
+            { errorMessage && 
+              <Text color="error">
+                {errorMessage}
+              </Text>
+            }
           </div>
         </div>
       </div>
@@ -342,19 +396,43 @@ export default function HomePage() {
     }
 
     function saveChanges() {
-      const docRef = doc(firestore, "offerings", currentOffering.id);
+      let newErrorMessage = "Error: missing fields ( "; 
+      let errorFound = false;
+      if (!tempDescription) {
+        newErrorMessage += "desctiption "
+        errorFound = true;
+      }
+      if (!tempTitle) {
+        newErrorMessage += "title "
+        errorFound = true;
+      }
+      if (!tempSchedule) {
+        newErrorMessage += "schedule "
+        errorFound = true;
+      }
+      newErrorMessage += ")";
+      if (errorFound) {
+        setErrorMessage(newErrorMessage);
+        return;
+      }
       const newData = {...currentOffering};
       newData.description = tempDescription;
       newData.schedule = tempSchedule;
       newData.title = tempTitle;
-      setDoc(docRef, newData);
+      if (currentOffering.id) {        
+        const docRef = doc(firestore, "offerings", currentOffering.id);
+        setDoc(docRef, newData);
+      } else {
+        const collectionRef = collection(firestore, "offerings");
+        addDoc(collectionRef, newData)
+      }
       setOfferingEdit(false);
       setOfferingModalOpen(false);
     }
 
     const [deleteWarningVisible, setDeleteWarningVisible] = useState(false);
 
-    function deleteTestimonial() {
+    function deleteOffering() {
       const docRef = doc(firestore, "offerings", currentOffering.id);
       const deleteRef = doc(firestore, "deletedOfferings", currentOffering.id);
       deleteDoc(docRef);
@@ -363,28 +441,48 @@ export default function HomePage() {
       setOfferingModalOpen(false);
     }
 
+    
+    function uploadImage() {
+      console.log("Uploading image...");
+    }
+
+    const [errorMessage, setErrorMessage] = useState(null);
+
     return (
       <Modal.Body>
       <div className="container-fluid">
         <div className="row d-flex flex-row align-items-center justify-content-center">
           <div className="col-lg-4 col-md-12 gap-3 d-flex flex-column align-items-center">
-            <img src={currentOffering.image} alt={currentOffering.title} className="img-shadow" style={{maxHeight: "50vw"}}/>
-            { offeringEdit && !deleteWarningVisible &&
+          { currentOffering.image ? 
+            <img src={currentOffering.image} alt={currentOffering.title ? currentOffering.title : "add-offering"} className="img-shadow" style={{maxHeight: "50vw"}}/>
+            :
+            <Card isPressable isHoverable onClick={uploadImage}>
+              <Card.Body className="d-flex flex-column align-items-center">
+                <Text>
+                  Upload an image
+                </Text>
+                <IconButton>
+                  <AddAPhotoIcon />
+                </IconButton>
+              </Card.Body>
+            </Card>
+          }
+            { offeringEdit && !deleteWarningVisible && currentOffering.id &&
               <Button flat auto color="error" onClick={() => setDeleteWarningVisible(true)}>
                 Delete Class Offering
               </Button>
             }
-            { offeringEdit && deleteWarningVisible &&
+            { offeringEdit && deleteWarningVisible && currentOffering.id &&
               <Text>
                 Are you sure you want to delete this class offering?
               </Text>
             }
-            { offeringEdit && deleteWarningVisible &&
+            { offeringEdit && deleteWarningVisible && currentOffering.id &&
               <div className="w-100 d-flex flex-row justify-content-around align-items-center">
                 <Button flat auto color="success" onClick={() => setDeleteWarningVisible(false)}>
                   Cancel
                 </Button>
-                <Button flat auto color="error" onClick={deleteTestimonial}>
+                <Button flat auto color="error" onClick={deleteOffering}>
                   Delete it!
                 </Button>
               </div>
@@ -419,6 +517,11 @@ export default function HomePage() {
               <Button flat auto color="success" onClick={saveChanges}>
                 Save Changes
               </Button>
+            }
+            { errorMessage && 
+              <Text color="error">
+                {errorMessage}
+              </Text>
             }
           </div>
         </div>
@@ -482,11 +585,10 @@ export default function HomePage() {
   }
 
   function renderOfferings(itemsPerCarousel) {
-
+    
     const offeringPages = splitArray(offeringData, itemsPerCarousel);
     
     function renderPage(op) {
-
 
       const col = 12/op.length;
 
@@ -590,7 +692,61 @@ export default function HomePage() {
       </Tooltip>
     )
   }
+  
 
+  function AddOfferingButton() {
+  
+    function handleButtonClick() {
+      setCurrentOffering({
+        description: null,
+        title: null,
+        image: null,
+        schedule: null,
+      });
+      setOfferingModalOpen(true);
+    }
+
+    function editOfferings() {
+      handleButtonClick();
+      setOfferingEdit(true);
+    }
+
+
+    return (
+      <div className="d-flex flex-row w-100 justify-content-center">
+        <Button className="m-2" size="lg" color="secondary" onClick={editOfferings}>
+          Add an Offering
+        </Button>
+      </div>
+    )
+  }
+
+  
+  function AddTestimonialButton() {
+  
+    function handleButtonClick() {
+      setCurrentTestimonial({
+        authorDescription: null,
+        message: null,
+        preview: null,
+      });
+      setTestimonialModalOpen(true);
+    }
+
+    function editTestimonials() {
+      handleButtonClick();
+      setTestimonialEdit(true);
+    }
+
+
+    return (
+      <div className="d-flex flex-row w-100 justify-content-center">
+        <Button className="m-2" size="lg" color="secondary" onClick={editTestimonials}>
+          Add a Testimonial
+        </Button>
+      </div>
+    )
+  }
   
 function ClassOffering({offering, col}) {
 

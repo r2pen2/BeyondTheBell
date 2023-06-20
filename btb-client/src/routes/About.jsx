@@ -12,8 +12,12 @@ import wall from "../assets/images/about-our-center-wall3.jpg"
 import { FormModal } from "../components/Forms";
 import { staffContext } from '../api/context';
 import { auth, firestore } from '../api/firebase';
-import { deleteDoc, doc, getDoc, setDoc } from 'firebase/firestore';
-import { TextField } from '@mui/material';
+import { addDoc, collection, deleteDoc, doc, getDoc, setDoc } from 'firebase/firestore';
+import { Icon, IconButton, TextField } from '@mui/material';
+
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+
+import AddIcon from '@mui/icons-material/Add';
 
 export default function About() {
 
@@ -22,7 +26,7 @@ export default function About() {
   const [modalOpen, setModalOpen] = useState(false);
 
   const [currentTeamMember, setCurrentTeamMember] = useState({
-    order: -1,
+    order: 0,
     name: null,
     position: null,
     image: null,
@@ -40,7 +44,7 @@ export default function About() {
       if (authUser) {
         fetchUserPermissions();
       } else {
-        userCanEditStaff(false);
+        setUserCanEditStaff(false);
       }
     })
   })
@@ -151,6 +155,7 @@ export default function About() {
         </Text>
         <div className="row d-flex flex-row justify-content-center align-items-center">
           { renderTeam() }
+          { userCanEditStaff && <AddStaffCard /> }
         </div>
       </section>
       <section className="container-fluid bg-blue" id="our-methods">
@@ -208,14 +213,44 @@ export default function About() {
       const [tempName, setTempName] = useState(currentTeamMember.name);
       const [tempPosition, setTempPosition] = useState(currentTeamMember.position);
       const [tempBio, setTempBio] = useState(currentTeamMember.bio);
+      const [tempOrder, setTempOrder] = useState(currentTeamMember.order);
 
       function saveChanges() {
-        const docRef = doc(firestore, "staff", currentTeamMember.id);
+        let newErrorMessage = "Error: missing fields ( "; 
+        let errorFound = false;
+        if (!tempName) {
+          newErrorMessage += "name "
+          errorFound = true;
+        }
+        if (!tempPosition) {
+          newErrorMessage += "position "
+          errorFound = true;
+        }
+        if (!tempPosition) {
+          newErrorMessage += "bio "
+          errorFound = true;
+        }
+        if (!tempPosition) {
+          newErrorMessage += "order "
+          errorFound = true;
+        }
+        newErrorMessage += ")";
+        if (errorFound) {
+          setErrorMessage(newErrorMessage);
+          return;
+        }
         const newData = {...currentTeamMember};
         newData.name = tempName;
         newData.position = tempPosition;
         newData.bio = tempBio;
-        setDoc(docRef, newData);
+        newData.order = tempOrder;
+        if (currentTeamMember.id) {        
+          const docRef = doc(firestore, "staff", currentTeamMember.id);
+          setDoc(docRef, newData);
+        } else {
+          const collectionRef = collection(firestore, "staff");
+          addDoc(collectionRef, newData)
+        }
         setStaffEdit(false);
         setTeamMemberModalOpen(false);
       }
@@ -243,22 +278,45 @@ export default function About() {
         setTempBio(e.target.value);
       }
 
+      function handleStaffOrderChange(e) {
+        setTempOrder(parseInt(e.target.value));
+      }
+
+      function uploadImage() {
+        console.log("Uploading image...");
+      }
+
+      const [errorMessage, setErrorMessage] = useState(null);
+
       return (
         <div className="container-fluid">
           <div className="row d-flex flex-row align-items-center justify-content-center">
             <div className="col-lg-4 col-md-12 d-flex flex-column align-items-center gap-3">
-              <img src={currentTeamMember.image} alt={currentTeamMember.name} className="img-shadow" style={{maxHeight: "50vw"}}/>
-              { staffEdit && !deleteWarningVisible &&
+              { currentTeamMember.image ? 
+                <img src={currentTeamMember.image} alt={currentTeamMember.name ? currentTeamMember.name : "add-team-member"} className="img-shadow" style={{maxHeight: "50vw"}}/>
+                :
+                <Card isPressable isHoverable onClick={uploadImage}>
+                  <Card.Body className="d-flex flex-column align-items-center">
+                    <Text>
+                      Upload an image
+                    </Text>
+                    <IconButton>
+                      <AddAPhotoIcon />
+                    </IconButton>
+                  </Card.Body>
+                </Card>
+              }
+              { staffEdit && !deleteWarningVisible &&  currentTeamMember.id &&
                 <Button flat auto color="error" onClick={() => setDeleteWarningVisible(true)}>
                   Delete Team Member
                 </Button>
               }
-              { staffEdit && deleteWarningVisible &&
+              { staffEdit && deleteWarningVisible && currentTeamMember.id &&
                 <Text>
                   Are you sure you want to delete this team member?
                 </Text>
               }
-              { staffEdit && deleteWarningVisible &&
+              { staffEdit && deleteWarningVisible && currentTeamMember.id &&
                 <div className="w-100 d-flex flex-row justify-content-around align-items-center">
                   <Button flat auto color="success" onClick={() => setDeleteWarningVisible(false)}>
                     Cancel
@@ -290,6 +348,9 @@ export default function About() {
                 { staffEdit && 
                   <TextField label="Position" placeholder="Enter their positon" value={tempPosition} onChange={handleStaffPositionChange}/>
                 }
+                { staffEdit && 
+                  <TextField numeric label="Order" placeholder="Enter their order value" value={tempOrder} onChange={handleStaffOrderChange}/>
+                }
               </div>
                 { !staffEdit && 
                   <Text align="center">
@@ -303,6 +364,11 @@ export default function About() {
                 <Button flat auto color="success" onClick={saveChanges}>
                   Save Changes
                 </Button>
+              }
+              { errorMessage && 
+                <Text color="error">
+                  {errorMessage}
+                </Text>
               }
             </div>
           </div>
@@ -343,11 +409,11 @@ export default function About() {
 
   
       return (
-        <div className="col-xxl-3 col-xl-4 col-md-6 col-sm-12" key={index}>
+        <div className="col-xxl-3 col-xl-4 col-md-6 col-sm-12 p-3" key={index} style={{height: "500px"}}>
           <Card 
             isHoverable 
             isPressable 
-            className="p-3 m-2 d-flex flex-column align-items-center"
+            className="p-3 m-2 d-flex flex-column align-items-center h-100"
             onPress={handleCardClick}
           >
             <Card.Body className="d-flex flex-column gap-2 align-items-center w-100 justify-content-center">
@@ -381,5 +447,45 @@ export default function About() {
       )
     })
   }
-}
 
+  function AddStaffCard() {
+  
+    function handleCardClick() {
+      setCurrentTeamMember({
+        id: null,
+        order: null,
+        name: null,
+        position: null,
+        image: null,
+        bio: null,
+      });
+      setTeamMemberModalOpen(true);
+    }
+
+    function editStaff() {
+      handleCardClick();
+      setStaffEdit(true);
+    }
+
+
+    return (
+      <div className="col-xxl-3 col-xl-4 col-md-6 col-sm-12 p-3" style={{height: "500px"}}>
+        <Card 
+          isHoverable 
+          isPressable 
+          className="p-3 m-2 d-flex flex-column align-items-center h-100"
+          onPress={editStaff}
+        >
+          <Card.Body className="d-flex flex-column gap-2 align-items-center w-100 justify-content-center">
+            <Text>
+              Add Team Member
+            </Text>
+            <IconButton onClick={editStaff}>
+              <AddIcon />
+            </IconButton>
+          </Card.Body>
+        </Card>
+      </div>
+    )
+  }
+}
