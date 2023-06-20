@@ -841,10 +841,10 @@ export default function HomePage() {
                   "{props.testimonial.preview}"
                 </Text>
                 <Text className="d-inline d-lg-none">
-                  "{props.testimonial.authorDescription}"
+                  {props.testimonial.authorDescription}
                 </Text>
                 <Text className="d-none d-lg-inline" size="$lg">
-                  "{props.testimonial.authorDescription}"
+                  {props.testimonial.authorDescription}
                 </Text>
               </div>
           </Card.Body>
