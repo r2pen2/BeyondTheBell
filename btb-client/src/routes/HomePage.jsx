@@ -308,6 +308,7 @@ export default function HomePage() {
       const uploadDate = Date.now().toString();
       const imgLink = await uploadImgToStorageAndReturnDownloadLink("testimonials", uploadImageFile, uploadDate);
       if (imgLink !== newData.image && imgLink) {
+        removeImage("testimonials/" + currentTestimonial.imgFileName);
       }
       newData.imgFileName = uploadDate;
       newData.image = imgLink ? imgLink : tempImageURL;
