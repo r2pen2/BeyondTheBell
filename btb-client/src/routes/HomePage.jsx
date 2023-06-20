@@ -252,7 +252,7 @@ export default function HomePage() {
           <Text h1 color="white" className="d-none d-md-inline">
             What Parents Are Saying
           </Text>
-          <Text h3 color="white" className="d-md-inline d-none">
+          <Text h3 color="white" className="d-inline d-md-none">
             What Parents Are Saying
           </Text>
           <div className="container-fluid my-5" >
