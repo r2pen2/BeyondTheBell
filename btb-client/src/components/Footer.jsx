@@ -43,6 +43,9 @@ export default function Footer() {
             }
           })
         }
+      }).catch((err) => {
+        console.warn(err);
+        setCurrentSignIn(null);
       });
     }
   }

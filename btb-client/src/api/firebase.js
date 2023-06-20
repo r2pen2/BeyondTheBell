@@ -33,7 +33,7 @@ export async function signInWithGoogle() {
       signInWithPopup(auth, provider).then((result) => {
           resolve(result.user);
         }).catch((error) => {
-          reject(error);
+          reject(error)
         });
     })
 }
