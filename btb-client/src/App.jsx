@@ -10,7 +10,7 @@ import Services from './routes/Services';
 import Contact from './routes/Contact';
 import ThankYou from './routes/ThankYou';
 
-export const serverURL = 'http://localhost:3001/';
+export const serverURL = '/';
 
 function App() {
 
