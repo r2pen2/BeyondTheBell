@@ -802,8 +802,7 @@ export default function HomePage() {
     }
 
     return (
-      <Tooltip 
-        content="Click to Expand" 
+      <div 
         className={`p-3`}
         style={{flex: 1, minHeight: "600px"}}
       >
@@ -835,7 +834,7 @@ export default function HomePage() {
           </Card.Body>
           { userCanEditTestimonials && <EditButton /> }
         </Card>
-      </Tooltip>
+      </div>
     )
   }
   
