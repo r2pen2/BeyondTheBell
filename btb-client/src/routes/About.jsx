@@ -474,14 +474,6 @@ export default function About() {
                   {teamMember.position}
                 </Text>
               </div>
-              <div className="w-100 d-md-flex d-lg-none flex-column align-items-center">
-                <Text size="$lg" css={{fontWeight: "bold"}} >
-                  {teamMember.name}
-                </Text>
-                <Text>
-                  {teamMember.position}
-                </Text>
-              </div>
               <Button bordered onClick={handleCardClick}>
                 Read More
               </Button>

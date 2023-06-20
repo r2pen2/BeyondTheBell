@@ -13,7 +13,9 @@ export default function Footer() {
   const [currentSignIn, setCurrentSignIn] = useState(null);
 
   useEffect(() => {
-    setCurrentSignIn(auth.currentUser);
+    auth.onAuthStateChanged(u => {
+      setCurrentSignIn(u);
+    })
   }, [])
 
   function handleSignInClick() {
