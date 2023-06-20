@@ -832,7 +832,6 @@ export default function HomePage() {
         >
           <Card.Body>
               <div className="text-center d-flex flex-column align-items-center justify-content-center h-100 w-100">
-                {serverURL + props.testimonial.image}
                 <img src={serverURL + props.testimonial.image} alt="testimonial-img" className="d-md-none d-xs-inline testimonial-img" style={{objectFit: "cover"}}/>
                 <img src={serverURL + props.testimonial.image} alt="testimonial-img" className="d-none d-md-inline testimonial-img" style={{width: "10rem", height: "10rem", objectFit: "cover"}}/>
                 <Text className="d-inline d-lg-none">
