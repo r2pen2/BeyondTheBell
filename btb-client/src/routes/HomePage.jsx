@@ -1,26 +1,20 @@
 import React, { useEffect, useState } from 'react'
 
-import { Button, Collapse, Text, Card, Modal, Link, Tooltip, Textarea } from "@nextui-org/react";
-
-
-import { OrangeBar, PageHeader } from "../components/Bar"
+import { Button, Text, Card, Modal, Tooltip, Textarea, Input } from "@nextui-org/react";
 
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
-
-import AddIcon from '@mui/icons-material/Add';
 
 import Carousel from "react-material-ui-carousel";
 
 import "../assets/style/homepage.css"
 import { FormModal } from '../components/Forms';
 
-
-import { useContext } from 'react';
-import { testimonialContext , offeringContext} from '../api/context';
-import { auth, firestore } from '../api/firebase';
-import { addDoc, collection, deleteDoc, doc, getDoc, setDoc } from 'firebase/firestore';
+import { auth, firestore, openFileBrowser, removeImage, storage, uploadImgToStorageAndReturnDownloadLink } from '../api/firebase';
+import { addDoc, collection, deleteDoc, doc, getDoc, onSnapshot, setDoc } from 'firebase/firestore';
 import { IconButton, TextField } from '@mui/material';
 import { PencilIcon } from '../components/Icons';
+import { deleteObject, ref, } from 'firebase/storage';
+import { serverURL } from '../App';
 
 export default function HomePage() {
 
@@ -34,6 +28,9 @@ export default function HomePage() {
   const [userCanEditTestimonials, setUserCanEditTestimonials] = useState(false)
   const [userCanEditOfferings, setUserCanEditOfferings] = useState(false)
 
+  const [testimonialData, setTestimonialData] = useState([]);
+  const [offeringData, setOfferingData] = useState([]);
+
   useEffect(() => {
     auth.onAuthStateChanged(async (authUser) => {
       if (authUser) {
@@ -43,7 +40,7 @@ export default function HomePage() {
         setUserCanEditOfferings(false);
       }
     })
-  })
+  }, [])
 
   function fetchUserPermissions() {
     const docRef = doc(firestore, "users", auth.currentUser.uid);
@@ -60,7 +57,12 @@ export default function HomePage() {
     if (auth.currentUser) {
       fetchUserPermissions();
     }
-  })
+  }, [])
+
+  useEffect(() => {
+    fetchOfferings();
+    fetchTestimonails();
+  }, [])
 
   const [currentTestimonial, setCurrentTestimonial] = useState({
     preview: "",
@@ -75,11 +77,38 @@ export default function HomePage() {
     image: null,
     schedule: "",
     title: "",
+    order: 0,
   });
-  
-  const {offeringData} = useContext(offeringContext);
 
-  const {testimonialData} = useContext(testimonialContext)
+  
+
+  function fetchOfferings() {
+    const collectionRef = collection(firestore, "offerings");
+    // Add listener
+    onSnapshot((collectionRef), (snap) => {
+      let newOfferings = [];
+      for (const doc of snap.docs) {
+        const offeringWithId = doc.data();
+        offeringWithId["id"] = doc.id;
+        newOfferings.push(offeringWithId);
+      }
+      setOfferingData(newOfferings);
+    })
+  }
+
+  function fetchTestimonails() {
+    const collectionRef = collection(firestore, "testimonials");
+    // Add listener
+    onSnapshot((collectionRef), (snap) => {
+      let newTestimonials = [];
+      for (const doc of snap.docs) {
+        const testimonialWithId = doc.data();
+        testimonialWithId["id"] = doc.id;
+        newTestimonials.push(testimonialWithId);
+      }
+      setTestimonialData(newTestimonials);
+    })
+  }
 
   function closeTestimonialModal() {
     setTestimonialModalOpen(false);
@@ -234,6 +263,10 @@ export default function HomePage() {
     const [tempMessage, setTempMessage] = useState(currentTestimonial.message);
     const [tempPreview, setTempPreview] = useState(currentTestimonial.preview);
     const [tempAuthorDesc, setTempAuthorDesc] = useState(currentTestimonial.authorDescription);
+    const [tempImageURL, setTempImageURL] = useState(serverURL + currentTestimonial.image);
+    const [uploadImageFile, setUploadImageFile] = useState(null);
+
+    const [errorMessage, setErrorMessage] = useState(null);
 
     function handleTestimonialMessageChange(e) {
       setTempMessage(e.target.value);
@@ -247,8 +280,8 @@ export default function HomePage() {
       setTempPreview(e.target.value);
     }
 
-    function saveChanges() {
-      let newErrorMessage = "Error: missing fields ( "; 
+    async function saveChanges() {
+      let newErrorMessage = "Error: Missing Fields ( "; 
       let errorFound = false;
       if (!tempMessage) {
         newErrorMessage += "message "
@@ -262,12 +295,22 @@ export default function HomePage() {
         newErrorMessage += "authorDescription "
         errorFound = true;
       }
+      if (!tempImageURL) {
+        newErrorMessage += "image "
+        errorFound = true;
+      }
       newErrorMessage += ")";
       if (errorFound) {
         setErrorMessage(newErrorMessage);
         return;
       }
       const newData = {...currentTestimonial};
+      const uploadDate = Date.now().toString();
+      const imgLink = await uploadImgToStorageAndReturnDownloadLink("testimonials", uploadImageFile, uploadDate);
+      if (imgLink !== newData.image && imgLink) {
+      }
+      newData.imgFileName = uploadDate;
+      newData.image = imgLink ? imgLink : tempImageURL;
       newData.authorDescription = tempAuthorDesc;
       newData.message = tempMessage;
       newData.preview = tempPreview;
@@ -287,6 +330,7 @@ export default function HomePage() {
     function deleteTestimonial() {
       const docRef = doc(firestore, "testimonials", currentTestimonial.id);
       const deleteRef = doc(firestore, "deletedTestimonials", currentTestimonial.id);
+      removeImage("testimonials/" + currentTestimonial.imgFileName);
       deleteDoc(docRef);
       setDoc(deleteRef, currentTestimonial);
       setTestimonialEdit(false);
@@ -294,18 +338,37 @@ export default function HomePage() {
     }
     
     function uploadImage() {
-      console.log("Uploading image...");
+      openFileBrowser().then((img) => {
+        if (img) {
+          const fileReader = new FileReader();
+          fileReader.onload = (e) => {
+            const { result } = e.target;
+            if (result) {
+              setTempImageURL(result);
+              setUploadImageFile(img);
+            }
+          }
+          fileReader.readAsDataURL(img);
+        }
+      });
     }
-
-    const [errorMessage, setErrorMessage] = useState(null);
 
     return (
       <Modal.Body>
       <div className="container-fluid">
         <div className="row d-flex flex-row align-items-center justify-content-center">
           <div className="col-lg-4 col-md-12 gap-3 d-flex flex-column align-items-center">
-          { currentTestimonial.image ? 
-            <img src={currentTestimonial.image} alt={currentTestimonial.authorDescription ? currentOffering.authorDescription : "add-testimonial"} className="img-shadow" style={{maxHeight: "50vw"}}/>
+          { tempImageURL ? 
+            <img 
+              src={tempImageURL} 
+              alt={currentTestimonial.authorDescription ? currentTestimonial.authorDescription : "add-testimonial"} 
+              className={`img-shadow ${testimonialEdit ? "edit" : ""}`}
+              style={{maxHeight: "50vw"}} 
+              onClick={() => {
+                if (testimonialEdit) {
+                  uploadImage()
+                }
+            }}/>
             :
             <Card isPressable isHoverable onClick={uploadImage}>
               <Card.Body className="d-flex flex-column align-items-center">
@@ -346,10 +409,10 @@ export default function HomePage() {
               </Text>
             }
             { testimonialEdit &&
-              <Textarea label="Testimonial Message" placeholder="Enter the full testimonial message" bordered value={tempMessage} onChange={handleTestimonialMessageChange}/>
+              <Textarea label="Testimonial Message" placeholder="Enter the full testimonial message" bordered value={tempMessage ? tempMessage : ""} onChange={handleTestimonialMessageChange}/>
             }
             { testimonialEdit &&
-              <Textarea label="Testimonial Preview" placeholder="This is the shortened preview that shows up on the homepage" bordered value={tempPreview} onChange={handleTestimonialPreviewChange}/>
+              <Textarea label="Testimonial Preview" placeholder="This is the shortened preview that shows up on the homepage" bordered value={tempPreview ? tempPreview : ""} onChange={handleTestimonialPreviewChange}/>
             }
             { !testimonialEdit && 
               <Text>
@@ -357,7 +420,7 @@ export default function HomePage() {
               </Text>
             }
             { testimonialEdit &&
-              <Textarea label="Author Description" placeholder="Enter a description of the testimonial's author" bordered value={tempAuthorDesc} onChange={handleTestimonialAuthorDescChange}/>
+              <Textarea label="Author Description" placeholder="Enter a description of the testimonial's author" bordered value={tempAuthorDesc ? tempAuthorDesc : ""} onChange={handleTestimonialAuthorDescChange}/>
             }
             { testimonialEdit &&
               <Button flat auto color="success" onClick={saveChanges}>
@@ -381,7 +444,10 @@ export default function HomePage() {
     
     const [tempDescription, setTempDescription] = useState(currentOffering.description);
     const [tempTitle, setTempTitle] = useState(currentOffering.title);
+    const [tempOrder, setTempOrder] = useState(currentOffering.order);
     const [tempSchedule, setTempSchedule] = useState(currentOffering.schedule);
+    const [tempImageURL, setTempImageURL] = useState(currentOffering.image);
+    const [uploadImageFile, setUploadImageFile] = useState(null);
 
     function handleOfferingDescriptionChange(e) {
       setTempDescription(e.target.value);
@@ -395,8 +461,12 @@ export default function HomePage() {
       setTempTitle(e.target.value);
     }
 
-    function saveChanges() {
-      let newErrorMessage = "Error: missing fields ( "; 
+    function handleOfferingOrderChange(e) {
+      setTempOrder(parseInt(e.target.value));
+    }
+
+    async function saveChanges() {
+      let newErrorMessage = "Error: Missing Fields ( "; 
       let errorFound = false;
       if (!tempDescription) {
         newErrorMessage += "desctiption "
@@ -410,12 +480,24 @@ export default function HomePage() {
         newErrorMessage += "schedule "
         errorFound = true;
       }
+      if (!tempSchedule) {
+        newErrorMessage += "schedule "
+        errorFound = true;
+      }
       newErrorMessage += ")";
       if (errorFound) {
         setErrorMessage(newErrorMessage);
         return;
       }
       const newData = {...currentOffering};
+      const uploadDate = Date.now().toString();
+      const imgLink = await uploadImgToStorageAndReturnDownloadLink("offerings", uploadImageFile, uploadDate);
+      if (imgLink !== newData.image && imgLink) {
+        const storageRef = ref(storage, `offerings/${newData.imgFileName}`);
+        deleteObject(storageRef);
+      }
+      newData.imgFileName = uploadDate;
+      newData.image = imgLink ? imgLink : tempImageURL;
       newData.description = tempDescription;
       newData.schedule = tempSchedule;
       newData.title = tempTitle;
@@ -443,7 +525,19 @@ export default function HomePage() {
 
     
     function uploadImage() {
-      console.log("Uploading image...");
+      openFileBrowser().then((img) => {
+        if (img) {
+          const fileReader = new FileReader();
+          fileReader.onload = (e) => {
+            const { result } = e.target;
+            if (result) {
+              setTempImageURL(result);
+              setUploadImageFile(img);
+            }
+          }
+          fileReader.readAsDataURL(img);
+        }
+      });
     }
 
     const [errorMessage, setErrorMessage] = useState(null);
@@ -453,8 +547,17 @@ export default function HomePage() {
       <div className="container-fluid">
         <div className="row d-flex flex-row align-items-center justify-content-center">
           <div className="col-lg-4 col-md-12 gap-3 d-flex flex-column align-items-center">
-          { currentOffering.image ? 
-            <img src={currentOffering.image} alt={currentOffering.title ? currentOffering.title : "add-offering"} className="img-shadow" style={{maxHeight: "50vw"}}/>
+          { tempImageURL ? 
+            <img 
+              src={tempImageURL} 
+              alt={currentOffering.title ? currentOffering.title : "add-offering"} 
+              className={`img-shadow ${offeringEdit ? "edit" : ""}`}
+              style={{maxHeight: "50vw"}} 
+              onClick={() => {
+                if (offeringEdit) {
+                  uploadImage()
+                }
+              }}/>
             :
             <Card isPressable isHoverable onClick={uploadImage}>
               <Card.Body className="d-flex flex-column align-items-center">
@@ -500,10 +603,13 @@ export default function HomePage() {
               </Text>
             }
             { offeringEdit &&
-              <Textarea label="Offering Title" placeholder="Please enter a title for this class offering" bordered value={tempTitle} onChange={handleOfferingTitleChange}/>
+              <div className="d-flex flex-row justify-content-center gap-2">
+                <TextField label="Offering Title" placeholder="Please enter a title for this class offering" bordered value={tempTitle ? tempTitle : ""} onChange={handleOfferingTitleChange}/>
+                <TextField numeric label="Order" placeholder="Enter offering order value" value={tempOrder} onChange={handleOfferingOrderChange}/>
+              </div>
             }
             { offeringEdit &&
-              <Textarea label="Offering Description" placeholder="Enter the class offering's description" bordered value={tempDescription} onChange={handleOfferingDescriptionChange}/>
+              <Textarea label="Offering Description" placeholder="Enter the class offering's description" bordered value={tempDescription ? tempDescription : ""} onChange={handleOfferingDescriptionChange}/>
             }
             { !offeringEdit && 
               <Text>
@@ -511,7 +617,7 @@ export default function HomePage() {
               </Text>
             }
             { offeringEdit &&
-              <Textarea label="Offering Schedule" placeholder="Enter this class offering's schedule" bordered value={tempSchedule} onChange={handleOfferingScheduleChange}/>
+              <Textarea label="Offering Schedule" placeholder="Enter this class offering's schedule" bordered value={tempSchedule ? tempSchedule : ""} onChange={handleOfferingScheduleChange}/>
             }
             { offeringEdit &&
               <Button flat auto color="success" onClick={saveChanges}>
@@ -562,8 +668,8 @@ export default function HomePage() {
           }}
           className="m-2"
         >
-          <Card.Body className="w-100 p-2 d-flex flex-row align-items-center justify-content-between">
-            <img src={o.image} alt={o.title} style={{height: "100%", objectFit:"cover"}} className="img-shadow"/>
+          <Card.Body className="w-100 p-2 d-flex flex-row align-items-center justify-content-between" style={{overflowY: "hidden"}}>
+            <img src={o.image} alt={o.title} style={{width: "30%", minHeight: "100%", objectFit:"cover"}} className="img-shadow"/>
             <div className="d-flex w-100 flex-column px-2 text-center justify-content-center">
               <Text b>
                 {o.title}
@@ -586,7 +692,7 @@ export default function HomePage() {
 
   function renderOfferings(itemsPerCarousel) {
     
-    const offeringPages = splitArray(offeringData, itemsPerCarousel);
+    const offeringPages = splitArray(offeringData.sort((a, b) => a.order - b.order), itemsPerCarousel);
     
     function renderPage(op) {
 
@@ -610,7 +716,7 @@ export default function HomePage() {
 
   function renderTestimonials(itemsPerCarousel) {
 
-    const testimonialPages = splitArray(testimonialData, itemsPerCarousel);
+    const testimonialPages = splitArray(testimonialData.sort((a, b) => a.order - b.order), itemsPerCarousel);
     
     function renderPage(tp) {
 
@@ -678,7 +784,7 @@ export default function HomePage() {
         >
           <Card.Body>
               <div className="text-center d-flex flex-column align-items-center justify-content-between h-100">
-                <img src={props.testimonial.image} alt="testimonial-img" className="testimonial-img"/>
+                <img src={serverURL + props.testimonial.image} alt="testimonial-img" className="testimonial-img" style={{objectFit: "cover"}}/>
                 <Text>
                   "{props.testimonial.preview}"
                 </Text>
@@ -702,6 +808,8 @@ export default function HomePage() {
         title: null,
         image: null,
         schedule: null,
+        order: null,
+        imgFileName: null,
       });
       setOfferingModalOpen(true);
     }
@@ -729,6 +837,8 @@ export default function HomePage() {
         authorDescription: null,
         message: null,
         preview: null,
+        order: null,
+        imgFileName: null,
       });
       setTestimonialModalOpen(true);
     }

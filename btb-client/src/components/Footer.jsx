@@ -1,15 +1,8 @@
-import { Grid, Text, Link, Button } from '@nextui-org/react'
+import { Text, Link, Button } from '@nextui-org/react'
 import React, {useState, useEffect} from 'react'
 import logo from "../assets/images/logoTransparent.png";
 import footerBackground from "../assets/images/footerBackground.png";
 
-import PlaceIcon from '@mui/icons-material/Place';
-import ScheduleIcon from '@mui/icons-material/Schedule';
-import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
-import LanguageIcon from '@mui/icons-material/Language';
-
-import { btbOrange } from '../assets/style/colors';
-import { currentUserContext } from '../api/context';
 import { signOut } from 'firebase/auth';
 import { auth, signInWithGoogle } from '../api/firebase';
 import { firestore } from '../api/firebase';
@@ -21,7 +14,7 @@ export default function Footer() {
 
   useEffect(() => {
     setCurrentSignIn(auth.currentUser);
-  })
+  }, [])
 
   function handleSignInClick() {
     if (auth.currentUser) {

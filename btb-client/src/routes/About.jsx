@@ -10,18 +10,37 @@ import ourMethods from "../assets/images/they-feast.jpeg"
 import wall from "../assets/images/about-our-center-wall3.jpg"
 
 import { FormModal } from "../components/Forms";
-import { staffContext } from '../api/context';
-import { auth, firestore } from '../api/firebase';
-import { addDoc, collection, deleteDoc, doc, getDoc, setDoc } from 'firebase/firestore';
+import { auth, firestore, openFileBrowser, storage, uploadImgToStorageAndReturnDownloadLink } from '../api/firebase';
+import { addDoc, collection, deleteDoc, doc, getDoc, onSnapshot, setDoc } from 'firebase/firestore';
 import { Icon, IconButton, TextField } from '@mui/material';
 
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 
 import AddIcon from '@mui/icons-material/Add';
+import { deleteObject, ref } from 'firebase/storage';
 
 export default function About() {
 
-  const { staffData } = useContext(staffContext);
+
+  function fetchStaff() {
+    const collectionRef = collection(firestore, "staff");
+    // Add listener
+    onSnapshot((collectionRef), (snap) => {
+      let newStaff = [];
+      for (const doc of snap.docs) {
+        const staffWithId = doc.data();
+        staffWithId["id"] = doc.id;
+        newStaff.push(staffWithId);
+      }
+      setStaffData(newStaff);
+    })
+  }
+  
+  useEffect(() => {
+    fetchStaff();
+  }, [])
+
+  const [staffData, setStaffData] = useState([]);
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -155,8 +174,8 @@ export default function About() {
         </Text>
         <div className="row d-flex flex-row justify-content-center align-items-center">
           { renderTeam() }
-          { userCanEditStaff && <AddStaffCard /> }
         </div>
+        { userCanEditStaff && <AddStaffButton /> }
       </section>
       <section className="container-fluid bg-blue" id="our-methods">
         <div className="row">
@@ -214,8 +233,10 @@ export default function About() {
       const [tempPosition, setTempPosition] = useState(currentTeamMember.position);
       const [tempBio, setTempBio] = useState(currentTeamMember.bio);
       const [tempOrder, setTempOrder] = useState(currentTeamMember.order);
+      const [tempImageURL, setTempImageURL] = useState(currentTeamMember.image);
+      const [uploadImageFile, setUploadImageFile] = useState(null);
 
-      function saveChanges() {
+      async function saveChanges() {
         let newErrorMessage = "Error: missing fields ( "; 
         let errorFound = false;
         if (!tempName) {
@@ -240,6 +261,14 @@ export default function About() {
           return;
         }
         const newData = {...currentTeamMember};
+        const uploadDate = Date.now().toString();
+        const imgLink = await uploadImgToStorageAndReturnDownloadLink("staff", uploadImageFile, uploadDate);
+        if ((imgLink !== newData.image) && imgLink) {
+          const storageRef = ref(storage, `staff/${newData.imgFileName}`);
+          deleteObject(storageRef);
+        }
+        newData.imgFileName = uploadDate;
+        newData.image = imgLink ? imgLink : tempImageURL;
         newData.name = tempName;
         newData.position = tempPosition;
         newData.bio = tempBio;
@@ -261,6 +290,8 @@ export default function About() {
         const docRef = doc(firestore, "staff", currentTeamMember.id);
         const deleteRef = doc(firestore, "deletedStaff", currentTeamMember.id);
         deleteDoc(docRef);
+        const storageRef = ref(storage, `staff/${currentTeamMember.imgFileName}`);
+        deleteObject(storageRef);
         setDoc(deleteRef, currentTeamMember);
         setStaffEdit(false);
         setTeamMemberModalOpen(false);
@@ -281,9 +312,21 @@ export default function About() {
       function handleStaffOrderChange(e) {
         setTempOrder(parseInt(e.target.value));
       }
-
+    
       function uploadImage() {
-        console.log("Uploading image...");
+        openFileBrowser().then((img) => {
+          if (img) {
+            const fileReader = new FileReader();
+            fileReader.onload = (e) => {
+              const { result } = e.target;
+              if (result) {
+                setTempImageURL(result);
+                setUploadImageFile(img);
+              }
+            }
+            fileReader.readAsDataURL(img);
+          }
+        });
       }
 
       const [errorMessage, setErrorMessage] = useState(null);
@@ -292,8 +335,17 @@ export default function About() {
         <div className="container-fluid">
           <div className="row d-flex flex-row align-items-center justify-content-center">
             <div className="col-lg-4 col-md-12 d-flex flex-column align-items-center gap-3">
-              { currentTeamMember.image ? 
-                <img src={currentTeamMember.image} alt={currentTeamMember.name ? currentTeamMember.name : "add-team-member"} className="img-shadow" style={{maxHeight: "50vw"}}/>
+              { tempImageURL ? 
+                <img 
+                  src={tempImageURL} 
+                  alt={currentTeamMember.name ? currentTeamMember.name : "add-team-member"} 
+                  className={`img-shadow ${staffEdit ? "edit" : ""}`}
+                  style={{maxHeight: "50vw"}} 
+                  onClick={() => {
+                    if (staffEdit) {
+                      uploadImage()
+                    }
+                }}/>
                 :
                 <Card isPressable isHoverable onClick={uploadImage}>
                   <Card.Body className="d-flex flex-column align-items-center">
@@ -378,11 +430,6 @@ export default function About() {
 
   function renderTeam() {
 
-    if (!staffData) {
-      console.log("Please")
-      return;
-    }
-
     const sortedTeamMembers = staffData.sort((a, b) => a.order - b.order);
   
     return sortedTeamMembers.map((teamMember, index) => {
@@ -409,7 +456,7 @@ export default function About() {
 
   
       return (
-        <div className="col-xxl-3 col-xl-4 col-md-6 col-sm-12 p-3" key={index} style={{height: "500px"}}>
+        <div className="col-xxl-3 col-xl-4 col-md-6 col-sm-12 p-3" key={index} style={{maxHeight: 550}}>
           <Card 
             isHoverable 
             isPressable 
@@ -417,13 +464,10 @@ export default function About() {
             onPress={handleCardClick}
           >
             <Card.Body className="d-flex flex-column gap-2 align-items-center w-100 justify-content-center">
-              <img src={teamMember.image} alt={teamMember.name} className="img-shadow img-round" style={{width: "10rem", height: "10rem"}}/>
-              <div className="w-100 d-md-none d-lg-flex flex-row gap-2 justify-content-center text-center align-items-center">
+              <img src={teamMember.image} alt={teamMember.name} className="img-shadow img-round" style={{maxWidth: "10rem", maxHeight: "10rem", objectFit: "cover"}}/>
+              <div className="w-100 d-md-none d-lg-flex flex-column justify-content-center text-center align-items-center">
                 <Text size="$lg" css={{fontWeight: "bold"}} >
                   {teamMember.name}
-                </Text>
-                <Text>
-                  —
                 </Text>
                 <Text>
                   {teamMember.position}
@@ -448,7 +492,7 @@ export default function About() {
     })
   }
 
-  function AddStaffCard() {
+  function AddStaffButton() {
   
     function handleCardClick() {
       setCurrentTeamMember({
@@ -468,23 +512,12 @@ export default function About() {
     }
 
 
+
     return (
-      <div className="col-xxl-3 col-xl-4 col-md-6 col-sm-12 p-3" style={{height: "500px"}}>
-        <Card 
-          isHoverable 
-          isPressable 
-          className="p-3 m-2 d-flex flex-column align-items-center h-100"
-          onPress={editStaff}
-        >
-          <Card.Body className="d-flex flex-column gap-2 align-items-center w-100 justify-content-center">
-            <Text>
-              Add Team Member
-            </Text>
-            <IconButton onClick={editStaff}>
-              <AddIcon />
-            </IconButton>
-          </Card.Body>
-        </Card>
+      <div className="d-flex flex-row w-100 justify-content-center">
+        <Button className="m-2" size="lg" color="secondary" onClick={editStaff}>
+          Add a Team Member
+        </Button>
       </div>
     )
   }

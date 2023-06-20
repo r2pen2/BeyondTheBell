@@ -1,8 +1,9 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getStorage } from "firebase/storage";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { getFirestore } from "firebase/firestore";
 import { getAuth, signOut, GoogleAuthProvider, signInWithRedirect, signInWithPopup } from "firebase/auth";
+import { serverURL } from "../App";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -35,4 +36,57 @@ export async function signInWithGoogle() {
           reject(error);
         });
     })
+}
+
+export async function openFileBrowser() {
+  return new Promise((resolve, reject) => {
+    let input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/png, image/jpeg, , image/jpg, image/heic";
+    input.multiple = false;
+    input.onchange = _ => {
+      resolve(input.files[0]);
+    }
+    input.click();
+  })
+}
+
+export async function uploadImgToStorageAndReturnDownloadLink(directory, file, date) {
+  return new Promise(async (resolve, reject) => {
+    if (file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      const path = `images/${directory}/${date}`;
+      fetch(`${serverURL}${path}`, {
+        method: "POST",
+        body: formData,
+      }).then(res => {
+        if (res.status === 200) {
+          resolve(path);
+        } else {
+          resolve(null);
+        }
+      });
+    } else {
+      resolve(null);
+    }
+  })
+}
+
+export async function removeImage(path) {
+  return new Promise(async (resolve, reject) => {
+    if (path) {
+      fetch(`${serverURL}delete-img?path=${path}`, {
+        method: "POST",
+      }).then(res => {
+        if (res.status === 200) {
+          resolve(path);
+        } else {
+          resolve(null);
+        }
+      });
+    } else {
+      resolve(null);
+    }
+  })
 }
