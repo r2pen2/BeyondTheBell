@@ -190,7 +190,7 @@ export default function HomePage() {
           Beyond The Bell
         </Text>
         <Text 
-          h2
+          h3
           color="white"
           css={{ 
             textShadow: "0px 0px 5px black",
@@ -735,7 +735,7 @@ export default function HomePage() {
                 {o.schedule}
               </Text>
               <div className="d-flex flex-row w-100 justify-content-center align-items-center">
-                <Button bordered size="sm" style={{minHeight:"2rem", maxWidth: "50%"}}>
+                <Button bordered size="sm" style={{minHeight:"2rem", maxWidth: "50%"}} onClick={handleOfferingPress}>
                   Read More
                 </Button>
               </div>
@@ -831,7 +831,7 @@ export default function HomePage() {
             onPress={handleTestimonialPress}
         >
           <Card.Body>
-              <div className="text-center d-flex flex-column align-items-center justify-content-center h-100 w-100">
+              <div className="text-center d-flex flex-column align-items-center justify-content-center h-100 w-100 gap-2">
                 <img src={serverURL + props.testimonial.image} alt="testimonial-img" className="d-md-none d-xs-inline testimonial-img" style={{objectFit: "cover"}}/>
                 <img src={serverURL + props.testimonial.image} alt="testimonial-img" className="d-none d-md-inline testimonial-img" style={{width: "10rem", height: "10rem", objectFit: "cover"}}/>
                 <Text className="d-inline d-lg-none">
