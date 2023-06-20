@@ -170,7 +170,7 @@ export default function HomePage() {
         <Text 
           h1
           css={{ 
-            fontSize: "6em",
+            fontSize: "5rem",
             filter: "drop-shadow(2px 2px 5px black)",
             textGradient: "45deg, $yellow600 -20%, $btbOrange600 100%",
           }}
@@ -180,8 +180,8 @@ export default function HomePage() {
         </Text>
         <Text 
           h1
-          css={{ 
-            fontSize: "4em",
+          css={{
+            fontSize: "2rem",
             filter: "drop-shadow(2px 2px 5px black)",
             textGradient: "45deg, $yellow600 -20%, $btbOrange600 100%",
           }}
@@ -190,7 +190,7 @@ export default function HomePage() {
           Beyond The Bell
         </Text>
         <Text 
-          h1
+          h2
           color="white"
           css={{ 
             textShadow: "0px 0px 5px black",
@@ -204,6 +204,16 @@ export default function HomePage() {
             rounded
             color="gradient"
             size="xl"
+            className="d-none d-md-inline"
+            onClick={() => setFormModalOpen(true)}
+          >
+            Schedule
+          </Button>
+          <Button
+            bordered
+            rounded
+            color="gradient"
+            className="d-md-none d-inline"
             onClick={() => setFormModalOpen(true)}
           >
             Schedule
