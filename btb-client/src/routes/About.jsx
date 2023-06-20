@@ -10,7 +10,7 @@ import ourMethods from "../assets/images/they-feast.jpeg"
 import wall from "../assets/images/about-our-center-wall3.jpg"
 
 import { FormModal } from "../components/Forms";
-import { auth, firestore, openFileBrowser, storage, uploadImgToStorageAndReturnDownloadLink } from '../api/firebase';
+import { auth, firestore, openFileBrowser, removeImage, storage, uploadImgToStorageAndReturnDownloadLink } from '../api/firebase';
 import { addDoc, collection, deleteDoc, doc, getDoc, onSnapshot, setDoc } from 'firebase/firestore';
 import { Icon, IconButton, TextField } from '@mui/material';
 
@@ -18,6 +18,7 @@ import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 
 import AddIcon from '@mui/icons-material/Add';
 import { deleteObject, ref } from 'firebase/storage';
+import { serverURL } from '../App';
 
 export default function About() {
 
@@ -233,7 +234,7 @@ export default function About() {
       const [tempPosition, setTempPosition] = useState(currentTeamMember.position);
       const [tempBio, setTempBio] = useState(currentTeamMember.bio);
       const [tempOrder, setTempOrder] = useState(currentTeamMember.order);
-      const [tempImageURL, setTempImageURL] = useState(currentTeamMember.image);
+      const [tempImageURL, setTempImageURL] = useState(serverURL + currentTeamMember.image);
       const [uploadImageFile, setUploadImageFile] = useState(null);
 
       async function saveChanges() {
@@ -264,8 +265,7 @@ export default function About() {
         const uploadDate = Date.now().toString();
         const imgLink = await uploadImgToStorageAndReturnDownloadLink("staff", uploadImageFile, uploadDate);
         if ((imgLink !== newData.image) && imgLink) {
-          const storageRef = ref(storage, `staff/${newData.imgFileName}`);
-          deleteObject(storageRef);
+          removeImage("staff/" + currentTeamMember.imgFileName);
         }
         newData.imgFileName = uploadDate;
         newData.image = imgLink ? imgLink : tempImageURL;
@@ -290,8 +290,7 @@ export default function About() {
         const docRef = doc(firestore, "staff", currentTeamMember.id);
         const deleteRef = doc(firestore, "deletedStaff", currentTeamMember.id);
         deleteDoc(docRef);
-        const storageRef = ref(storage, `staff/${currentTeamMember.imgFileName}`);
-        deleteObject(storageRef);
+        removeImage("staff/" + currentTeamMember.imgFileName);
         setDoc(deleteRef, currentTeamMember);
         setStaffEdit(false);
         setTeamMemberModalOpen(false);
@@ -464,7 +463,7 @@ export default function About() {
             onPress={handleCardClick}
           >
             <Card.Body className="d-flex flex-column gap-2 align-items-center w-100 justify-content-center">
-              <img src={teamMember.image} alt={teamMember.name} className="img-shadow img-round" style={{maxWidth: "10rem", maxHeight: "10rem", objectFit: "cover"}}/>
+              <img src={serverURL + teamMember.image} alt={teamMember.name} className="img-shadow img-round" style={{height: "10rem", width: "10rem", objectFit: "cover"}}/>
               <div className="w-100 d-md-none d-lg-flex flex-column justify-content-center text-center align-items-center">
                 <Text size="$lg" css={{fontWeight: "bold"}} >
                   {teamMember.name}
