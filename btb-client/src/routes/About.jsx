@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 
-import { Button, Card, Modal, Text, } from "@nextui-org/react";
+import { Button, Card, Modal, Text, Textarea, } from "@nextui-org/react";
 
 import "../assets/style/about.css"
 import { PageHeader, OrangeBar } from '../components/Bar';
@@ -11,6 +11,9 @@ import wall from "../assets/images/about-our-center-wall3.jpg"
 
 import { FormModal } from "../components/Forms";
 import { staffContext } from '../api/context';
+import { auth, firestore } from '../api/firebase';
+import { deleteDoc, doc, getDoc, setDoc } from 'firebase/firestore';
+import { TextField } from '@mui/material';
 
 export default function About() {
 
@@ -28,6 +31,41 @@ export default function About() {
 
   const [teamMemberModalOpen, setTeamMemberModalOpen] = useState(false);
 
+  const [userCanEditStaff, setUserCanEditStaff] = useState(false);
+
+  const [staffEdit, setStaffEdit] = useState(false);
+
+  useEffect(() => {
+    auth.onAuthStateChanged(async (authUser) => {
+      if (authUser) {
+        fetchUserPermissions();
+      } else {
+        userCanEditStaff(false);
+      }
+    })
+  })
+
+  function fetchUserPermissions() {
+    const docRef = doc(firestore, "users", auth.currentUser.uid);
+    getDoc(docRef).then((doc) => {
+      if (doc.exists()) {
+        const data = doc.data();
+        setUserCanEditStaff(data.staff);
+      }
+    })
+  }
+
+  useEffect(() => {
+    if (auth.currentUser) {
+      fetchUserPermissions();
+    }
+  })
+
+  function handleStaffModalClose() {
+    setTeamMemberModalOpen(false);
+    setStaffEdit(false);
+  }
+
   return (
     <div className="d-flex flex-column">
       <Modal 
@@ -35,36 +73,14 @@ export default function About() {
         width="75vw"
         open={teamMemberModalOpen}
         blur
-        onClose={() => setTeamMemberModalOpen(false)}
+        onClose={handleStaffModalClose}
       >
         <Modal.Body>
-          <div className="container-fluid">
-            <div className="row d-flex flex-row align-items-center justify-content-center">
-              <div className="col-lg-4 col-md-12 d-flex flex-row justify-content-center">
-                <img src={currentTeamMember.image} alt={currentTeamMember.name} className="img-shadow" style={{maxHeight: "50vw"}}/>
-              </div>
-              <div className="col-lg-8 p-3 col-md-12 d-flex flex-column justify-content-center">
-                <div className="w-100 d-flex flex-row gap-2 justify-content-center">
-                  <Text size="$lg" css={{fontWeight: "bold"}} >
-                    {currentTeamMember.name}
-                  </Text>
-                  <Text>
-                    —
-                  </Text>
-                  <Text>
-                    {currentTeamMember.position}
-                  </Text>
-                </div>
-                <Text align="center">
-                  {currentTeamMember.bio}
-                </Text>
-              </div>
-            </div>
-          </div>
+          <StaffModal />
         </Modal.Body>
         <Modal.Footer>
           <div className="d-flex flex-row align-items-center justify-content-center w-100">
-            <Button auto flat color="error" onPress={() => setTeamMemberModalOpen(false)} >
+            <Button auto flat color="error" onPress={handleStaffModalClose} >
                 Close
             </Button>
           </div>
@@ -187,6 +203,113 @@ export default function About() {
     </div>
   )
 
+    function StaffModal() {
+
+      const [tempName, setTempName] = useState(currentTeamMember.name);
+      const [tempPosition, setTempPosition] = useState(currentTeamMember.position);
+      const [tempBio, setTempBio] = useState(currentTeamMember.bio);
+
+      function saveChanges() {
+        const docRef = doc(firestore, "staff", currentTeamMember.id);
+        const newData = {...currentTeamMember};
+        newData.name = tempName;
+        newData.position = tempPosition;
+        newData.bio = tempBio;
+        setDoc(docRef, newData);
+        setStaffEdit(false);
+        setTeamMemberModalOpen(false);
+      }
+
+      const [deleteWarningVisible, setDeleteWarningVisible] = useState(false);
+
+      function deleteStaff() {
+        const docRef = doc(firestore, "staff", currentTeamMember.id);
+        const deleteRef = doc(firestore, "deletedStaff", currentTeamMember.id);
+        deleteDoc(docRef);
+        setDoc(deleteRef, currentTeamMember);
+        setStaffEdit(false);
+        setTeamMemberModalOpen(false);
+      }
+
+      function handleStaffNameChange(e) {
+        setTempName(e.target.value);
+      }
+
+      function handleStaffPositionChange(e) {
+        setTempPosition(e.target.value);
+      }
+
+      function handleStaffBioChange(e) {
+        setTempBio(e.target.value);
+      }
+
+      return (
+        <div className="container-fluid">
+          <div className="row d-flex flex-row align-items-center justify-content-center">
+            <div className="col-lg-4 col-md-12 d-flex flex-column align-items-center gap-3">
+              <img src={currentTeamMember.image} alt={currentTeamMember.name} className="img-shadow" style={{maxHeight: "50vw"}}/>
+              { staffEdit && !deleteWarningVisible &&
+                <Button flat auto color="error" onClick={() => setDeleteWarningVisible(true)}>
+                  Delete Team Member
+                </Button>
+              }
+              { staffEdit && deleteWarningVisible &&
+                <Text>
+                  Are you sure you want to delete this team member?
+                </Text>
+              }
+              { staffEdit && deleteWarningVisible &&
+                <div className="w-100 d-flex flex-row justify-content-around align-items-center">
+                  <Button flat auto color="success" onClick={() => setDeleteWarningVisible(false)}>
+                    Cancel
+                  </Button>
+                  <Button flat auto color="error" onClick={deleteStaff}>
+                    Delete them!
+                  </Button>
+                </div>
+              }
+            </div>
+            <div className="col-lg-8 p-3 col-md-12 d-flex flex-column justify-content-center gap-2">
+              <div className="w-100 d-flex flex-row gap-2 justify-content-center">
+                { !staffEdit && 
+                  <Text size="$lg" css={{fontWeight: "bold"}} >
+                    {tempName}
+                  </Text>
+                }
+                { staffEdit && 
+                  <TextField label="Name" placeholder="Enter their name" value={tempName} onChange={handleStaffNameChange}/>
+                }
+                <Text>
+                  —
+                </Text>
+                { !staffEdit && 
+                  <Text>
+                    {tempPosition}
+                  </Text>
+                }
+                { staffEdit && 
+                  <TextField label="Position" placeholder="Enter their positon" value={tempPosition} onChange={handleStaffPositionChange}/>
+                }
+              </div>
+                { !staffEdit && 
+                  <Text align="center">
+                    {tempBio}
+                  </Text>
+                }
+              { staffEdit && 
+                <Textarea label="Team Member Bio" placeholder="Please enter a bio for this team member" bordered value={tempBio} onChange={handleStaffBioChange}/>
+              }
+              { staffEdit &&
+                <Button flat auto color="success" onClick={saveChanges}>
+                  Save Changes
+                </Button>
+              }
+            </div>
+          </div>
+        </div>
+      )
+    }
+
   function renderTeam() {
 
     if (!staffData) {
@@ -202,6 +325,22 @@ export default function About() {
         setCurrentTeamMember(teamMember);
         setTeamMemberModalOpen(true);
       }
+
+      function editStaff() {
+        handleCardClick();
+        setStaffEdit(true);
+      }
+
+      function EditButton() {
+        return (
+          <Card.Footer className="d-flex flex-row justify-content-center w-100 my-2">
+            <Button color="secondary" onClick={editStaff}>
+              Edit
+            </Button>
+          </Card.Footer>
+        )
+      }
+
   
       return (
         <div className="col-xxl-3 col-xl-4 col-md-6 col-sm-12" key={index}>
@@ -232,10 +371,11 @@ export default function About() {
                   {teamMember.position}
                 </Text>
               </div>
-            </Card.Body>
               <Button bordered onClick={handleCardClick}>
                 Read More
               </Button>
+            </Card.Body>
+            { userCanEditStaff && <EditButton />}
           </Card>
         </div>
       )
