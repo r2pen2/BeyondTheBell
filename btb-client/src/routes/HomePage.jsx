@@ -264,6 +264,7 @@ export default function HomePage() {
     const [tempPreview, setTempPreview] = useState(currentTestimonial.preview);
     const [tempAuthorDesc, setTempAuthorDesc] = useState(currentTestimonial.authorDescription);
     const [tempImageURL, setTempImageURL] = useState(serverURL + currentTestimonial.image);
+    const [tempOrder, setTempOrder] = useState(currentTestimonial.order);
     const [uploadImageFile, setUploadImageFile] = useState(null);
 
     const [errorMessage, setErrorMessage] = useState(null);
@@ -278,6 +279,10 @@ export default function HomePage() {
 
     function handleTestimonialPreviewChange(e) {
       setTempPreview(e.target.value);
+    }
+
+    function handleTestimonialOrderChange(e) {
+      setTempOrder(parseInt(e.target.value));
     }
 
     async function saveChanges() {
@@ -307,11 +312,15 @@ export default function HomePage() {
       const newData = {...currentTestimonial};
       const uploadDate = Date.now().toString();
       const imgLink = await uploadImgToStorageAndReturnDownloadLink("testimonials", uploadImageFile, uploadDate);
+      console.log(imgLink);
       if (imgLink !== newData.image && imgLink) {
         removeImage("testimonials/" + currentTestimonial.imgFileName);
       }
-      newData.imgFileName = uploadDate;
-      newData.image = imgLink ? imgLink : tempImageURL;
+      newData.imgFileName = imgLink ? uploadDate : currentTestimonial.imgFileName;
+      newData.order = tempOrder ? tempOrder : testimonialData.length + 1;
+      if (imgLink) {
+        newData.image = imgLink;
+      }
       newData.authorDescription = tempAuthorDesc;
       newData.message = tempMessage;
       newData.preview = tempPreview;
@@ -421,7 +430,12 @@ export default function HomePage() {
               </Text>
             }
             { testimonialEdit &&
-              <Textarea label="Author Description" placeholder="Enter a description of the testimonial's author" bordered value={tempAuthorDesc ? tempAuthorDesc : ""} onChange={handleTestimonialAuthorDescChange}/>
+              <div className="container-fluid">
+                <div className="row">
+                  <TextField className="p-1 col-xl-6 col-md-12" label="Author Description" placeholder="Enter a description of the testimonial's author" bordered value={tempAuthorDesc ? tempAuthorDesc : ""} onChange={handleTestimonialAuthorDescChange}/>
+                  <TextField className="p-1 col-xl-6 col-md-12" label="Order" placeholder="Enter this testimonial's order value" bordered value={tempOrder ? tempOrder : ""} onChange={handleTestimonialOrderChange}/>
+                </div>
+              </div>
             }
             { testimonialEdit &&
               <Button flat auto color="success" onClick={saveChanges}>
@@ -447,7 +461,7 @@ export default function HomePage() {
     const [tempTitle, setTempTitle] = useState(currentOffering.title);
     const [tempOrder, setTempOrder] = useState(currentOffering.order);
     const [tempSchedule, setTempSchedule] = useState(currentOffering.schedule);
-    const [tempImageURL, setTempImageURL] = useState(currentOffering.image);
+    const [tempImageURL, setTempImageURL] = useState(serverURL + currentOffering.image);
     const [uploadImageFile, setUploadImageFile] = useState(null);
 
     function handleOfferingDescriptionChange(e) {
@@ -494,11 +508,14 @@ export default function HomePage() {
       const uploadDate = Date.now().toString();
       const imgLink = await uploadImgToStorageAndReturnDownloadLink("offerings", uploadImageFile, uploadDate);
       if (imgLink !== newData.image && imgLink) {
-        const storageRef = ref(storage, `offerings/${newData.imgFileName}`);
-        deleteObject(storageRef);
+        removeImage("offerings/" + currentOffering.imgFileName);
+      }
+      newData.imgFileName = imgLink ? uploadDate : currentOffering.imgFileName;
+      newData.order = tempOrder ? tempOrder : offeringData.length + 1;
+      if (imgLink) {
+        newData.image = imgLink;
       }
       newData.imgFileName = uploadDate;
-      newData.image = imgLink ? imgLink : tempImageURL;
       newData.description = tempDescription;
       newData.schedule = tempSchedule;
       newData.title = tempTitle;
@@ -519,6 +536,7 @@ export default function HomePage() {
       const docRef = doc(firestore, "offerings", currentOffering.id);
       const deleteRef = doc(firestore, "deletedOfferings", currentOffering.id);
       deleteDoc(docRef);
+      removeImage("offerings/" + currentOffering.imgFileName);
       setDoc(deleteRef, currentOffering);
       setOfferingEdit(false);
       setOfferingModalOpen(false);
@@ -606,7 +624,7 @@ export default function HomePage() {
             { offeringEdit &&
               <div className="d-flex flex-row justify-content-center gap-2">
                 <TextField label="Offering Title" placeholder="Please enter a title for this class offering" bordered value={tempTitle ? tempTitle : ""} onChange={handleOfferingTitleChange}/>
-                <TextField numeric label="Order" placeholder="Enter offering order value" value={tempOrder} onChange={handleOfferingOrderChange}/>
+                <TextField label="Order" placeholder="Enter offering order value" value={tempOrder} onChange={handleOfferingOrderChange}/>
               </div>
             }
             { offeringEdit &&
@@ -670,7 +688,7 @@ export default function HomePage() {
           className="m-2"
         >
           <Card.Body className="w-100 p-2 d-flex flex-row align-items-center justify-content-between" style={{overflowY: "hidden"}}>
-            <img src={o.image} alt={o.title} style={{width: "30%", minHeight: "100%", objectFit:"cover"}} className="img-shadow"/>
+            <img src={serverURL + o.image} alt={o.title} style={{width: "30%", minHeight: "100%", objectFit:"cover"}} className="img-shadow"/>
             <div className="d-flex w-100 flex-column px-2 text-center justify-content-center">
               <Text b>
                 {o.title}
@@ -822,9 +840,9 @@ export default function HomePage() {
 
 
     return (
-      <div className="d-flex flex-row w-100 justify-content-center">
-        <Button className="m-2" size="lg" color="secondary" onClick={editOfferings}>
-          Add an Offering
+      <div className="d-flex flex-row w-100 p-2 justify-content-center">
+        <Button css={{width: "100%"}} size="lg" color="secondary" onClick={editOfferings}>
+          Add a Class Offering
         </Button>
       </div>
     )
@@ -851,8 +869,8 @@ export default function HomePage() {
 
 
     return (
-      <div className="d-flex flex-row w-100 justify-content-center">
-        <Button className="m-2" size="lg" color="secondary" onClick={editTestimonials}>
+      <div className="d-flex flex-row w-100 p-2 justify-content-center">
+        <Button css={{width: "100%"}}  size="lg" color="secondary" onClick={editTestimonials}>
           Add a Testimonial
         </Button>
       </div>
@@ -885,7 +903,7 @@ function ClassOffering({offering, col}) {
     <div className={`col-${col} p-3`} style={{height: "500px"}}>
       <Card isHoverable isPressable css={{height: "500px"}} className="d-flex flex-column justify-content-between" onClick={handleOfferingPress}>
         <Card.Image
-          src={offering.image}
+          src={serverURL + offering.image}
           objectFit='cover'
           width="100%"
           alt={offering.title}

@@ -267,12 +267,14 @@ export default function About() {
         if ((imgLink !== newData.image) && imgLink) {
           removeImage("staff/" + currentTeamMember.imgFileName);
         }
-        newData.imgFileName = uploadDate;
-        newData.image = imgLink ? imgLink : tempImageURL;
+        newData.imgFileName = imgLink ? uploadDate : currentTeamMember.imgFileName;
+        newData.order = tempOrder ? tempOrder : staffData.length + 1;
+        if (imgLink) {
+          newData.image = imgLink;
+        }
         newData.name = tempName;
         newData.position = tempPosition;
         newData.bio = tempBio;
-        newData.order = tempOrder;
         if (currentTeamMember.id) {        
           const docRef = doc(firestore, "staff", currentTeamMember.id);
           setDoc(docRef, newData);
@@ -400,7 +402,7 @@ export default function About() {
                   <TextField label="Position" placeholder="Enter their positon" value={tempPosition} onChange={handleStaffPositionChange}/>
                 }
                 { staffEdit && 
-                  <TextField numeric label="Order" placeholder="Enter their order value" value={tempOrder} onChange={handleStaffOrderChange}/>
+                  <TextField label="Order" placeholder="Enter their order value" value={tempOrder} onChange={handleStaffOrderChange}/>
                 }
               </div>
                 { !staffEdit && 
@@ -513,8 +515,8 @@ export default function About() {
 
 
     return (
-      <div className="d-flex flex-row w-100 justify-content-center">
-        <Button className="m-2" size="lg" color="secondary" onClick={editStaff}>
+      <div className="d-flex flex-row w-100 justify-content-center p-3">
+        <Button size="lg" color="secondary" css={{width: "100%"}} onClick={editStaff}>
           Add a Team Member
         </Button>
       </div>
