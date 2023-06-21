@@ -348,7 +348,7 @@ function NavbarScheduleDropdownSmall() {
   }
 
   return (
-    <NextUINavbar.Content showIn="xs" css={{flex: 1}} className="d-flex flex-row w-100 justify-content-end px-2">
+    <NextUINavbar.Content showIn="xs" hideIn="sm" css={{flex: 1}} className="d-flex flex-row w-100 justify-content-end px-2">
       <Dropdown isBordered>
         <NextUINavbar.Item
           css={{
