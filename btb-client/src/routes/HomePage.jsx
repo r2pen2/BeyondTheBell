@@ -212,6 +212,7 @@ export default function HomePage() {
           <Button
             bordered
             rounded
+            size="lg"
             color="gradient"
             className="d-md-none d-inline"
             onClick={() => setFormModalOpen(true)}
@@ -727,7 +728,20 @@ export default function HomePage() {
         >
           <Card.Body className="w-100 p-2 d-flex flex-row align-items-center justify-content-between" style={{overflowY: "hidden"}}>
             <img src={serverURL + o.image} alt={o.title} style={{width: "40%", minHeight: "100%", objectFit:"cover"}} className="img-shadow"/>
-            <div className="d-flex w-100 flex-column px-2 text-center justify-content-center">
+            <div className="d-none d-sm-flex w-100 flex-column px-2 text-center justify-content-center">
+              <Text b>
+                {o.title}
+              </Text>
+              <Text>
+                {o.schedule}
+              </Text>
+              <div className="d-flex flex-row w-100 justify-content-center align-items-center">
+                <Button bordered style={{minHeight:"2rem", maxWidth: "50%"}} onClick={handleOfferingPress}>
+                  Read More
+                </Button>
+              </div>
+            </div>
+            <div className="d-flex d-sm-none w-100 flex-column px-2 text-center justify-content-center">
               <Text b size="$sm">
                 {o.title}
               </Text>
@@ -735,7 +749,7 @@ export default function HomePage() {
                 {o.schedule}
               </Text>
               <div className="d-flex flex-row w-100 justify-content-center align-items-center">
-                <Button bordered size="sm" style={{minHeight:"2rem", maxWidth: "50%"}} onClick={handleOfferingPress}>
+                <Button size="sm" bordered style={{minHeight:"2rem", maxWidth: "50%"}} onClick={handleOfferingPress}>
                   Read More
                 </Button>
               </div>
@@ -820,24 +834,23 @@ export default function HomePage() {
     return (
       <div 
         className={`p-3`}
-        style={{flex: 1, minHeight: "600px"}}
+        style={{flex: 1, minHeight: "550px"}}
       >
         <Card 
           isPressable 
           isHoverable 
           css={{
             height: "100%",
-            }}
+          }}
             onPress={handleTestimonialPress}
         >
           <Card.Body>
               <div className="text-center d-flex flex-column align-items-center justify-content-center h-100 w-100 gap-2">
-                <img src={serverURL + props.testimonial.image} alt="testimonial-img" className="d-md-none d-xs-inline testimonial-img" style={{objectFit: "cover"}}/>
-                <img src={serverURL + props.testimonial.image} alt="testimonial-img" className="d-none d-md-inline testimonial-img" style={{width: "10rem", height: "10rem", objectFit: "cover"}}/>
-                <Text className="d-inline d-lg-none">
+                <img src={serverURL + props.testimonial.image} alt="testimonial-img" className="testimonial-img" style={{width: "10rem", height: "10rem", objectFit: "cover"}}/>
+                <Text className="d-inline d-sm-none">
                   "{props.testimonial.preview}"
                 </Text>
-                <Text className="d-none d-lg-inline" size="$lg">
+                <Text className="d-none d-sm-inline" size="$lg">
                   "{props.testimonial.preview}"
                 </Text>
                 <Text className="d-inline d-lg-none">
