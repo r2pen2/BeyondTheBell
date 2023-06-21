@@ -123,8 +123,9 @@ export function Navbar() {
 function BrandSmall() {
   return (
     <NextUINavbar.Brand
-      showIn="md"
+      showIn="sm"
       hideIn="xs"
+      css={{flex: 1}}
     >
       <div 
         className="navbar-brand-content"
@@ -144,8 +145,8 @@ function BrandSmall() {
 function BrandLarge() {
   return (
     <NextUINavbar.Brand
-      hideIn="md"
-      css={{width: "25%"}}
+      hideIn="sm"
+      css={{width: "25%", flex: 3}}
     >
       <div 
         className="navbar-brand-content"
@@ -195,7 +196,7 @@ function NavbarSocials() {
 
   return (
     <NextUINavbar.Content hideIn="md" enableCursorHighlight activeColor="primary">
-      <div className="d-flex flex-row align-items-center justify-content-end gap-2">
+      <div className="d-flex flex-row align-items-center justify-content-center w-100 gap-2">
         <Button
           light
           auto
@@ -252,7 +253,7 @@ function NavbarScheduleDropdown() {
   }
 
   return (
-    <NextUINavbar.Content hideIn="xs">
+    <NextUINavbar.Content css={{flex: 1}} className="d-none d-md-flex flex-row w-100 justify-content-end px-2">
       <Dropdown isBordered>
         <NextUINavbar.Item
           css={{
@@ -348,7 +349,7 @@ function NavbarScheduleDropdownSmall() {
   }
 
   return (
-    <NextUINavbar.Content showIn="xs" hideIn="sm" css={{flex: 1}} className="d-flex flex-row w-100 justify-content-end px-2">
+    <NextUINavbar.Content css={{flex: 1}} className="d-flex d-md-none flex-row w-100 justify-content-end px-2">
       <Dropdown isBordered>
         <NextUINavbar.Item
           css={{
