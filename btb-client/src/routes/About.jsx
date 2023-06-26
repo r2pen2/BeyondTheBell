@@ -457,7 +457,7 @@ export default function About() {
 
   
       return (
-        <div className="col-xxl-3 col-xl-4 col-md-6 col-sm-12 p-3" key={index} style={{maxHeight: 550}}>
+        <div className="col-xxl-3 col-xl-4 col-md-6 col-sm-12 p-3 d-flex flex-column align-items-center justify-content-center" key={index} style={{maxHeight: 550}}>
           <Card 
             isHoverable 
             isPressable 
