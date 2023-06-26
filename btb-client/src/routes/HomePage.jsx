@@ -280,7 +280,7 @@ export default function HomePage() {
 
   function BTBCarousel(props) {
     return (
-      <Carousel swipe={false}  animation="slide" navButtonsAlwaysVisible className="w-100 px-3" autoPlay={false}>
+      <Carousel swipe={false}  animation="slide" navButtonsAlwaysVisible className="w-100 px-3" >
         {props.children}
       </Carousel>
     )

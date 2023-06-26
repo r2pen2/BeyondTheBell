@@ -131,7 +131,7 @@ export default function About() {
           },
         ]}
       />
-      <section className="container-fluid p-5" id="developing-all-learners">
+      <section className="container-fluid p-lg-5 py-5 p-2" id="developing-all-learners">
         <div className="row">
           <div className="col-xxl-6 col-xl-12 about-text">
             <Text h1 color="primary">
@@ -153,7 +153,7 @@ export default function About() {
         </div>
       </section>
       <div className="rainbow-line" />
-      <section className="container-fluid p-5" id="meet-the-team">
+      <section className="container-fluid p-lg-5 p-2 py-5" id="meet-the-team">
         <div className="row d-flex flex-row justify-content-center align-items-center">
           <div className="col-xxl-3 col-xl-6">
             <img src={nancyMager} className="img-shadow img-round" alt="nancy-mager" />
@@ -196,7 +196,7 @@ export default function About() {
           </div>
         </div>
       </section>
-      <section className="container-fluid p-5 section-header" id="our-learning-center">
+      <section className="container-fluid p-lg-5 p-2 py-5 section-header" id="our-learning-center">
         <div className="row">
           <div className="col-xl-6 col-lg-12" >
             <img src={wall} className="img-shadow" alt="about-us-homework-space" style={{width: "auto", height: "100%", objectFit: "cover"}} />
