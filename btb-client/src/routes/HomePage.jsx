@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { Button, Text, Card, Modal, Tooltip, Textarea, Input } from "@nextui-org/react";
+import { Button, Text, Card, Modal, Textarea } from "@nextui-org/react";
 
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 
@@ -9,12 +9,12 @@ import Carousel from "react-material-ui-carousel";
 import "../assets/style/homepage.css"
 import { FormModal } from '../components/Forms';
 
-import { auth, firestore, openFileBrowser, removeImage, storage, uploadImgToStorageAndReturnDownloadLink } from '../api/firebase';
+import { auth, firestore, openFileBrowser, removeImage, uploadImgToStorageAndReturnDownloadLink } from '../api/firebase';
 import { addDoc, collection, deleteDoc, doc, getDoc, onSnapshot, setDoc } from 'firebase/firestore';
 import { IconButton, TextField } from '@mui/material';
 import { PencilIcon } from '../components/Icons';
-import { deleteObject, ref, } from 'firebase/storage';
 import { serverURL } from '../App';
+import { BTBLoader } from '../components/Feedback';
 
 export default function HomePage() {
 
@@ -28,8 +28,8 @@ export default function HomePage() {
   const [userCanEditTestimonials, setUserCanEditTestimonials] = useState(false)
   const [userCanEditOfferings, setUserCanEditOfferings] = useState(false)
 
-  const [testimonialData, setTestimonialData] = useState([]);
-  const [offeringData, setOfferingData] = useState([]);
+  const [testimonialData, setTestimonialData] = useState(null);
+  const [offeringData, setOfferingData] = useState(null);
 
   useEffect(() => {
     auth.onAuthStateChanged(async (authUser) => {
@@ -694,6 +694,10 @@ export default function HomePage() {
   }
 
   function renderOfferingsList() {
+    
+    // Guard clauses
+    if (!offeringData) { return <BTBLoader />; }  // Offering data has not been fetched yet
+
     return offeringData.map((o, index) => {
 
       function handleOfferingPress() {
@@ -763,6 +767,9 @@ export default function HomePage() {
 
   function renderOfferings(itemsPerCarousel) {
     
+    // Guard clauses
+    if (!offeringData) { return <BTBLoader />; }  // Offering data has not been fetched yet
+
     const offeringPages = splitArray(offeringData.sort((a, b) => a.order - b.order), itemsPerCarousel);
     
     function renderPage(op) {
@@ -781,7 +788,10 @@ export default function HomePage() {
     })
   }
 
-  function renderTestimonials(itemsPerCarousel, noMargin) {
+  function renderTestimonials(itemsPerCarousel) {
+
+    // Guard clauses
+    if (!testimonialData) { return <BTBLoader />; }  // Testimonial data has not been fetched yet
 
     const testimonialPages = splitArray(testimonialData.sort((a, b) => a.order - b.order), itemsPerCarousel);
     
