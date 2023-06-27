@@ -102,39 +102,11 @@ export function FormModal({open, setOpen}) {
   }
 
 
-  function GridModalContent() {
-
-    return (
-      <div className="d-xl-flex d-none flex-column">
-        <div className="d-flex flex-row align-items-center justify-content-center w-100">
-          <div className="m-1 w-100">
-            <SchoolDaysFormCard />
-          </div>
-          <div className="m-1 w-100">
-            <AfterSchoolFormCard />
-          </div>
-        </div>
-        <div className="d-flex flex-row align-items-center justify-content-center w-100">
-          <div className="m-1 w-100">
-            <SchoolYearFormCard />
-          </div>
-          <div className="m-1 w-100">
-            <ScholarshipFormCard />
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-
   
   return (
     <Modal
       closeButton
-      css={{
-        maxWidth: "75vw"
-      }}
-      aria-labelledby="modal-title"
+      width="80vw"
       open={open}
       blur
       onClose={() => setOpen(false)}

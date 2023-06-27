@@ -59,8 +59,8 @@ export default function Services() {
           },
         ]}
       />
-      <section className="d-flex flex-column align-items-center w-100">
-        <Collapse.Group splitted css={{width: "80%"}} accordion={false}>
+      <section className="d-flex flex-column align-items-center w-100 p-xl-5">
+        <Collapse.Group splitted accordion={false}>
           <Collapse 
             title="After School Programs" 
             bordered 
@@ -74,7 +74,7 @@ export default function Services() {
             <div className="fill-line dotted" />
             <div className="container-fluid">
               <div className="row">
-                <div className="col-xxl-6 col-xl-12 d-flex flex-column p-5 gap-2">
+                <div className="col-xxl-6 col-xl-12 d-flex flex-column px-xl-5 py-5 gap-2">
                   <Text h1 color="primary">
                     After School at BTB
                   </Text>
@@ -90,7 +90,7 @@ export default function Services() {
                 </div>
               </div>
               <div className="row">
-                <div className="col p-5">
+                <div className="col px-xl-5 py-5">
                   <div className="container-fluid">
                     <Text h2 color="primary">
                       Why Sign Up?
@@ -135,7 +135,7 @@ export default function Services() {
             <div className="fill-line dotted" />
             <div className="container-fluid">
               <div className="row">
-                <div className="col-xxl-6 col-xl-12 d-flex flex-column p-5 gap-2">
+                <div className="col-xxl-6 col-xl-12 d-flex flex-column px-xl-5 py-5 gap-2">
                   <Text h1 color="primary">
                     1 on 1 Tutoring at BTB
                   </Text>
@@ -151,7 +151,7 @@ export default function Services() {
                 </div>
               </div>
               <div className="row">
-                <div className="col p-5">
+                <div className="col px-xl-5 py-5">
                   <div className="container-fluid">
                     <Text h2 color="primary">
                       Why Sign Up?
@@ -191,7 +191,7 @@ export default function Services() {
             <div className="fill-line dotted" />
             <div className="container-fluid">
               <div className="row">
-                <div className="col-xxl-6 col-xl-12 d-flex flex-column p-5 gap-2">
+                <div className="col-xxl-6 col-xl-12 d-flex flex-column px-xl-5 py-5 gap-2">
                   <Text h1 color="primary">
                     Wilson Tutoring at BTB
                   </Text>
@@ -207,7 +207,7 @@ export default function Services() {
                 </div>
               </div>
               <div className="row">
-                <div className="col p-5">
+                <div className="col px-xl-5 py-5">
                   <div className="container-fluid">
                     <Text h2 color="primary">
                       Why Sign Up?
@@ -277,7 +277,7 @@ export default function Services() {
 
 function SignUpReason(props) {
   return (
-    <div className="d-flex flex-row align-items-center p-2 h-100">
+    <div className="d-flex flex-row align-items-center px-xl-2 py-2 h-100">
       <Card isHoverable css={{height: "100%"}}>
         <Card.Body>
           <div className="d-flex flex-row align-items-center h-100 gap-2">
