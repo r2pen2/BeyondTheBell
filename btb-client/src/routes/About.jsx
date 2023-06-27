@@ -9,7 +9,7 @@ import nancyMager from "../assets/images/nancy-mager.jpg"
 import ourMethods from "../assets/images/they-feast.jpeg"
 import wall from "../assets/images/about-our-center-wall3.jpg"
 
-import { FormModal } from "../components/Forms";
+import { FormModal, ScheduleBar } from "../components/Forms";
 import { auth, firestore, openFileBrowser, removeImage, storage, uploadImgToStorageAndReturnDownloadLink } from '../api/firebase';
 import { addDoc, collection, deleteDoc, doc, getDoc, onSnapshot, setDoc } from 'firebase/firestore';
 import { Icon, IconButton, TextField } from '@mui/material';
@@ -43,7 +43,7 @@ export default function About() {
 
   const [staffData, setStaffData] = useState([]);
 
-  const [modalOpen, setModalOpen] = useState(false);
+  const [formModalOpen, setFormModalOpen] = useState(false);
 
   const [currentTeamMember, setCurrentTeamMember] = useState({
     order: 0,
@@ -214,17 +214,7 @@ export default function About() {
           </div>
         </div>
       </section>
-      <section>
-        <OrangeBar>
-          <Text h1 color="white">
-            Ready to support your child’s learning?
-          </Text>
-          <Button size="xl" bordered color="gradient" shadow onClick={() => setModalOpen(true)}>
-            Schedule A Session
-          </Button>
-        </OrangeBar>
-      </section>
-      <FormModal open={modalOpen} setOpen={setModalOpen}/>
+      <ScheduleBar open={formModalOpen} setOpen={setFormModalOpen} />
     </div>
   )
 

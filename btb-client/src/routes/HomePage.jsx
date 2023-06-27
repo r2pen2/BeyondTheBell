@@ -7,7 +7,7 @@ import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import Carousel from "react-material-ui-carousel";
 
 import "../assets/style/homepage.css"
-import { FormModal } from '../components/Forms';
+import { FormModal, ScheduleBar } from '../components/Forms';
 
 import { auth, firestore, openFileBrowser, removeImage, uploadImgToStorageAndReturnDownloadLink } from '../api/firebase';
 import { addDoc, collection, deleteDoc, doc, getDoc, onSnapshot, setDoc } from 'firebase/firestore';
@@ -275,6 +275,7 @@ export default function HomePage() {
           </div>
         { userCanEditOfferings && <AddTestimonialButton /> }
       </section>
+      <ScheduleBar open={formModalOpen} setOpen={setFormModalOpen} />
     </div>
   )
 

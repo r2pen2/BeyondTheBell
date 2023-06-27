@@ -12,12 +12,15 @@ import CheckIcon from '@mui/icons-material/Check';
 
 import EditIcon from '@mui/icons-material/Edit';
 import { AfterSchoolIcon, BookIcon, PencilIcon, iconFills } from '../components/Icons';
+import { ScheduleBar } from '../components/Forms';
 
 export default function Services() {
 
   const [afterSchoolOpen, setAfterSchoolOpen] = useState(false);
   const [tutoringOpen, setTutoringOpen] = useState(false);
   const [dyslexiaOpen, setDyslexiaOpen] = useState(false);
+
+  const [formModalOpen, setFormModalOpen] = useState(false);
 
   return (
     <div className="d-flex flex-column">
@@ -271,6 +274,7 @@ export default function Services() {
           </Collapse>
         </Collapse.Group>
       </section>
+      <ScheduleBar open={formModalOpen} setOpen={setFormModalOpen} />
     </div>
   )
 }

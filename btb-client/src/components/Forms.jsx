@@ -4,6 +4,7 @@ import { AfterSchoolIcon, ContractIcon, ScholarshipIcon, SchoolDaysIcon, iconFil
 
 import LaunchIcon from '@mui/icons-material/Launch';
 import { afterSchoolFormLink, scholarshipLink, schoolContractLink, schoolDayFormLink } from '../api/links';
+import { OrangeBar } from "./Bar";
 
 function FormCard({icon, title, formType, href}) {
 
@@ -76,6 +77,25 @@ export function ScholarshipFormCard() {
       formType="application"
       href={scholarshipLink}
     />
+  )
+}
+
+export function ScheduleBar({open, setOpen}) {
+
+  return (
+    <div>
+      <section>
+        <OrangeBar>
+          <Text h1 color="white">
+            Ready to support your child’s learning?
+          </Text>
+          <Button size="xl" bordered color="gradient" shadow onClick={() => setOpen(true)}>
+            Schedule A Session
+          </Button>
+        </OrangeBar>
+      </section>
+      <FormModal open={open} setOpen={setOpen}/>
+    </div>
   )
 }
 
