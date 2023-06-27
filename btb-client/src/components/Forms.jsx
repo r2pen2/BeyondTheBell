@@ -86,7 +86,7 @@ export function ScheduleBar({open, setOpen}) {
     <div>
       <section>
         <OrangeBar>
-          <Text h1 color="white">
+          <Text h3 color="white">
             Ready to support your child’s learning?
           </Text>
           <Button size="xl" bordered color="gradient" shadow onClick={() => setOpen(true)}>
