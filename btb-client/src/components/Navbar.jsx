@@ -10,7 +10,7 @@ import { SchoolDaysIcon, AfterSchoolIcon, ContractIcon, ScholarshipIcon, iconFil
 
 import { afterSchoolFormLink, callLink, facebookLink, mapsLink, mailLink, schoolContractLink, schoolDayFormLink, scholarshipLink, } from '../api/links';
 
-import logoBlack from "../assets/images/logoBlack.png";
+import logoBlack from "../assets/images/logoTransparentBlack.png";
 
 // Style Imports
 import "../assets/style/navbar.css";

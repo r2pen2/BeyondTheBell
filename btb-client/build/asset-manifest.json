@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.64e9c3a6.css",
-    "main.js": "/static/js/main.cbca3ebd.js",
+    "main.js": "/static/js/main.4ebb20ca.js",
     "static/media/footerBackground.png": "/static/media/footerBackground.0946dfbf1e48edeb043a.png",
     "static/media/they-feast.jpeg": "/static/media/they-feast.4322994b9b431e1673fd.jpeg",
     "static/media/after-school.jpg": "/static/media/after-school.c639e50a0acacaa22324.jpg",
@@ -14,7 +14,7 @@
     "static/media/wilson-reading-tutoring.jpg": "/static/media/wilson-reading-tutoring.8ef8748abb56cc64f08e.jpg",
     "static/media/logoTransparent.png": "/static/media/logoTransparent.8eef0f5af147d2623f46.png",
     "static/media/hexagons.svg": "/static/media/hexagons.6a7d35e57ab9acd2a95f.svg",
-    "static/media/logoBlack.png": "/static/media/logoBlack.6516d8ba988f93bdab94.png",
+    "static/media/logoTransparentBlack.png": "/static/media/logoTransparentBlack.92af34da5c0d8bf76dc4.png",
     "static/media/blueToPurple.svg": "/static/media/blueToPurple.4c5575c406d102bf56c4.svg",
     "static/media/yellowToOrange.svg": "/static/media/yellowToOrange.9ba88d76a8fd03c37984.svg",
     "index.html": "/index.html",
@@ -22,10 +22,10 @@
     "static/media/call.svg": "/static/media/call.cf266a418c645002a306.svg",
     "static/media/mail.svg": "/static/media/mail.84fe65fb6695456fa65a.svg",
     "main.64e9c3a6.css.map": "/static/css/main.64e9c3a6.css.map",
-    "main.cbca3ebd.js.map": "/static/js/main.cbca3ebd.js.map"
+    "main.4ebb20ca.js.map": "/static/js/main.4ebb20ca.js.map"
   },
   "entrypoints": [
     "static/css/main.64e9c3a6.css",
-    "static/js/main.cbca3ebd.js"
+    "static/js/main.4ebb20ca.js"
   ]
 }
