@@ -1,44 +1,39 @@
-import React, { useContext, useState, useEffect } from 'react'
-
+// Library Imports
+import { addDoc, collection, deleteDoc, doc, getDoc, setDoc, } from 'firebase/firestore';
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+import { IconButton, TextField, } from '@mui/material';
 import { Button, Card, Modal, Text, Textarea, } from "@nextui-org/react";
+import { useEffect, useState, } from 'react'
 
-import "../assets/style/about.css"
-import { PageHeader, OrangeBar } from '../components/Bar';
+// Style Imports
+import "../assets/style/about.css";
+
+// Image Imports
 import homeworkSpace from "../assets/images/about-us-homework-space2.jpg"
 import nancyMager from "../assets/images/nancy-mager.jpg"
 import ourMethods from "../assets/images/they-feast.jpeg"
 import wall from "../assets/images/about-our-center-wall3.jpg"
 
-import { FormModal, ScheduleBar } from "../components/Forms";
-import { auth, firestore, openFileBrowser, removeImage, storage, uploadImgToStorageAndReturnDownloadLink } from '../api/firebase';
-import { addDoc, collection, deleteDoc, doc, getDoc, onSnapshot, setDoc } from 'firebase/firestore';
-import { Icon, IconButton, TextField } from '@mui/material';
+// Component Imports
+import { serverURL, } from '../App';
+import { PageHeader, } from '../components/Bar';
+import { ScheduleBar, } from "../components/Forms";
 
-import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+// API Imports
+import { auth, firestore, openFileBrowser, removeImage, uploadImgToStorageAndReturnDownloadLink, } from '../api/firebase';
 
-import AddIcon from '@mui/icons-material/Add';
-import { deleteObject, ref } from 'firebase/storage';
-import { serverURL } from '../App';
 
 export default function About() {
 
-
-  function fetchStaff() {
-    const collectionRef = collection(firestore, "staff");
-    // Add listener
-    onSnapshot((collectionRef), (snap) => {
-      let newStaff = [];
-      for (const doc of snap.docs) {
-        const staffWithId = doc.data();
-        staffWithId["id"] = doc.id;
-        newStaff.push(staffWithId);
-      }
-      setStaffData(newStaff);
-    })
-  }
-  
+  // Fetch current team members after component mount
   useEffect(() => {
-    fetchStaff();
+    // Ask server for current staff
+    fetch(`${serverURL}staff`).then(res => {
+      res.json().then(data => {
+        // Get json from HTTP response and set data state
+        setStaffData(data);
+      })
+    });
   }, [])
 
   const [staffData, setStaffData] = useState([]);
