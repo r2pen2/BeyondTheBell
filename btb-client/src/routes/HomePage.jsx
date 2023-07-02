@@ -59,9 +59,22 @@ export default function HomePage() {
     }
   }, [])
 
+  // Fetch current class offerings and testimonials after component mount
   useEffect(() => {
-    fetchOfferings();
-    fetchTestimonails();
+    // Ask server for current offerings
+    fetch(`${serverURL}offerings`).then(res => {
+      res.json().then(data => {
+        // Get json from HTTP response and set data state
+        setOfferingData(data);
+      })
+    })
+    fetch(`${serverURL}testimonials`).then(res => {
+      // Ask server for current testimonials
+      res.json().then(data => {
+        // Get json from HTTP response and set data state
+        setTestimonialData(data);
+      })
+    })
   }, [])
 
   const [currentTestimonial, setCurrentTestimonial] = useState({
@@ -83,30 +96,18 @@ export default function HomePage() {
   
 
   function fetchOfferings() {
-    const collectionRef = collection(firestore, "offerings");
-    // Add listener
-    onSnapshot((collectionRef), (snap) => {
-      let newOfferings = [];
-      for (const doc of snap.docs) {
-        const offeringWithId = doc.data();
-        offeringWithId["id"] = doc.id;
-        newOfferings.push(offeringWithId);
-      }
-      setOfferingData(newOfferings);
+    fetch(`${serverURL}offerings`).then(res => {
+      res.json().then(data => {
+        setCurrentOffering(data);
+      })
     })
   }
 
   function fetchTestimonails() {
-    const collectionRef = collection(firestore, "testimonials");
-    // Add listener
-    onSnapshot((collectionRef), (snap) => {
-      let newTestimonials = [];
-      for (const doc of snap.docs) {
-        const testimonialWithId = doc.data();
-        testimonialWithId["id"] = doc.id;
-        newTestimonials.push(testimonialWithId);
-      }
-      setTestimonialData(newTestimonials);
+    fetch(`${serverURL}testimonials`).then(res => {
+      res.json().then(data => {
+        setTestimonialData(data);
+      })
     })
   }
 
