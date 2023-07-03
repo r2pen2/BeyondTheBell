@@ -59,8 +59,8 @@ staffCollectionRef.onSnapshot((data) => {
 dotenv.config();
 
 // Start listening on defined port
-app.listen(process.env.PORT || 3001, () => {
-    console.log('Now listening on port ' + process.env.PORT || 3001);
+app.listen(3000, () => {
+    console.log('Now listening on port ' + 3000);
 });
 
 // BodyParser setup
@@ -74,12 +74,15 @@ app.use(express.static(__dirname + "/server/static/"));
 app.use(express.static(__dirname + "/btb-client/build"));
 
 app.get("/testimonials", (req, res) => {
+    console.log("Sending testimoninial data...")
     res.send(testimonialData);
 })
 app.get("/offerings", (req, res) => {
+    console.log("Sending offering data...")
     res.send(offeringData);
 })
 app.get("/staff", (req, res) => {
+    console.log("Sending staff data...")
     res.send(staffData);
 })
 
