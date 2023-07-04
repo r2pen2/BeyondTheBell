@@ -35,7 +35,9 @@ testimonialCollectionRef.onSnapshot((data) => {
     console.log("Found updated testimonial data");
     testimonialData = []; // Clear data
     for (const doc of data.docs) {
-        testimonialData.push(doc.data());
+        const dataWithId = doc.data();
+        dataWithId["id"] = doc.id;
+        testimonialData.push(dataWithId);
     }
 })
 const offeringCollectionRef = db.collection("offerings");
@@ -43,7 +45,9 @@ offeringCollectionRef.onSnapshot((data) => {
     console.log("Found updated class offering data");
     offeringData = []; // Clear data
     for (const doc of data.docs) {
-        offeringData.push(doc.data());
+        const dataWithId = doc.data();
+        dataWithId["id"] = doc.id;
+        offeringData.push(dataWithId);
     }
 })
 const staffCollectionRef = db.collection("staff");
@@ -51,7 +55,9 @@ staffCollectionRef.onSnapshot((data) => {
     console.log("Found updated staff data");
     staffData = []; // Clear data
     for (const doc of data.docs) {
-        staffData.push(doc.data());
+        const dataWithId = doc.data();
+        dataWithId["id"] = doc.id;
+        staffData.push(dataWithId);
     }
 })
 

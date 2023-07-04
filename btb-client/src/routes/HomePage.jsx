@@ -10,38 +10,67 @@ import "../assets/style/homepage.css"
 import { FormModal, ScheduleBar } from '../components/Forms';
 
 import { auth, firestore, openFileBrowser, removeImage, uploadImgToStorageAndReturnDownloadLink } from '../api/firebase';
-import { addDoc, collection, deleteDoc, doc, getDoc, onSnapshot, setDoc } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDoc, setDoc } from 'firebase/firestore';
 import { IconButton, TextField } from '@mui/material';
 import { PencilIcon } from '../components/Icons';
 import { serverURL } from '../App';
 import { BTBLoader } from '../components/Feedback';
 
 export default function HomePage() {
+  
+  // Create states for HomePage
+  const [currentTestimonial, setCurrentTestimonial] = useState({  // Default focused testimonial data
+    preview: "",            // No testimonial selected, so no preview yet 
+    authorDescription: "",  // No testimonial selected, so no author description yet
+    image: null,            // No testimonial selected, so no image yet
+    message: "",            // No testimonial selected, so no message yet
+    id: "",                 // No testimonial selected, so no id yet
+  });
+  const [currentOffering, setCurrentOffering] = useState({        // Default focused class offering data
+    description: "",        // No class offering selected, so no description yet
+    image: null,            // No class offering selected, so no image yet
+    schedule: "",           // No class offering selected, so no schedule yet
+    title: "",              // No class offering selected, so no title yet
+    order: 0,               // No class offering selected, so no order yet
+  });
+  const [formModalOpen, setFormModalOpen] = useState(false);                      // Whether form modal is open
+  const [testimonialModalOpen, setTestimonialModalOpen] = useState(false);        // Whether focused testimonial modal is open
+  const [offeringModalOpen, setOfferingModalOpen] = useState(false);              // Whether focused class offering modal is open
+  const [userCanEditTestimonials, setUserCanEditTestimonials] = useState(false);  // Whether current user can edit testimonials
+  const [userCanEditOfferings, setUserCanEditOfferings] = useState(false);        // Whether current user can edit class offerings
+  const [testimonialEdit, setTestimonialEdit] = useState(false);                  // Whether current user is currently editing a testimonial
+  const [offeringEdit, setOfferingEdit] = useState(false);                        // Whether current user is currently editing a class offering
+  const [testimonialData, setTestimonialData] = useState(null);                   // Data for all testimonials from DB
+  const [offeringData, setOfferingData] = useState(null);                         // Data for all class offerings from DB
 
-  const [formModalOpen, setFormModalOpen] = useState(false);
-  const [testimonialModalOpen, setTestimonialModalOpen] = useState(false);
-  const [offeringModalOpen, setOfferingModalOpen] = useState(false);
+  /**
+   * Close all modals and reload the page. This is intended for use after some edit is confirmed.
+   */
+  function closeModalsAndReload() {
+    setTestimonialEdit(false);
+    setOfferingEdit(false);
+    setTestimonialModalOpen(false);
+    setOfferingModalOpen(false);
+    window.location.reload();
+  }
 
-  const [testimonialEdit, setTestimonialEdit] = useState(false);
-  const [offeringEdit, setOfferingEdit] = useState(false);
-
-  const [userCanEditTestimonials, setUserCanEditTestimonials] = useState(false)
-  const [userCanEditOfferings, setUserCanEditOfferings] = useState(false)
-
-  const [testimonialData, setTestimonialData] = useState(null);
-  const [offeringData, setOfferingData] = useState(null);
-
+  // Add a listener for authentication state changes once the component has mounted
   useEffect(() => {
     auth.onAuthStateChanged(async (authUser) => {
       if (authUser) {
+        // Whenever we change users, fetch new permissions
         fetchUserPermissions();
       } else {
+        // If the user signed-out, set both permissions to false
         setUserCanEditTestimonials(false);
         setUserCanEditOfferings(false);
       }
     })
   }, [])
 
+  /**
+   * Contact {@link firestore} for current user's permissions, then set relevant states
+   */
   function fetchUserPermissions() {
     const docRef = doc(firestore, "users", auth.currentUser.uid);
     getDoc(docRef).then((doc) => {
@@ -53,7 +82,9 @@ export default function HomePage() {
     })
   }
 
+  // Fetch current user's edit permissions after component mount
   useEffect(() => {
+    // Only fetch credentials of the user is signed in
     if (auth.currentUser) {
       fetchUserPermissions();
     }
@@ -77,45 +108,17 @@ export default function HomePage() {
     })
   }, [])
 
-  const [currentTestimonial, setCurrentTestimonial] = useState({
-    preview: "",
-    authorDescription: "",
-    image: null,
-    message: "",
-    id: "",
-  });
-
-  const [currentOffering, setCurrentOffering] = useState({
-    description: "",
-    image: null,
-    schedule: "",
-    title: "",
-    order: 0,
-  });
-
-  
-
-  function fetchOfferings() {
-    fetch(`${serverURL}offerings`).then(res => {
-      res.json().then(data => {
-        setCurrentOffering(data);
-      })
-    })
-  }
-
-  function fetchTestimonails() {
-    fetch(`${serverURL}testimonials`).then(res => {
-      res.json().then(data => {
-        setTestimonialData(data);
-      })
-    })
-  }
-
+  /**
+   * Close the focused testimonial modal 
+   */
   function closeTestimonialModal() {
     setTestimonialModalOpen(false);
     setTestimonialEdit(false);
   }
   
+  /**
+   * Close the focused class offering modal 
+   */
   function closeOfferingModal() {
     setOfferingModalOpen(false);
     setOfferingEdit(false);
@@ -361,8 +364,7 @@ export default function HomePage() {
         const collectionRef = collection(firestore, "testimonials");
         addDoc(collectionRef, newData)
       }
-      setTestimonialEdit(false);
-      setTestimonialModalOpen(false);
+      closeModalsAndReload();
     }
 
     const [deleteWarningVisible, setDeleteWarningVisible] = useState(false);
@@ -373,8 +375,7 @@ export default function HomePage() {
       removeImage("testimonials/" + currentTestimonial.imgFileName);
       deleteDoc(docRef);
       setDoc(deleteRef, currentTestimonial);
-      setTestimonialEdit(false);
-      setTestimonialModalOpen(false);
+      closeModalsAndReload();
     }
     
     function uploadImage() {
@@ -566,8 +567,7 @@ export default function HomePage() {
         const collectionRef = collection(firestore, "offerings");
         addDoc(collectionRef, newData)
       }
-      setOfferingEdit(false);
-      setOfferingModalOpen(false);
+      closeModalsAndReload();
     }
 
     const [deleteWarningVisible, setDeleteWarningVisible] = useState(false);
@@ -578,8 +578,7 @@ export default function HomePage() {
       deleteDoc(docRef);
       removeImage("offerings/" + currentOffering.imgFileName);
       setDoc(deleteRef, currentOffering);
-      setOfferingEdit(false);
-      setOfferingModalOpen(false);
+      closeModalsAndReload();
     }
 
     
