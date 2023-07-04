@@ -15,6 +15,8 @@ import { IconButton, TextField } from '@mui/material';
 import { PencilIcon } from '../components/Icons';
 import { serverURL } from '../App';
 import { BTBLoader } from '../components/Feedback';
+import { compressImage } from '../api/images';
+
 
 export default function HomePage() {
   
@@ -344,7 +346,8 @@ export default function HomePage() {
       }
       const newData = {...currentTestimonial};
       const uploadDate = Date.now().toString();
-      const imgLink = await uploadImgToStorageAndReturnDownloadLink("testimonials", uploadImageFile, uploadDate);
+      const compressedImage = await compressImage(uploadImageFile);
+      const imgLink = await uploadImgToStorageAndReturnDownloadLink("testimonials", compressedImage, uploadDate);
       console.log(imgLink);
       if (imgLink !== newData.image && imgLink) {
         removeImage("testimonials/" + currentTestimonial.imgFileName);
@@ -551,7 +554,8 @@ export default function HomePage() {
       }
       const newData = {...currentOffering};
       const uploadDate = Date.now().toString();
-      const imgLink = await uploadImgToStorageAndReturnDownloadLink("offerings", uploadImageFile, uploadDate);
+      const compressedImage = await compressImage(uploadImageFile);
+      const imgLink = await uploadImgToStorageAndReturnDownloadLink("offerings", compressedImage, uploadDate);
       if (imgLink !== newData.image && imgLink) {
         removeImage("offerings/" + currentOffering.imgFileName);
       }
