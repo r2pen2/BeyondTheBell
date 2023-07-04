@@ -14,7 +14,7 @@ export default function ThankYou() {
         <Text>
           Thank you for contacting us. We look forward to speaking with you and hearing more about how we can be of assistance. We will be in touch with you soon.
         </Text>
-        <img src={`${serverURL}image/thankyou.jpg`} alt="thank-you" className="img-shadow"/>
+        <img src={`${serverURL}images/thankyou.jpg`} alt="thank-you" className="img-shadow"/>
       </section>
     </div>
   )

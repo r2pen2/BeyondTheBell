@@ -151,7 +151,7 @@ export default function About() {
       <section className="container-fluid p-lg-5 p-2 py-5" id="meet-the-team">
         <div className="row d-flex flex-row justify-content-center align-items-center">
           <div className="col-xxl-3 col-xl-6">
-            <img src={`${serverURL}image/nancy-mager.jpg`} className="img-shadow img-round" alt="nancy-mager" />
+            <img src={`${serverURL}images/nancy-mager.jpg`} className="img-shadow img-round" alt="nancy-mager" />
           </div>
           <div className="col-xxl-6 col-xl-12 about-text">
               <Text h1 color="primary">
