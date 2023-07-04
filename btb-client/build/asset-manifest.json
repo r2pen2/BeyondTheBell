@@ -1,14 +1,12 @@
 {
   "files": {
     "main.css": "/static/css/main.64e9c3a6.css",
-    "main.js": "/static/js/main.d81c67a5.js",
+    "main.js": "/static/js/main.88c22cec.js",
     "static/media/after-school.jpg": "/static/media/after-school.b9964372810b8c6cbc07.jpg",
     "static/media/footerBackground.png": "/static/media/footerBackground.b04e90f74f1c8317bfa5.png",
     "static/media/they-feast.jpeg": "/static/media/they-feast.207d84fd0008241ea6e9.jpeg",
     "static/media/tutoring-placeholder.jpg": "/static/media/tutoring-placeholder.dcb43a900dec555eb0b1.jpg",
     "static/media/about-our-center-wall3.jpg": "/static/media/about-our-center-wall3.280b0553cce3fddcf217.jpg",
-    "static/media/thankyou.jpg": "/static/media/thankyou.8f2944b8c04f63d9e219.jpg",
-    "static/media/nancy-mager.jpg": "/static/media/nancy-mager.a890ff1036378b5d1fce.jpg",
     "static/media/about-us-homework-space2.jpg": "/static/media/about-us-homework-space2.b66b114c189ce7c6a345.jpg",
     "static/media/writing.jpg": "/static/media/writing.104e73ea137064fff396.jpg",
     "static/media/wilson-reading-tutoring.jpg": "/static/media/wilson-reading-tutoring.8ef8748abb56cc64f08e.jpg",
@@ -22,10 +20,10 @@
     "static/media/call.svg": "/static/media/call.cf266a418c645002a306.svg",
     "static/media/mail.svg": "/static/media/mail.84fe65fb6695456fa65a.svg",
     "main.64e9c3a6.css.map": "/static/css/main.64e9c3a6.css.map",
-    "main.d81c67a5.js.map": "/static/js/main.d81c67a5.js.map"
+    "main.88c22cec.js.map": "/static/js/main.88c22cec.js.map"
   },
   "entrypoints": [
     "static/css/main.64e9c3a6.css",
-    "static/js/main.d81c67a5.js"
+    "static/js/main.88c22cec.js"
   ]
 }

@@ -10,7 +10,6 @@ import "../assets/style/about.css";
 
 // Image Imports
 import homeworkSpace from "../assets/images/about-us-homework-space2.jpg"
-import nancyMager from "../assets/images/nancy-mager.jpg"
 import ourMethods from "../assets/images/they-feast.jpeg"
 import wall from "../assets/images/about-our-center-wall3.jpg"
 
@@ -21,6 +20,7 @@ import { ScheduleBar, } from "../components/Forms";
 
 // API Imports
 import { auth, firestore, openFileBrowser, removeImage, uploadImgToStorageAndReturnDownloadLink, } from '../api/firebase';
+import { compressImage } from '../api/images';
 
 
 export default function About() {
@@ -151,7 +151,7 @@ export default function About() {
       <section className="container-fluid p-lg-5 p-2 py-5" id="meet-the-team">
         <div className="row d-flex flex-row justify-content-center align-items-center">
           <div className="col-xxl-3 col-xl-6">
-            <img src={nancyMager} className="img-shadow img-round" alt="nancy-mager" />
+            <img src={`${serverURL}image/nancy-mager.jpg`} className="img-shadow img-round" alt="nancy-mager" />
           </div>
           <div className="col-xxl-6 col-xl-12 about-text">
               <Text h1 color="primary">
@@ -248,7 +248,8 @@ export default function About() {
         }
         const newData = {...currentTeamMember};
         const uploadDate = Date.now().toString();
-        const imgLink = await uploadImgToStorageAndReturnDownloadLink("staff", uploadImageFile, uploadDate);
+        const compressedImage = await compressImage(uploadImageFile);
+        const imgLink = await uploadImgToStorageAndReturnDownloadLink("staff", compressedImage, uploadDate);
         if ((imgLink !== newData.image) && imgLink) {
           removeImage("staff/" + currentTeamMember.imgFileName);
         }
