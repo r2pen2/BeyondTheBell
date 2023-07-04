@@ -262,13 +262,19 @@ export default function About() {
         newData.bio = tempBio;
         if (currentTeamMember.id) {        
           const docRef = doc(firestore, "staff", currentTeamMember.id);
-          setDoc(docRef, newData);
+          setDoc(docRef, newData).then(() => {
+            setStaffEdit(false);
+            setTeamMemberModalOpen(false);
+            window.location.reload();
+          });
         } else {
           const collectionRef = collection(firestore, "staff");
-          addDoc(collectionRef, newData)
+          addDoc(collectionRef, newData).then(() => {
+            setStaffEdit(false);
+            setTeamMemberModalOpen(false);
+            window.location.reload();
+          });
         }
-        setStaffEdit(false);
-        setTeamMemberModalOpen(false);
       }
 
       const [deleteWarningVisible, setDeleteWarningVisible] = useState(false);
@@ -278,9 +284,11 @@ export default function About() {
         const deleteRef = doc(firestore, "deletedStaff", currentTeamMember.id);
         deleteDoc(docRef);
         removeImage("staff/" + currentTeamMember.imgFileName);
-        setDoc(deleteRef, currentTeamMember);
-        setStaffEdit(false);
-        setTeamMemberModalOpen(false);
+        setDoc(deleteRef, currentTeamMember).then(() => {
+          setStaffEdit(false);
+          setTeamMemberModalOpen(false);
+          window.location.reload();
+        });
       }
 
       function handleStaffNameChange(e) {

@@ -95,7 +95,7 @@ export function Navbar() {
       <BrandLarge />
       <BrandCentered />
       <NavbarPages />
-      <div className="d-flex flex-row align-items-center justify-content-center gap-2 w-25" >
+      <div className="d-flex flex-row align-items-center justify-content-center gap-2 px-2 w-25" >
         <NavbarSocials />
         <NavbarScheduleDropdown />
         <NavbarScheduleDropdownSmall />

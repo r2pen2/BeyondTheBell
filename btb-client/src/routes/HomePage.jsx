@@ -285,7 +285,7 @@ export default function HomePage() {
 
   function BTBCarousel(props) {
     return (
-      <Carousel swipe={false}  animation="slide" navButtonsAlwaysVisible className="w-100 px-3" >
+      <Carousel swipe={false} autoPlay={false} animation="slide" navButtonsAlwaysVisible className="w-100 px-3" >
         {props.children}
       </Carousel>
     )
@@ -359,12 +359,15 @@ export default function HomePage() {
       newData.preview = tempPreview;
       if (currentTestimonial.id) {        
         const docRef = doc(firestore, "testimonials", currentTestimonial.id);
-        setDoc(docRef, newData);
+        setDoc(docRef, newData).then(() => {
+          closeModalsAndReload();
+        });
       } else {
         const collectionRef = collection(firestore, "testimonials");
-        addDoc(collectionRef, newData)
+        addDoc(collectionRef, newData).then(() => {
+          closeModalsAndReload();
+        });
       }
-      closeModalsAndReload();
     }
 
     const [deleteWarningVisible, setDeleteWarningVisible] = useState(false);
@@ -374,8 +377,9 @@ export default function HomePage() {
       const deleteRef = doc(firestore, "deletedTestimonials", currentTestimonial.id);
       removeImage("testimonials/" + currentTestimonial.imgFileName);
       deleteDoc(docRef);
-      setDoc(deleteRef, currentTestimonial);
-      closeModalsAndReload();
+      setDoc(deleteRef, currentTestimonial).then(() => {
+        closeModalsAndReload();
+      });
     }
     
     function uploadImage() {
@@ -562,12 +566,15 @@ export default function HomePage() {
       newData.title = tempTitle;
       if (currentOffering.id) {        
         const docRef = doc(firestore, "offerings", currentOffering.id);
-        setDoc(docRef, newData);
+        setDoc(docRef, newData).then(() => {
+          closeModalsAndReload();
+        });
       } else {
         const collectionRef = collection(firestore, "offerings");
-        addDoc(collectionRef, newData)
+        addDoc(collectionRef, newData).then(() => {
+          closeModalsAndReload();
+        });
       }
-      closeModalsAndReload();
     }
 
     const [deleteWarningVisible, setDeleteWarningVisible] = useState(false);
@@ -577,8 +584,9 @@ export default function HomePage() {
       const deleteRef = doc(firestore, "deletedOfferings", currentOffering.id);
       deleteDoc(docRef);
       removeImage("offerings/" + currentOffering.imgFileName);
-      setDoc(deleteRef, currentOffering);
-      closeModalsAndReload();
+      setDoc(deleteRef, currentOffering).then(() => {
+        closeModalsAndReload();
+      });
     }
 
     
