@@ -8,11 +8,6 @@ import { useEffect, useState, } from 'react'
 // Style Imports
 import "../assets/style/about.css";
 
-// Image Imports
-import homeworkSpace from "../assets/images/about-us-homework-space2.jpg"
-import ourMethods from "../assets/images/they-feast.jpeg"
-import wall from "../assets/images/about-our-center-wall3.jpg"
-
 // Component Imports
 import { serverURL, } from '../App';
 import { PageHeader, } from '../components/Bar';
@@ -143,7 +138,7 @@ export default function About() {
             </Text>
           </div>
           <div className="col-xxl-6 col-xl-12" >
-            <img src={homeworkSpace} className="img-shadow" alt="about-us-homework-space" style={{width: "100%", height: "100%", maxWidth: "80vw" ,objectFit: "cover"}} />
+            <img src={`${serverURL}images/about-us-homework-space2.jpg`} className="img-shadow" alt="about-us-homework-space" style={{width: "100%", height: "100%", maxWidth: "80vw" ,objectFit: "cover"}} />
           </div>
         </div>
       </section>
@@ -187,14 +182,14 @@ export default function About() {
             </Text>
           </div>
           <div className="col-xl-6 d-none d-xl-flex" >
-            <img src={ourMethods} className="img-shadow" alt="our-methods" style={{padding: "1rem", height: "100%", width: "50vw", objectFit: "cover"}}/>
+            <img src={`${serverURL}images/they-feast.jpeg`} className="img-shadow" alt="our-methods" style={{padding: "1rem", height: "100%", width: "50vw", objectFit: "cover"}}/>
           </div>
         </div>
       </section>
       <section className="container-fluid p-lg-5 p-2 py-5 section-header" id="our-learning-center">
         <div className="row">
           <div className="col-xl-6 col-lg-12" >
-            <img src={wall} className="img-shadow" alt="about-us-homework-space" style={{width: "auto", height: "100%", objectFit: "cover"}} />
+            <img src={`${serverURL}images/about-our-center-wall3.jpg`} className="img-shadow" alt="about-us-homework-space" style={{width: "auto", height: "100%", objectFit: "cover"}} />
           </div>
           <div className="col-xl-6 col-lg-12 about-text">
             <Text h1 color="primary">
