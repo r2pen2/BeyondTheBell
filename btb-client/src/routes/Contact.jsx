@@ -1,21 +1,11 @@
-import React, { createRef, useState } from 'react'
+import { useState, } from 'react'
 
-import { Button, Collapse, Grid, Input, Link, Modal, Spacer, Text, Textarea } from "@nextui-org/react";
+import { Button, Input, Modal, Text, Textarea } from "@nextui-org/react";
 
 import ReCAPTCHA from "react-google-recaptcha";
 
 import "../assets/style/services.css"
 import { PageHeader, } from '../components/Bar';
-import homeworkSpace from "../assets/images/about-us-homework-space2.jpg"
-import afterSchool from "../assets/images/after-school.jpg"
-import dyslexia from "../assets/images/wilson-reading-tutoring.jpg"
-import tutoring from "../assets/images/tutoring-placeholder.jpg"
-import SchoolIcon from '@mui/icons-material/School';
-import { btbOrange } from '../assets/style/colors';
-import AutoStoriesIcon from '@mui/icons-material/AutoStories';
-
-import EditIcon from '@mui/icons-material/Edit';
-import { Socials } from '../components/Navbar';
 
 export default function Contact() {
   

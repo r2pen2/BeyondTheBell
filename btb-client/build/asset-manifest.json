@@ -1,11 +1,10 @@
 {
   "files": {
     "main.css": "/static/css/main.64e9c3a6.css",
-    "main.js": "/static/js/main.4ea2c131.js",
+    "main.js": "/static/js/main.3072bf81.js",
     "static/media/after-school.jpg": "/static/media/after-school.b9964372810b8c6cbc07.jpg",
     "static/media/footerBackground.png": "/static/media/footerBackground.b04e90f74f1c8317bfa5.png",
     "static/media/tutoring-placeholder.jpg": "/static/media/tutoring-placeholder.dcb43a900dec555eb0b1.jpg",
-    "static/media/about-us-homework-space2.jpg": "/static/media/about-us-homework-space2.b66b114c189ce7c6a345.jpg",
     "static/media/writing.jpg": "/static/media/writing.104e73ea137064fff396.jpg",
     "static/media/wilson-reading-tutoring.jpg": "/static/media/wilson-reading-tutoring.8ef8748abb56cc64f08e.jpg",
     "static/media/hexagons.svg": "/static/media/hexagons.6a7d35e57ab9acd2a95f.svg",
@@ -18,10 +17,10 @@
     "static/media/call.svg": "/static/media/call.cf266a418c645002a306.svg",
     "static/media/mail.svg": "/static/media/mail.84fe65fb6695456fa65a.svg",
     "main.64e9c3a6.css.map": "/static/css/main.64e9c3a6.css.map",
-    "main.4ea2c131.js.map": "/static/js/main.4ea2c131.js.map"
+    "main.3072bf81.js.map": "/static/js/main.3072bf81.js.map"
   },
   "entrypoints": [
     "static/css/main.64e9c3a6.css",
-    "static/js/main.4ea2c131.js"
+    "static/js/main.3072bf81.js"
   ]
 }
