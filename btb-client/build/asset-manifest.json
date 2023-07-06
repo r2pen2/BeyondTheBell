@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.64e9c3a6.css",
-    "main.js": "/static/js/main.3072bf81.js",
+    "main.js": "/static/js/main.fee6e023.js",
     "static/media/after-school.jpg": "/static/media/after-school.b9964372810b8c6cbc07.jpg",
     "static/media/footerBackground.png": "/static/media/footerBackground.b04e90f74f1c8317bfa5.png",
     "static/media/tutoring-placeholder.jpg": "/static/media/tutoring-placeholder.dcb43a900dec555eb0b1.jpg",
@@ -17,10 +17,10 @@
     "static/media/call.svg": "/static/media/call.cf266a418c645002a306.svg",
     "static/media/mail.svg": "/static/media/mail.84fe65fb6695456fa65a.svg",
     "main.64e9c3a6.css.map": "/static/css/main.64e9c3a6.css.map",
-    "main.3072bf81.js.map": "/static/js/main.3072bf81.js.map"
+    "main.fee6e023.js.map": "/static/js/main.fee6e023.js.map"
   },
   "entrypoints": [
     "static/css/main.64e9c3a6.css",
-    "static/js/main.3072bf81.js"
+    "static/js/main.fee6e023.js"
   ]
 }

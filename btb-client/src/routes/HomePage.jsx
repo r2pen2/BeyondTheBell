@@ -235,7 +235,24 @@ export default function HomePage() {
         <Text h3 color="primary" className="d-inline d-md-none">
           What's Happening Now At BTB
         </Text>
-        { renderOfferingsByWidth() }
+        <div className="d-xxl-flex d-none w-100 align-items-center flex-row justify-content-center">
+          <BTBCarousel>
+            { renderOfferings(4) }  
+          </BTBCarousel>
+        </div>
+        <div className="d-xl-flex d-xxl-none d-none w-100 align-items-center flex-row justify-content-center">
+          <BTBCarousel>
+            { renderOfferings(3) }  
+          </BTBCarousel>
+        </div>
+        <div className="d-lg-flex d-xl-none d-none w-100 align-items-center flex-row justify-content-center">
+          <BTBCarousel>
+            { renderOfferings(2) }  
+          </BTBCarousel>
+        </div>
+        <div className="d-lg-none d-flex flex-column d-lg-none align-items-center w-100">
+          { renderOfferingsList() }
+        </div>
         { userCanEditOfferings && <AddOfferingButton /> }
       </section>
       <section className="bg-blue px-1 py-5">
@@ -246,78 +263,27 @@ export default function HomePage() {
             What Parents Are Saying
           </Text>
           <div className="container-fluid my-5" >
-            { renderTestimonialsByWidth() }
+            <div className="d-xxl-flex d-none w-100 align-items-center flex-row justify-content-center">
+              <BTBCarousel>
+                { renderTestimonials(3) }  
+              </BTBCarousel>
+            </div>
+            <div className="d-lg-flex d-xxl-none d-none w-100 align-items-center flex-row justify-content-center">
+              <BTBCarousel>
+                { renderTestimonials(2) }  
+              </BTBCarousel>
+            </div>
+            <div className="d-lg-none d-flex w-100 align-items-center flex-row justify-content-center">
+              <BTBCarousel>
+                { renderTestimonials(1) }  
+              </BTBCarousel>
+            </div>
           </div>
         { userCanEditOfferings && <AddTestimonialButton /> }
       </section>
       <ScheduleBar open={formModalOpen} setOpen={setFormModalOpen} />
     </div>
   )
-
-  function renderTestimonialsByWidth() {
-    const width = window.screen.width;
-    if (width > 1400) {
-      return (
-        <div className="d-flex w-100 align-items-center flex-row justify-content-center">
-          <BTBCarousel>
-            { renderTestimonials(3) }  
-          </BTBCarousel>
-        </div>
-      )
-    }
-    if (width > 800) {
-      return (
-        <div className="d-flex w-100 align-items-center flex-row justify-content-center">
-          <BTBCarousel>
-            { renderTestimonials(2) }  
-          </BTBCarousel>
-        </div>
-      )
-    }
-    return (
-      <div className="d-flex w-100 align-items-center flex-row justify-content-center">
-        <BTBCarousel>
-          { renderTestimonials(1) }  
-        </BTBCarousel>
-      </div>
-    )
-  }
-
-  function renderOfferingsByWidth() {
-    const width = window.screen.width;
-    if (width > 1400) {
-      return (
-        <div className="d-flex w-100 align-items-center flex-row justify-content-center">
-          <BTBCarousel>
-            { renderOfferings(4) }  
-          </BTBCarousel>
-        </div>
-      )
-    }
-    if (width > 1200) {
-      return (
-        <div className="d-flex w-100 align-items-center flex-row justify-content-center">
-          <BTBCarousel>
-            { renderOfferings(3) }  
-          </BTBCarousel>
-        </div>
-      )
-    }
-    if (width > 1000) {
-      return (
-        <div className="d-flex w-100 align-items-center flex-row justify-content-center">
-          <BTBCarousel>
-            { renderOfferings(2) }  
-          </BTBCarousel>
-        </div>
-      )
-    }
-    return (
-      <div className="d-flex flex-column d-lg-none align-items-center w-100">
-        { renderOfferingsList() }
-      </div>
-    )
-  }
 
   function BTBCarousel(props) {
     return (
