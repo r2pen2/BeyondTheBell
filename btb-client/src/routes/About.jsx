@@ -17,6 +17,7 @@ import { ScheduleBar, } from "../components/Forms";
 import { auth, firestore, openFileBrowser, removeImage, uploadImgToStorageAndReturnDownloadLink, } from '../api/firebase';
 import { compressImage } from '../api/images';
 
+const textBlockClasses = "px-4 px-md-5 indent";
 
 export default function About() {
 
@@ -127,13 +128,13 @@ export default function About() {
             <Text h1 color="primary">
               Developing All Learners
             </Text>
-            <Text size="$lg">
+            <Text p size="$lg" align="left" className={textBlockClasses}>
               Beyond the Bell (BTB) supports the development of all learners, using current best practices in education. BTB students will improve their academic success, executive functioning, and social/emotional health.
             </Text>
-            <Text size="$lg">
+            <Text p size="$lg" align="left" className={textBlockClasses}>
               We encourage relationship building as a bridge to lifelong success. Our highly trained professional educators will spend time truly getting to know you and your child. With our guidance, your child will make more efficient use of homework time. This will foster happiness, confidence and results at home and at school.
             </Text>
-            <Text size="$lg">
+            <Text p size="$lg" align="left" className={textBlockClasses}>
               The bonds your child will make with our educators will lead to improved school performance and increased confidence, while your child becomes happier at school. Completing homework at BTB may even relieve the burden that homework struggles can put on your entire family.
             </Text>
           </div>
@@ -152,10 +153,10 @@ export default function About() {
               <Text h1 color="primary">
                 Meet the Director - Nancy Mager
               </Text>
-              <Text size="$lg">
+              <Text p size="$lg" align="left" className={textBlockClasses}>
                 <strong>Nancy Mager</strong> has always loved kids, and her passion is understanding each child’s motivation, strengths and struggles. Nancy has a Bachelor's degree in psychology from Boston University and a Master’s degree in special education from Simmons College. She’s spent the last 25 years working in the field of special education, with a strong interest in autism spectrum disorders and mental health. Professionally, Nancy has worked as a classroom teacher, behavioral and educational consultant, student advocate, adjunct college instructor, and most recently as the Director of Education for a non-profit.
               </Text>
-              <Text size="$lg">
+              <Text p size="$lg" align="left" className={textBlockClasses}>
                 Nancy has been trained extensively in the practices and philosophy of Applied Behavior Analysis (ABA), Social Thinking©, the Picture Exchange Communication System© (PECS), multiple assistive technology programs, TEACCH Autism (University of North Carolina), STARS Autism (Naperville, IL), Moving Traditions; It’s a Girls Thing©, and crisis prevention.
               </Text>
           </div>
@@ -174,10 +175,10 @@ export default function About() {
             <Text h1 color="white">
               Our Methods
             </Text>
-            <Text size="$lg" color="white">
+            <Text p size="$lg" color="white" className={textBlockClasses} align="left">
               We encourage relationship building as a bridge to lifelong success. Our highly trained professional educators will spend time truly getting to know you and your child. With our guidance, your child will make more efficient use of homework time. This will foster happiness, confidence and results at home and at school.
             </Text>
-            <Text size="$lg" color="white">
+            <Text p size="$lg" color="white" className={textBlockClasses} align="left">
               The bonds your child will make with our educators will lead to improved school performance and increased confidence, while your child becomes happier at school. Completing homework at BTB may even relieve the burden that homework struggles can put on your entire family.
             </Text>
           </div>
@@ -195,10 +196,10 @@ export default function About() {
             <Text h1 color="primary">
               Our Learning Center
             </Text>
-            <Text size="$lg">
+            <Text p size="$lg" className={textBlockClasses} align="left">
               Beyond The Bell offers a broad spectrum of services including school day support for remote learning plans, a menu of academic electives, individual tutoring in all subjects, plus afterschool small group homework help and project support. We also offer parent coaching, educational and behavioral consultation, student advocacy and professional development for educators.
             </Text>
-            <Text size="$lg">
+            <Text p size="$lg" className={textBlockClasses} align="left">
               BTB is located at 3 Man-Mar Drive, Unit 14, in Plainville, Massachusetts, just minutes from Route 1, I-95, and I-495. Our facility is located a short walk or drive from quality restaurants, the popular An Unlikely Story bookstore, and much more.
             </Text>
           </div>

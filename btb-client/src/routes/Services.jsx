@@ -81,10 +81,10 @@ export default function Services() {
                   <Text h1 color="primary">
                     After School at BTB
                   </Text>
-                  <Text>
+                  <Text p align="left">
                     The BTB After School Program offers students in K-8 a warm and relaxing environment where they can unwind with friends and get homework done under the guidance of attentive, professional educators.
                   </Text>
-                  <Text>
+                  <Text p align="left">
                     The BTB After School Program is a place where all students are welcome. Your child’s potential will be unleashed when our enthusiastic teachers connect with your child and partner with both of you in reaching his or her goals. Our low student-to-teacher ratios, creative programming, and modern youthful space will be a place where every child is, and feels, accepted.
                   </Text>
                 </div>
@@ -142,10 +142,10 @@ export default function Services() {
                   <Text h1 color="primary">
                     1 on 1 Tutoring at BTB
                   </Text>
-                  <Text>
+                  <Text p align="left">
                     Beyond The Bell respects all children for their unique learning profiles. We believe that all children will thrive when provided with appropriate accommodations, positive behavioral supports and skilled, engaging educators.
                   </Text>
-                  <Text>
+                  <Text p align="left">
                     Beyond The Bell provides carefully organized, one-hour tutoring sessions in all areas of academics. Students engaging with BTB tutoring services receive the necessary assistance in subjects like math, reading, science, and social studies.
                   </Text>
                 </div>
@@ -198,10 +198,10 @@ export default function Services() {
                   <Text h1 color="primary">
                     Wilson Tutoring at BTB
                   </Text>
-                  <Text>
+                  <Text p align="left">
                     Using the <Link isExternal href="https://www.wilsonlanguage.com/programs/wilson-reading-system/" target="blank" color="success">Wilson Reading System©</Link>, a multi-sensory approach to literacy instruction, BTB offers direct instruction with a Level II certified Wilson reading specialist for students whose basic literacy skills are below that of their peers, despite conventional interventions.
                   </Text>
-                  <Text>
+                  <Text p align="left">
                     This system is very effective for those who have been unable to learn to read due to language based learning disabilities like dyslexia. Our Dyslexia Therapist will combine Wilson instruction and silent reading of high interest books to facilitate real progress in the area of literacy. Using the Wilson diagnostic assessments, we will be able to follow your student's progress through out the program.
                   </Text>
                 </div>

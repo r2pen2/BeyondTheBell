@@ -93,3 +93,7 @@ section {
   opacity: .5;
   border: 2px solid black;
 }
+
+.indent {
+  text-indent: 2.5rem;
+}
