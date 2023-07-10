@@ -1,6 +1,6 @@
 import { Text, Link, Button } from '@nextui-org/react'
 import React, {useState, useEffect} from 'react'
-import logo from "../assets/images/logoTransparent.png";
+import logo from "../assets/images/LogoHD.png";
 import footerBackground from "../assets/images/footerBackground.png";
 
 import { signOut } from 'firebase/auth';
