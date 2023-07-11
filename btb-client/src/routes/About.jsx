@@ -17,7 +17,7 @@ import { ScheduleBar, } from "../components/Forms";
 import { auth, firestore, removeImage, uploadImgToStorageAndReturnDownloadLink, } from '../api/firebase';
 import { UploadImageCard } from '../libraries/Web-Legos/components/Images';
 import { ImageCompressor } from '../libraries/Web-Legos/api/images';
-import { getFileExtension, openFileBrowser } from '../libraries/Web-Legos/api/files';
+import { getFileExtension, getFileNameByCurrentTime, openFileBrowser } from '../libraries/Web-Legos/api/files';
 
 const textBlockClasses = "px-4 px-md-5 indent";
 
@@ -245,7 +245,7 @@ export default function About() {
           return;
         }
         const newData = {...currentTeamMember};
-        const newFileName = Date.now().toString() + getFileExtension(uploadImageFile);
+        const newFileName = getFileNameByCurrentTime(uploadImageFile);
         const compressedImage = await ImageCompressor.compressImage(uploadImageFile);
         const imgLink = await uploadImgToStorageAndReturnDownloadLink("staff", compressedImage, newFileName);
         if ((imgLink !== newData.image) && imgLink) {
