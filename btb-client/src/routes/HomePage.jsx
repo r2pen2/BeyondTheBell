@@ -2,19 +2,21 @@ import React, { useEffect, useState } from 'react'
 
 import { Button, Text, Card, Modal, Textarea } from "@nextui-org/react";
 
+import { ImageCompressor } from "../libraries/Web-Legos/api/images";
+
 import Carousel from "react-material-ui-carousel";
 
 import "../assets/style/homepage.css"
 import { FormModal, ScheduleBar } from '../components/Forms';
 
-import { auth, firestore, openFileBrowser, removeImage, uploadImgToStorageAndReturnDownloadLink } from '../api/firebase';
+import { auth, firestore, removeImage, uploadImgToStorageAndReturnDownloadLink } from '../api/firebase';
 import { addDoc, collection, deleteDoc, doc, getDoc, setDoc } from 'firebase/firestore';
 import { IconButton, TextField } from '@mui/material';
 import { PencilIcon } from '../components/Icons';
 import { serverURL } from '../App';
 import { BTBLoader } from '../components/Feedback';
-import { compressImage } from '../api/images';
 import { UploadImageCard } from '../libraries/Web-Legos/components/Images';
+import { getFileExtension, getFileNameByCurrentTime, openFileBrowser } from '../libraries/Web-Legos/api/files';
 
 
 export default function HomePage() {
@@ -344,14 +346,13 @@ export default function HomePage() {
         return;
       }
       const newData = {...currentTestimonial};
-      const uploadDate = Date.now().toString();
-      const compressedImage = await compressImage(uploadImageFile);
-      const imgLink = await uploadImgToStorageAndReturnDownloadLink("testimonials", compressedImage, uploadDate);
-      console.log(imgLink);
+      const newFileName = getFileNameByCurrentTime(uploadImageFile);
+      const compressedImage = await ImageCompressor.compressImage(uploadImageFile);
+      const imgLink = await uploadImgToStorageAndReturnDownloadLink("testimonials", compressedImage, newFileName);
       if (imgLink !== newData.image && imgLink) {
         removeImage("testimonials/" + currentTestimonial.imgFileName);
       }
-      newData.imgFileName = imgLink ? uploadDate : currentTestimonial.imgFileName;
+      newData.imgFileName = imgLink ? newFileName : currentTestimonial.imgFileName;
       newData.order = tempOrder ? tempOrder : testimonialData.length + 1;
       if (imgLink) {
         newData.image = imgLink;
@@ -543,18 +544,17 @@ export default function HomePage() {
         return;
       }
       const newData = {...currentOffering};
-      const uploadDate = Date.now().toString();
-      const compressedImage = await compressImage(uploadImageFile);
-      const imgLink = await uploadImgToStorageAndReturnDownloadLink("offerings", compressedImage, uploadDate);
+      const newFileName = getFileNameByCurrentTime(uploadImageFile)
+      const compressedImage = await ImageCompressor.compressImage(uploadImageFile);
+      const imgLink = await uploadImgToStorageAndReturnDownloadLink("offerings", compressedImage, newFileName);
       if (imgLink !== newData.image && imgLink) {
         removeImage("offerings/" + currentOffering.imgFileName);
       }
-      newData.imgFileName = imgLink ? uploadDate : currentOffering.imgFileName;
+      newData.imgFileName = imgLink ? newFileName : currentOffering.imgFileName;
       newData.order = tempOrder ? tempOrder : offeringData.length + 1;
       if (imgLink) {
         newData.image = imgLink;
       }
-      newData.imgFileName = uploadDate;
       newData.description = tempDescription;
       newData.schedule = tempSchedule;
       newData.title = tempTitle;
@@ -601,8 +601,6 @@ export default function HomePage() {
     }
 
     const [errorMessage, setErrorMessage] = useState(null);
-
-    console.log(tempImageURL)
 
     return (
       <Modal.Body>

@@ -4,6 +4,7 @@ import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { getFirestore } from "firebase/firestore";
 import { getAuth, signOut, GoogleAuthProvider, signInWithRedirect, signInWithPopup } from "firebase/auth";
 import { serverURL } from "../App";
+import { getFileExtension } from "../libraries/Web-Legos/api/files";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -38,25 +39,13 @@ export async function signInWithGoogle() {
     })
 }
 
-export async function openFileBrowser() {
-  return new Promise((resolve, reject) => {
-    let input = document.createElement("input");
-    input.type = "file";
-    input.accept = "image/png, image/jpeg, , image/jpg, image/heic";
-    input.multiple = false;
-    input.onchange = _ => {
-      resolve(input.files[0]);
-    }
-    input.click();
-  })
-}
-
-export async function uploadImgToStorageAndReturnDownloadLink(directory, file, date) {
+export async function uploadImgToStorageAndReturnDownloadLink(directory, file, fileName) {
   return new Promise(async (resolve, reject) => {
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
-      const path = `images/${directory}/${date}`;
+
+      const path = `images/${directory}/${fileName}`;
       fetch(`${serverURL}${path}`, {
         method: "POST",
         body: formData,

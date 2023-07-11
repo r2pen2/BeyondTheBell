@@ -14,9 +14,10 @@ import { PageHeader, } from '../components/Bar';
 import { ScheduleBar, } from "../components/Forms";
 
 // API Imports
-import { auth, firestore, openFileBrowser, removeImage, uploadImgToStorageAndReturnDownloadLink, } from '../api/firebase';
-import { compressImage } from '../api/images';
+import { auth, firestore, removeImage, uploadImgToStorageAndReturnDownloadLink, } from '../api/firebase';
 import { UploadImageCard } from '../libraries/Web-Legos/components/Images';
+import { ImageCompressor } from '../libraries/Web-Legos/api/images';
+import { getFileExtension, openFileBrowser } from '../libraries/Web-Legos/api/files';
 
 const textBlockClasses = "px-4 px-md-5 indent";
 
@@ -244,13 +245,13 @@ export default function About() {
           return;
         }
         const newData = {...currentTeamMember};
-        const uploadDate = Date.now().toString();
-        const compressedImage = await compressImage(uploadImageFile);
-        const imgLink = await uploadImgToStorageAndReturnDownloadLink("staff", compressedImage, uploadDate);
+        const newFileName = Date.now().toString() + getFileExtension(uploadImageFile);
+        const compressedImage = await ImageCompressor.compressImage(uploadImageFile);
+        const imgLink = await uploadImgToStorageAndReturnDownloadLink("staff", compressedImage, newFileName);
         if ((imgLink !== newData.image) && imgLink) {
           removeImage("staff/" + currentTeamMember.imgFileName);
         }
-        newData.imgFileName = imgLink ? uploadDate : currentTeamMember.imgFileName;
+        newData.imgFileName = imgLink ? newFileName : currentTeamMember.imgFileName;
         newData.order = tempOrder ? tempOrder : staffData.length + 1;
         if (imgLink) {
           newData.image = imgLink;
