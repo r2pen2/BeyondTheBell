@@ -410,7 +410,7 @@ export default function HomePage() {
             <img 
               src={tempImageURL} 
               alt={currentTestimonial.authorDescription ? currentTestimonial.authorDescription : "add-testimonial"} 
-              className={`img-shadow ${testimonialEdit ? "edit" : ""}`}
+              className={`img-shadow img-square ${testimonialEdit ? "edit" : ""}`}
               style={{maxHeight: "50vw"}} 
               onClick={() => {
                 if (testimonialEdit) {
@@ -611,7 +611,7 @@ export default function HomePage() {
             <img 
               src={tempImageURL} 
               alt={currentOffering.title ? currentOffering.title : "add-offering"} 
-              className={`img-shadow ${offeringEdit ? "edit" : ""}`}
+              className={`img-shadow img-square ${offeringEdit ? "edit" : ""}`}
               style={{maxHeight: "50vw"}} 
               onClick={() => {
                 if (offeringEdit) {

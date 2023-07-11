@@ -97,3 +97,8 @@ section {
 .indent {
   text-indent: 2.5rem;
 }
+
+.img-square {
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
