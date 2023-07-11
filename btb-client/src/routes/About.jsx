@@ -16,6 +16,7 @@ import { ScheduleBar, } from "../components/Forms";
 // API Imports
 import { auth, firestore, openFileBrowser, removeImage, uploadImgToStorageAndReturnDownloadLink, } from '../api/firebase';
 import { compressImage } from '../api/images';
+import { UploadImageCard } from '../libraries/Web-Legos/components/Images';
 
 const textBlockClasses = "px-4 px-md-5 indent";
 
@@ -215,7 +216,7 @@ export default function About() {
       const [tempPosition, setTempPosition] = useState(currentTeamMember.position);
       const [tempBio, setTempBio] = useState(currentTeamMember.bio);
       const [tempOrder, setTempOrder] = useState(currentTeamMember.order);
-      const [tempImageURL, setTempImageURL] = useState(serverURL + currentTeamMember.image);
+      const [tempImageURL, setTempImageURL] = useState(currentTeamMember.image ? serverURL + currentTeamMember.image : null);
       const [uploadImageFile, setUploadImageFile] = useState(null);
 
       async function saveChanges() {
@@ -338,16 +339,7 @@ export default function About() {
                     }
                 }}/>
                 :
-                <Card isPressable isHoverable onClick={uploadImage}>
-                  <Card.Body className="d-flex flex-column align-items-center">
-                    <Text>
-                      Upload an image
-                    </Text>
-                    <IconButton>
-                      <AddAPhotoIcon />
-                    </IconButton>
-                  </Card.Body>
-                </Card>
+                <UploadImageCard onClick={uploadImage} />
               }
               { staffEdit && !deleteWarningVisible &&  currentTeamMember.id &&
                 <Button flat auto color="error" onClick={() => setDeleteWarningVisible(true)}>

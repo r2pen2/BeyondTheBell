@@ -8,6 +8,8 @@ import { auth, signInWithGoogle } from '../api/firebase';
 import { firestore } from '../api/firebase';
 import { getDoc, doc, setDoc } from 'firebase/firestore';
 
+import { Copyright } from "../libraries/Web-Legos/components/Footer";
+
 export default function Footer() {
 
   const [currentSignIn, setCurrentSignIn] = useState(null);
@@ -104,10 +106,8 @@ export default function Footer() {
           </div>
         </div>
         <div className="fill-line mb-3" />
-        <div className="d-flex flex-column gap-2 m-2 align-items-center">
-          <Text size="$sm">
-            Copyright © 2023 Beyond the Bell Educational Services
-          </Text>
+        <div className="d-flex flex-column gap-2 m-2 align-items-center">          
+          <Copyright year="2023" name="Beyond the Bell Educational Services"/>
           <Button light onClick={handleSignInClick}>
             {currentSignIn ? `Signed in as ${currentSignIn.displayName}` : "Admin Login"}
           </Button>

@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react'
 
 import { Button, Text, Card, Modal, Textarea } from "@nextui-org/react";
 
-import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
-
 import Carousel from "react-material-ui-carousel";
 
 import "../assets/style/homepage.css"
@@ -16,6 +14,7 @@ import { PencilIcon } from '../components/Icons';
 import { serverURL } from '../App';
 import { BTBLoader } from '../components/Feedback';
 import { compressImage } from '../api/images';
+import { UploadImageCard } from '../libraries/Web-Legos/components/Images';
 
 
 export default function HomePage() {
@@ -298,7 +297,7 @@ export default function HomePage() {
     const [tempMessage, setTempMessage] = useState(currentTestimonial.message);
     const [tempPreview, setTempPreview] = useState(currentTestimonial.preview);
     const [tempAuthorDesc, setTempAuthorDesc] = useState(currentTestimonial.authorDescription);
-    const [tempImageURL, setTempImageURL] = useState(serverURL + currentTestimonial.image);
+    const [tempImageURL, setTempImageURL] = useState(currentTestimonial.image ? serverURL + currentTestimonial.image : null);
     const [tempOrder, setTempOrder] = useState(currentTestimonial.order);
     const [uploadImageFile, setUploadImageFile] = useState(null);
 
@@ -418,16 +417,7 @@ export default function HomePage() {
                 }
             }}/>
             :
-            <Card isPressable isHoverable onClick={uploadImage}>
-              <Card.Body className="d-flex flex-column align-items-center">
-                <Text>
-                  Upload an image
-                </Text>
-                <IconButton>
-                  <AddAPhotoIcon />
-                </IconButton>
-              </Card.Body>
-            </Card>
+            <UploadImageCard onClick={uploadImage} />
           }
             { testimonialEdit && !deleteWarningVisible && currentTestimonial.id &&
               <Button flat auto color="error" onClick={() => setDeleteWarningVisible(true)}>
@@ -509,7 +499,7 @@ export default function HomePage() {
     const [tempTitle, setTempTitle] = useState(currentOffering.title);
     const [tempOrder, setTempOrder] = useState(currentOffering.order);
     const [tempSchedule, setTempSchedule] = useState(currentOffering.schedule);
-    const [tempImageURL, setTempImageURL] = useState(serverURL + currentOffering.image);
+    const [tempImageURL, setTempImageURL] = useState(currentOffering.image ? serverURL + currentOffering.image : null);
     const [uploadImageFile, setUploadImageFile] = useState(null);
 
     function handleOfferingDescriptionChange(e) {
@@ -612,6 +602,8 @@ export default function HomePage() {
 
     const [errorMessage, setErrorMessage] = useState(null);
 
+    console.log(tempImageURL)
+
     return (
       <Modal.Body>
       <div className="container-fluid">
@@ -629,16 +621,7 @@ export default function HomePage() {
                 }
               }}/>
             :
-            <Card isPressable isHoverable onClick={uploadImage}>
-              <Card.Body className="d-flex flex-column align-items-center">
-                <Text>
-                  Upload an image
-                </Text>
-                <IconButton>
-                  <AddAPhotoIcon />
-                </IconButton>
-              </Card.Body>
-            </Card>
+            <UploadImageCard onClick={uploadImage}/>
           }
             { offeringEdit && !deleteWarningVisible && currentOffering.id &&
               <Button flat auto color="error" onClick={() => setDeleteWarningVisible(true)}>
