@@ -1,0 +1,3 @@
+[submodule "btb-client/src/libraries/Web-Legos"]
+	path = btb-client/src/libraries/Web-Legos
+	url = https://github.com/r2pen2/Web-Legos.git

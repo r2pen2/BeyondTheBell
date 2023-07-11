@@ -8,6 +8,7 @@ export const iconFills = {
   green: "#00ae17",
 }
 
+/** Default size for BeyondTheBell icons */
 const defaultIconSize = "1.875rem";
 
 function BTBIcon(props) {
