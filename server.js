@@ -5,9 +5,11 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const fileUpload = require("express-fileupload")
 const fs = require('fs');
-const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');
-const { getFirestore, Timestamp, FieldValue, Filter } = require('firebase-admin/firestore');
-const serviceAccount = require('./serviceAccountKey.json');
+const { initializeApp, cert } = require('firebase-admin/app');
+const { getFirestore, } = require('firebase-admin/firestore');
+const serviceAccount = require('./config/serviceAccountKey.json');
+
+const siteText = require("./libraries/Server-Legos/siteText.js");
 
 // Init express application
 const app = express();
@@ -75,6 +77,9 @@ app.use(bodyParser.urlencoded({ extended: true, limit: "50mb"}));
 
 // Serve static files
 app.use(express.static(__dirname + "/server/static/"));
+
+// Server site text
+app.use("/site-text", siteText);
 
 // Serve React build
 app.use(express.static(__dirname + "/btb-client/build"));

@@ -18,7 +18,7 @@ import { auth, firestore, removeImage, uploadImgToStorageAndReturnDownloadLink, 
 import { UploadImageCard } from '../libraries/Web-Legos/components/Images';
 import { ImageCompressor } from '../libraries/Web-Legos/api/images';
 import { getFileExtension, getFileNameByCurrentTime, openFileBrowser } from '../libraries/Web-Legos/api/files';
-import { TextBlock } from '../libraries/Web-Legos/components/Text';
+import { TextBlock, WLTextBlock } from '../libraries/Web-Legos/components/Text';
 
 const textBlockClasses = "px-4 px-md-5";
 
@@ -152,16 +152,11 @@ export default function About() {
           <div className="col-xxl-3 col-xl-6">
             <img src={`${serverURL}images/nancy-mager.jpg`} className="img-shadow img-round" alt="nancy-mager" />
           </div>
-          <div className="col-xxl-6 col-xl-12 about-text">
+          <div className="col-xxl-6 col-xl-12 px-2 px-lg-5 about-text">
               <Text h1 color="primary">
                 Meet the Director - Nancy Mager
               </Text>
-              <TextBlock size="$lg" className={textBlockClasses}>
-                <strong>Nancy Mager</strong> has always loved kids, and her passion is understanding each child’s motivation, strengths and struggles. Nancy has a Bachelor's degree in psychology from Boston University and a Master’s degree in special education from Simmons College. She’s spent the last 25 years working in the field of special education, with a strong interest in autism spectrum disorders and mental health. Professionally, Nancy has worked as a classroom teacher, behavioral and educational consultant, student advocate, adjunct college instructor, and most recently as the Director of Education for a non-profit.
-              </TextBlock>
-              <TextBlock size="$lg" className={textBlockClasses}>
-                Nancy has been trained extensively in the practices and philosophy of Applied Behavior Analysis (ABA), Social Thinking©, the Picture Exchange Communication System© (PECS), multiple assistive technology programs, TEACCH Autism (University of North Carolina), STARS Autism (Naperville, IL), Moving Traditions; It’s a Girls Thing©, and crisis prevention.
-              </TextBlock>
+              <WLTextBlock size="$lg" className={textBlockClasses} firestoreId="meet-the-director" />
           </div>
         </div>
         <Text h1 color="primary">
