@@ -18,7 +18,7 @@ import { auth, firestore, removeImage, uploadImgToStorageAndReturnDownloadLink, 
 import { UploadImageCard } from '../libraries/Web-Legos/components/Images';
 import { ImageCompressor } from '../libraries/Web-Legos/api/images';
 import { getFileExtension, getFileNameByCurrentTime, openFileBrowser } from '../libraries/Web-Legos/api/files';
-import { TextBlock, WLTextBlock } from '../libraries/Web-Legos/components/Text';
+import { TextBlock, WLHeader, WLTextBlock } from '../libraries/Web-Legos/components/Text';
 
 const textBlockClasses = "px-4 px-md-5";
 
@@ -50,6 +50,7 @@ export default function About() {
   const [teamMemberModalOpen, setTeamMemberModalOpen] = useState(false);
 
   const [userCanEditStaff, setUserCanEditStaff] = useState(false);
+  const [userCanEditText, setuserCanEditText] = useState(false);
 
   const [staffEdit, setStaffEdit] = useState(false);
 
@@ -69,6 +70,7 @@ export default function About() {
       if (doc.exists()) {
         const data = doc.data();
         setUserCanEditStaff(data.staff);
+        setuserCanEditText(data.op);
       }
     })
   }
@@ -128,18 +130,8 @@ export default function About() {
       <section className="container-fluid p-lg-5 py-5 p-2" id="developing-all-learners">
         <div className="row">
           <div className="col-xxl-6 col-xl-12 about-text">
-            <Text h1 color="primary">
-              Developing All Learners
-            </Text>
-            <TextBlock size="$lg" className={textBlockClasses}>
-              Beyond the Bell (BTB) supports the development of all learners, using current best practices in education. BTB students will improve their academic success, executive functioning, and social/emotional health.
-            </TextBlock>
-            <TextBlock size="$lg" className={textBlockClasses}>
-              We encourage relationship building as a bridge to lifelong success. Our highly trained professional educators will spend time truly getting to know you and your child. With our guidance, your child will make more efficient use of homework time. This will foster happiness, confidence and results at home and at school.
-            </TextBlock>
-            <TextBlock size="$lg" className={textBlockClasses}>
-              The bonds your child will make with our educators will lead to improved school performance and increased confidence, while your child becomes happier at school. Completing homework at BTB may even relieve the burden that homework struggles can put on your entire family.
-            </TextBlock>
+            <WLHeader editable={userCanEditText} firestoreId="developing-all-learners-header" color="primary" headerLevel={1} />
+            <WLTextBlock editable={userCanEditText} size="$lg" className={textBlockClasses} firestoreId="developing-all-learners" />
           </div>
           <div className="col-xxl-6 col-xl-12" >
             <img src={`${serverURL}images/about-us-homework-space2.jpg`} className="img-shadow" alt="about-us-homework-space" style={{width: "100%", height: "100%", maxWidth: "80vw" ,objectFit: "cover"}} />
@@ -153,15 +145,11 @@ export default function About() {
             <img src={`${serverURL}images/nancy-mager.jpg`} className="img-shadow img-round" alt="nancy-mager" />
           </div>
           <div className="col-xxl-6 col-xl-12 px-2 px-lg-5 about-text">
-              <Text h1 color="primary">
-                Meet the Director - Nancy Mager
-              </Text>
-              <WLTextBlock size="$lg" className={textBlockClasses} firestoreId="meet-the-director" />
+              <WLHeader editable={userCanEditText} firestoreId="meet-the-director-header" color="primary" headerLevel={1} />
+              <WLTextBlock editable={userCanEditText} size="$lg" className={textBlockClasses} firestoreId="meet-the-director" />
           </div>
         </div>
-        <Text h1 color="primary">
-          And our Amazing Staff
-        </Text>
+        <WLHeader editable={userCanEditText} firestoreId="our-staff-header" color="primary" headerLevel={1} />
         <div className="row d-flex flex-row justify-content-center align-items-center">
           { renderTeam() }
         </div>
@@ -170,15 +158,8 @@ export default function About() {
       <section className="container-fluid bg-blue" id="our-methods">
         <div className="row">
           <div className="col-xl-6 col-lg-12 about-text">
-            <Text h1 color="white">
-              Our Methods
-            </Text>
-            <TextBlock size="$lg" className={textBlockClasses} color="white">
-              We encourage relationship building as a bridge to lifelong success. Our highly trained professional educators will spend time truly getting to know you and your child. With our guidance, your child will make more efficient use of homework time. This will foster happiness, confidence and results at home and at school.
-            </TextBlock>
-            <TextBlock size="$lg" className={textBlockClasses} color="white">
-              The bonds your child will make with our educators will lead to improved school performance and increased confidence, while your child becomes happier at school. Completing homework at BTB may even relieve the burden that homework struggles can put on your entire family.
-            </TextBlock>
+            <WLHeader editable={userCanEditText} firestoreId="our-methods-header" color="white" headerLevel={1} />
+            <WLTextBlock editable={userCanEditText} size="$lg" className={textBlockClasses} firestoreId="our-methods" color="white" />
           </div>
           <div className="col-xl-6 d-none d-xl-flex" >
             <img src={`${serverURL}images/they-feast.jpeg`} className="img-shadow" alt="our-methods" style={{padding: "1rem", height: "100%", width: "50vw", objectFit: "cover"}}/>
@@ -191,15 +172,8 @@ export default function About() {
             <img src={`${serverURL}images/about-our-center-wall3.jpg`} className="img-shadow" alt="about-us-homework-space" style={{width: "auto", height: "100%", objectFit: "cover"}} />
           </div>
           <div className="col-xl-6 col-lg-12 about-text">
-            <Text h1 color="primary">
-              Our Learning Center
-            </Text>
-            <TextBlock size="$lg" className={textBlockClasses}>
-              Beyond The Bell offers a broad spectrum of services including school day support for remote learning plans, a menu of academic electives, individual tutoring in all subjects, plus afterschool small group homework help and project support. We also offer parent coaching, educational and behavioral consultation, student advocacy and professional development for educators.
-            </TextBlock>
-            <TextBlock size="$lg" className={textBlockClasses}>
-              BTB is located at 3 Man-Mar Drive, Unit 14, in Plainville, Massachusetts, just minutes from Route 1, I-95, and I-495. Our facility is located a short walk or drive from quality restaurants, the popular An Unlikely Story bookstore, and much more.
-            </TextBlock>
+            <WLHeader editable={userCanEditText} firestoreId="our-learning-center-header" color="primary" headerLevel={1} />
+            <WLTextBlock editable={userCanEditText} size="$lg" className={textBlockClasses} firestoreId="our-learning-center" />
           </div>
         </div>
       </section>
