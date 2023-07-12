@@ -5,9 +5,7 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const fileUpload = require("express-fileupload")
 const fs = require('fs');
-const { initializeApp, cert } = require('firebase-admin/app');
-const { getFirestore, } = require('firebase-admin/firestore');
-const serviceAccount = require('./config/serviceAccountKey.json');
+const db = require('./firebase.js');
 
 const siteText = require("./libraries/Server-Legos/siteText.js");
 
@@ -17,12 +15,6 @@ const app = express();
 // Allow for CORS and file upload
 app.use(cors());
 app.use(fileUpload());
-
-/** Firestore DB instance */
-initializeApp({
-    credential: cert(serviceAccount)
-});
-const db = getFirestore();
 
 /** Always up-to-date testimonial data from Firebase */
 let testimonialData = [];
