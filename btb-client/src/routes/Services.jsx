@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Button, Card, Collapse, Grid, Link, Spacer, Text } from "@nextui-org/react";
 
@@ -13,8 +13,34 @@ import CheckIcon from '@mui/icons-material/Check';
 import EditIcon from '@mui/icons-material/Edit';
 import { AfterSchoolIcon, BookIcon, PencilIcon, iconFills } from '../components/Icons';
 import { ScheduleBar } from '../components/Forms';
+import { WLHeader, WLTextBlock } from '../libraries/Web-Legos/components/Text';
+import { doc, getDoc } from 'firebase/firestore';
+import { auth, firestore } from '../api/firebase';
 
 export default function Services() {
+
+  const [userCanEditText, setUserCanEditText] = useState(false);
+
+    /**
+   * Contact {@link firestore} for current user's permissions, then set relevant states
+   */
+    function fetchUserPermissions() {
+      const docRef = doc(firestore, "users", auth.currentUser.uid);
+      getDoc(docRef).then((doc) => {
+        if (doc.exists()) {
+          const data = doc.data();
+          setUserCanEditText(data.op);
+        }
+      })
+    }
+  
+    // Fetch current user's edit permissions after component mount
+    useEffect(() => {
+      // Only fetch credentials of the user is signed in
+      if (auth.currentUser) {
+        fetchUserPermissions();
+      }
+    }, [])
 
   const [afterSchoolOpen, setAfterSchoolOpen] = useState(false);
   const [tutoringOpen, setTutoringOpen] = useState(false);
@@ -78,15 +104,8 @@ export default function Services() {
             <div className="container-fluid">
               <div className="row">
                 <div className="col-xxl-6 col-xl-12 d-flex flex-column px-xl-5 py-5 gap-2">
-                  <Text h1 color="primary">
-                    After School at BTB
-                  </Text>
-                  <Text p align="left">
-                    The BTB After School Program offers students in K-8 a warm and relaxing environment where they can unwind with friends and get homework done under the guidance of attentive, professional educators.
-                  </Text>
-                  <Text p align="left">
-                    The BTB After School Program is a place where all students are welcome. Your child’s potential will be unleashed when our enthusiastic teachers connect with your child and partner with both of you in reaching his or her goals. Our low student-to-teacher ratios, creative programming, and modern youthful space will be a place where every child is, and feels, accepted.
-                  </Text>
+                  <WLHeader firestoreId="after-school-header" color="primary" editable={userCanEditText} />
+                  <WLTextBlock firestoreId="after-school" editable={userCanEditText} />
                 </div>
                 <div className="col-xxl-6 col-xl-12">
                   <img src={afterSchool} alt="after-school" className="service-image img-shadow"/>
@@ -139,15 +158,8 @@ export default function Services() {
             <div className="container-fluid">
               <div className="row">
                 <div className="col-xxl-6 col-xl-12 d-flex flex-column px-xl-5 py-5 gap-2">
-                  <Text h1 color="primary">
-                    1 on 1 Tutoring at BTB
-                  </Text>
-                  <Text p align="left">
-                    Beyond The Bell respects all children for their unique learning profiles. We believe that all children will thrive when provided with appropriate accommodations, positive behavioral supports and skilled, engaging educators.
-                  </Text>
-                  <Text p align="left">
-                    Beyond The Bell provides carefully organized, one-hour tutoring sessions in all areas of academics. Students engaging with BTB tutoring services receive the necessary assistance in subjects like math, reading, science, and social studies.
-                  </Text>
+                  <WLHeader firestoreId="1-on-1-tutoring-header" color="primary" editable={userCanEditText} />
+                  <WLTextBlock firestoreId="1-on-1-tutoring" editable={userCanEditText} />
                 </div>
                 <div className="col-xxl-6 col-xl-12">
                   <img src={tutoring} alt="private-tutoring" className="service-image img-shadow"/>
