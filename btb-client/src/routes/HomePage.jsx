@@ -16,7 +16,7 @@ import { PencilIcon } from '../components/Icons';
 import { serverURL } from '../App';
 import { BTBLoader } from '../components/Feedback';
 import { UploadImageCard } from '../libraries/Web-Legos/components/Images';
-import { getFileExtension, getFileNameByCurrentTime, openFileBrowser } from '../libraries/Web-Legos/api/files';
+import { getFileNameByCurrentTime, openFileBrowser } from '../libraries/Web-Legos/api/files';
 
 
 export default function HomePage() {
