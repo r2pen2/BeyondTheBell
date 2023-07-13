@@ -3,13 +3,13 @@ import { addDoc, collection, deleteDoc, doc, getDoc, setDoc, } from 'firebase/fi
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import { IconButton, TextField, } from '@mui/material';
 import { Button, Card, Modal, Text, Textarea, } from "@nextui-org/react";
-import { useEffect, useState, } from 'react'
+import { useContext, useEffect, useState, } from 'react'
 
 // Style Imports
 import "../assets/style/about.css";
 
 // Component Imports
-import { serverURL, } from '../App';
+import { CurrentUserContext, serverURL, } from '../App';
 import { PageHeader, } from '../components/Bar';
 import { ScheduleBar, } from "../components/Forms";
 
@@ -49,37 +49,13 @@ export default function About() {
 
   const [teamMemberModalOpen, setTeamMemberModalOpen] = useState(false);
 
-  const [userCanEditStaff, setUserCanEditStaff] = useState(false);
-  const [userCanEditText, setuserCanEditText] = useState(false);
+  const { currentUser } = useContext(CurrentUserContext)
+
+  const userCanEditStaff = currentUser ? currentUser.staff : false;
+  const userCanEditText = currentUser ? currentUser.op : false;
+  const userCanEditImages = currentUser ? currentUser.op : false;
 
   const [staffEdit, setStaffEdit] = useState(false);
-
-  useEffect(() => {
-    auth.onAuthStateChanged(async (authUser) => {
-      if (authUser) {
-        fetchUserPermissions();
-      } else {
-        setUserCanEditStaff(false);
-      }
-    })
-  })
-
-  function fetchUserPermissions() {
-    const docRef = doc(firestore, "users", auth.currentUser.uid);
-    getDoc(docRef).then((doc) => {
-      if (doc.exists()) {
-        const data = doc.data();
-        setUserCanEditStaff(data.staff);
-        setuserCanEditText(data.op);
-      }
-    })
-  }
-
-  useEffect(() => {
-    if (auth.currentUser) {
-      fetchUserPermissions();
-    }
-  })
 
   function handleStaffModalClose() {
     setTeamMemberModalOpen(false);

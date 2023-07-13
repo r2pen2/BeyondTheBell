@@ -1,5 +1,5 @@
 import { Text, Link, Button } from '@nextui-org/react'
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import logo from "../assets/images/LogoHD.png";
 import footerBackground from "../assets/images/footerBackground.png";
 
@@ -9,10 +9,13 @@ import { firestore } from '../api/firebase';
 import { getDoc, doc, setDoc } from 'firebase/firestore';
 
 import { Copyright } from "../libraries/Web-Legos/components/Footer";
+import { CurrentUserContext } from '../App';
 
 export default function Footer() {
 
   const [currentSignIn, setCurrentSignIn] = useState(null);
+
+  const {currentUser, setCurrentUser} = useContext(CurrentUserContext);
 
   useEffect(() => {
     auth.onAuthStateChanged(u => {
@@ -41,7 +44,10 @@ export default function Footer() {
                 email: authUser.email,
                 op: false,
               }
+              setCurrentUser(newUser);
               setDoc(doc(firestore, "users", authUser.uid), newUser);
+            } else {
+              setCurrentUser(docSnap.data());
             }
           })
         }

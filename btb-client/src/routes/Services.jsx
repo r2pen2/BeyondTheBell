@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import { Button, Card, Collapse, Grid, Link, Spacer, Text } from "@nextui-org/react";
 
@@ -10,41 +10,21 @@ import tutoring from "../assets/images/tutoring-placeholder.jpg"
 import { btbOrange } from '../assets/style/colors';
 import CheckIcon from '@mui/icons-material/Check';
 
-import EditIcon from '@mui/icons-material/Edit';
-import { AfterSchoolIcon, BookIcon, PencilIcon, iconFills } from '../components/Icons';
 import { ScheduleBar } from '../components/Forms';
 import { WLHeader, WLTextBlock } from '../libraries/Web-Legos/components/Text';
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, firestore } from '../api/firebase';
+import { CurrentUserContext } from '../App';
+
 
 export default function Services() {
 
-  const [userCanEditText, setUserCanEditText] = useState(false);
+  // Get current user from context
+  const { currentUser } = useContext(CurrentUserContext);
 
-    /**
-   * Contact {@link firestore} for current user's permissions, then set relevant states
-   */
-    function fetchUserPermissions() {
-      const docRef = doc(firestore, "users", auth.currentUser.uid);
-      getDoc(docRef).then((doc) => {
-        if (doc.exists()) {
-          const data = doc.data();
-          setUserCanEditText(data.op);
-        }
-      })
-    }
-  
-    // Fetch current user's edit permissions after component mount
-    useEffect(() => {
-      // Only fetch credentials of the user is signed in
-      if (auth.currentUser) {
-        fetchUserPermissions();
-      }
-    }, [])
-
-  const [afterSchoolOpen, setAfterSchoolOpen] = useState(false);
-  const [tutoringOpen, setTutoringOpen] = useState(false);
-  const [dyslexiaOpen, setDyslexiaOpen] = useState(false);
+  // User Permissions
+  const userCanEditText = currentUser ? currentUser.op : false;
+  const userCanEditImages = currentUser ? currentUser.op : false;
 
   const [formModalOpen, setFormModalOpen] = useState(false);
 
@@ -56,235 +36,169 @@ export default function Services() {
           {
             title: "After School Programs",
             id: "after-school-programs",
-            openCollapse: () => {
-              setAfterSchoolOpen(true);
-              setTimeout(() => {
-                window.location.hash = "";
-                window.location.hash = `after-school-programs`;
-              }, 100);
-            }
           },
           {
             title: "1 on 1 Tutoring",
             id: "1-on-1-tutoring",
-            openCollapse: () => {
-              setTutoringOpen(true);
-              setTimeout(() => {
-                window.location.hash = "";
-                window.location.hash = `1-on-1-tutoring`;
-              }, 100);
-            }
           },
           {
             title: "Dyslexia Therapy",
             id: "dyslexia-therapy",
-            openCollapse: () => {
-              setDyslexiaOpen(true);
-              setTimeout(() => {
-                window.location.hash = "";
-                window.location.hash = `dyslexia-therapy`;
-              }, 100);
-            }
           },
         ]}
       />
-      <section className="d-flex flex-column align-items-center w-100 p-xl-5">
-        <Collapse.Group splitted accordion={false}>
-          <Collapse 
-            title="After School Programs" 
-            bordered 
-            shadow
-            expanded={afterSchoolOpen}
-            onClick={() => setAfterSchoolOpen(!afterSchoolOpen)}
-            subtitle="Explore social skills and executive functioning programs after-school at BTB"
-            contentLeft={<AfterSchoolIcon fill={iconFills.orange} />}
-            id="after-school-programs"
-          >
-            <div className="fill-line dotted" />
+      <section className="container-fluid d-flex flex-column align-items-center w-100 p-xl-5" id="after-school-programs">
+        <div className="row">
+          <div className="col-xxl-6 col-xl-12 d-flex flex-column px-xl-5 py-5 gap-2">
+            <WLHeader firestoreId="after-school-header" color="primary" editable={userCanEditText} />
+            <WLTextBlock firestoreId="after-school" editable={userCanEditText} />
+          </div>
+          <div className="col-xxl-6 col-xl-12">
+            <img src={afterSchool} alt="after-school" className="service-image img-shadow"/>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col px-xl-5 py-5">
             <div className="container-fluid">
+              <Text h2 color="primary">
+                Why Sign Up?
+              </Text>
               <div className="row">
-                <div className="col-xxl-6 col-xl-12 d-flex flex-column px-xl-5 py-5 gap-2">
-                  <WLHeader firestoreId="after-school-header" color="primary" editable={userCanEditText} />
-                  <WLTextBlock firestoreId="after-school" editable={userCanEditText} />
+                <div className="col-xl-6 col-lg-12">
+                  <SignUpReason>
+                    1 on 1 tutoring in all academic subjects including math, reading, science, and social studies
+                  </SignUpReason>
                 </div>
-                <div className="col-xxl-6 col-xl-12">
-                  <img src={afterSchool} alt="after-school" className="service-image img-shadow"/>
+                <div className="col-xl-6 col-lg-12">
+                  <SignUpReason>
+                    Tutoring in executive functioning, study skills, social behavior mapping or any area that requires individual instruction
+                  </SignUpReason>
                 </div>
-              </div>
-              <div className="row">
-                <div className="col px-xl-5 py-5">
-                  <div className="container-fluid">
-                    <Text h2 color="primary">
-                      Why Sign Up?
-                    </Text>
-                    <div className="row">
-                      <div className="col-xl-6 col-lg-12">
-                        <SignUpReason>
-                          1 on 1 tutoring in all academic subjects including math, reading, science, and social studies
-                        </SignUpReason>
-                      </div>
-                      <div className="col-xl-6 col-lg-12">
-                        <SignUpReason>
-                          Tutoring in executive functioning, study skills, social behavior mapping or any area that requires individual instruction
-                        </SignUpReason>
-                      </div>
-                      <div className="col-xl-6 col-lg-12">
-                        <SignUpReason>
-                          Educators provide data confirming your child’s progress and participation
-                        </SignUpReason>
-                      </div>
-                      <div className="col-xl-6 col-lg-12">
-                        <SignUpReason>
-                          Regular communication with parents and teachers (if appropriate)
-                        </SignUpReason>
-                      </div>
-                    </div>
-                  </div>
+                <div className="col-xl-6 col-lg-12">
+                  <SignUpReason>
+                    Educators provide data confirming your child’s progress and participation
+                  </SignUpReason>
+                </div>
+                <div className="col-xl-6 col-lg-12">
+                  <SignUpReason>
+                    Regular communication with parents and teachers (if appropriate)
+                  </SignUpReason>
                 </div>
               </div>
             </div>
-          </Collapse>
-          <Collapse 
-            title="1 on 1 Tutoring" 
-            bordered 
-            shadow
-            expanded={tutoringOpen}
-            onClick={() => setTutoringOpen(!tutoringOpen)}
-            subtitle="Dive into individualized learning at BTB"
-            contentLeft={<PencilIcon fill={iconFills.red} />}
-            id="1-on-1-tutoring"
-          >
-            <div className="fill-line dotted" />
+          </div>
+        </div>
+      </section>
+      <div className="rainbow-line" />
+      <section className="container-fluid d-flex flex-column align-items-center w-100 p-xl-5" id="1-on-1-tutoring">
+        <div className="row">
+          <div className="col-xxl-6 col-xl-12 d-flex flex-column px-xl-5 py-5 gap-2">
+            <WLHeader firestoreId="1-on-1-tutoring-header" color="primary" editable={userCanEditText} />
+            <WLTextBlock firestoreId="1-on-1-tutoring" editable={userCanEditText} />
+          </div>
+          <div className="col-xxl-6 col-xl-12">
+            <img src={tutoring} alt="private-tutoring" className="service-image img-shadow"/>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col px-xl-5 py-5">
             <div className="container-fluid">
+              <Text h2 color="primary">
+                Why Sign Up?
+              </Text>
               <div className="row">
-                <div className="col-xxl-6 col-xl-12 d-flex flex-column px-xl-5 py-5 gap-2">
-                  <WLHeader firestoreId="1-on-1-tutoring-header" color="primary" editable={userCanEditText} />
-                  <WLTextBlock firestoreId="1-on-1-tutoring" editable={userCanEditText} />
+                <div className="col-xl-6 col-lg-12">
+                  <SignUpReason>
+                    Homework support from experienced educators and certified teachers
+                  </SignUpReason>
                 </div>
-                <div className="col-xxl-6 col-xl-12">
-                  <img src={tutoring} alt="private-tutoring" className="service-image img-shadow"/>
+                <div className="col-xl-6 col-lg-12">
+                  <SignUpReason>
+                    A “chillaxing” zone (with hammock swings, bean bags, fidgets, noise cancelling headphones, Chromebook laptops and iPads to access Google Classroom and other resources)
+                  </SignUpReason>
                 </div>
-              </div>
-              <div className="row">
-                <div className="col px-xl-5 py-5">
-                  <div className="container-fluid">
-                    <Text h2 color="primary">
-                      Why Sign Up?
-                    </Text>
-                    <div className="row">
-                      <div className="col-xl-6 col-lg-12">
-                        <SignUpReason>
-                          Homework support from experienced educators and certified teachers
-                        </SignUpReason>
-                      </div>
-                      <div className="col-xl-6 col-lg-12">
-                        <SignUpReason>
-                          A “chillaxing” zone (with hammock swings, bean bags, fidgets, noise cancelling headphones, Chromebook laptops and iPads to access Google Classroom and other resources)
-                        </SignUpReason>
-                      </div>
-                      <div className="col-xl-6 col-lg-12">
-                        <SignUpReason>
-                          Study spots (including cozy study carrels, comfy chairs, the work bar, and adjustable height project tables)
-                        </SignUpReason>
-                      </div>
-                    </div>
-                  </div>
+                <div className="col-xl-6 col-lg-12">
+                  <SignUpReason>
+                    Study spots (including cozy study carrels, comfy chairs, the work bar, and adjustable height project tables)
+                  </SignUpReason>
                 </div>
               </div>
             </div>
-          </Collapse>
-          <Collapse 
-            title="Dyslexia Therapist/Wilson Tutoring" 
-            bordered 
-            shadow
-            expanded={dyslexiaOpen}
-            onClick={() => setDyslexiaOpen(!dyslexiaOpen)}
-            subtitle="Uncover Tailored Dyslexia Support at BTB"
-            contentLeft={<BookIcon fill={iconFills.blue} />}
-            id="dyslexia-therapy"
-          >
-            <div className="fill-line dotted" />
+          </div>
+        </div>
+      </section>
+      <div className="rainbow-line" />
+      <section className="container-fluid d-flex flex-column align-items-center w-100 p-xl-5" id="dyslexia-therapy">
+        <div className="row">
+          <div className="col-xxl-6 col-xl-12 d-flex flex-column px-xl-5 py-5 gap-2">
+            <WLHeader firestoreId="wilson-tutoring-header" color="primary" editable={userCanEditText} />
+            <WLTextBlock firestoreId="wilson-tutoring" editable={userCanEditText} />
+          </div>
+          <div className="col-xxl-6 col-xl-12">
+            <img src={dyslexia} alt="wilson-tutoring" className="service-image img-shadow"/>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col px-xl-5 py-5">
             <div className="container-fluid">
+              <Text h2 color="primary">
+                Why Sign Up?
+              </Text>
               <div className="row">
-                <div className="col-xxl-6 col-xl-12 d-flex flex-column px-xl-5 py-5 gap-2">
-                  <Text h1 color="primary">
-                    Wilson Tutoring at BTB
-                  </Text>
-                  <Text p align="left">
-                    Using the <Link isExternal href="https://www.wilsonlanguage.com/programs/wilson-reading-system/" target="blank" color="success">Wilson Reading System©</Link>, a multi-sensory approach to literacy instruction, BTB offers direct instruction with a Level II certified Wilson reading specialist for students whose basic literacy skills are below that of their peers, despite conventional interventions.
-                  </Text>
-                  <Text p align="left">
-                    This system is very effective for those who have been unable to learn to read due to language based learning disabilities like dyslexia. Our Dyslexia Therapist will combine Wilson instruction and silent reading of high interest books to facilitate real progress in the area of literacy. Using the Wilson diagnostic assessments, we will be able to follow your student's progress through out the program.
-                  </Text>
+                <div className="col-xxl-4 col-xl-6 col-lg-12">
+                  <SignUpReason>
+                    Word structure, in depth, for automatic decoding and spelling
+                  </SignUpReason>
                 </div>
-                <div className="col-xxl-6 col-xl-12">
-                  <img src={dyslexia} alt="wilson-tutoring" className="service-image img-shadow"/>
+                <div className="col-xxl-4 col-xl-6 col-lg-12">
+                  <SignUpReason>
+                    Word recognition and spelling of high frequency words, including irregular words
+                  </SignUpReason>
                 </div>
-              </div>
-              <div className="row">
-                <div className="col px-xl-5 py-5">
-                  <div className="container-fluid">
-                    <Text h2 color="primary">
-                      Why Sign Up?
-                    </Text>
-                    <div className="row">
-                      <div className="col-xxl-4 col-xl-6 col-lg-12">
-                        <SignUpReason>
-                          Word structure, in depth, for automatic decoding and spelling
-                        </SignUpReason>
-                      </div>
-                      <div className="col-xxl-4 col-xl-6 col-lg-12">
-                        <SignUpReason>
-                          Word recognition and spelling of high frequency words, including irregular words
-                        </SignUpReason>
-                      </div>
-                      <div className="col-xxl-4 col-xl-6 col-lg-12">
-                        <SignUpReason>
-                          Word-learning skills
-                        </SignUpReason>
-                      </div>
-                      <div className="col-xxl-4 col-xl-6 col-lg-12">
-                        <SignUpReason>
-                          Sentence-level text reading with ease, expression, and understanding
-                        </SignUpReason>
-                      </div>
-                      <div className="col-xxl-4 col-xl-6 col-lg-12">
-                        <SignUpReason>
-                          Listening comprehension with age-appropriate narrative and informational text
-                        </SignUpReason>
-                      </div>
-                      <div className="col-xxl-4 col-xl-6 col-lg-12">
-                        <SignUpReason>
-                          Reading comprehension with narrative and expository text of increasing levels of difficulty
-                        </SignUpReason>
-                      </div>
-                      <div className="col-xxl-4 col-xl-6 col-lg-12">
-                        <SignUpReason>
-                          Narrative and informational text structures
-                        </SignUpReason>
-                      </div>
-                      <div className="col-xxl-4 col-xl-6 col-lg-12">
-                        <SignUpReason>
-                          Organization of information for oral or written expression
-                        </SignUpReason>
-                      </div>
-                      <div className="col-xxl-4 col-xl-6 col-lg-12">
-                        <SignUpReason>
-                          Proofreading skills
-                        </SignUpReason>
-                      </div>
-                      <div className="col-xxl-4 col-xl-6 col-lg-12">
-                        <SignUpReason>
-                        Self-monitoring for word recognition accuracy and comprehension
-                        </SignUpReason>
-                      </div>
-                    </div>
-                  </div>
+                <div className="col-xxl-4 col-xl-6 col-lg-12">
+                  <SignUpReason>
+                    Word-learning skills
+                  </SignUpReason>
+                </div>
+                <div className="col-xxl-4 col-xl-6 col-lg-12">
+                  <SignUpReason>
+                    Sentence-level text reading with ease, expression, and understanding
+                  </SignUpReason>
+                </div>
+                <div className="col-xxl-4 col-xl-6 col-lg-12">
+                  <SignUpReason>
+                    Listening comprehension with age-appropriate narrative and informational text
+                  </SignUpReason>
+                </div>
+                <div className="col-xxl-4 col-xl-6 col-lg-12">
+                  <SignUpReason>
+                    Reading comprehension with narrative and expository text of increasing levels of difficulty
+                  </SignUpReason>
+                </div>
+                <div className="col-xxl-4 col-xl-6 col-lg-12">
+                  <SignUpReason>
+                    Narrative and informational text structures
+                  </SignUpReason>
+                </div>
+                <div className="col-xxl-4 col-xl-6 col-lg-12">
+                  <SignUpReason>
+                    Organization of information for oral or written expression
+                  </SignUpReason>
+                </div>
+                <div className="col-xxl-4 col-xl-6 col-lg-12">
+                  <SignUpReason>
+                    Proofreading skills
+                  </SignUpReason>
+                </div>
+                <div className="col-xxl-4 col-xl-6 col-lg-12">
+                  <SignUpReason>
+                  Self-monitoring for word recognition accuracy and comprehension
+                  </SignUpReason>
                 </div>
               </div>
             </div>
-          </Collapse>
-        </Collapse.Group>
+          </div>
+        </div>
       </section>
       <ScheduleBar open={formModalOpen} setOpen={setFormModalOpen} />
     </div>
@@ -298,7 +212,7 @@ function SignUpReason(props) {
         <Card.Body>
           <div className="d-flex flex-row align-items-center h-100 gap-2">
             <CheckIcon fontSize="12px" htmlColor={btbOrange} />
-            <Text>
+            <Text css={{height:"100%", marginTop: 0, marginBottom: 0}} className="d-flex flex-column justify-content-center">
               {props.children}
             </Text>
           </div>

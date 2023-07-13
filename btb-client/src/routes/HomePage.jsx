@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import { Button, Text, Card, Modal, Textarea } from "@nextui-org/react";
 
@@ -13,7 +13,7 @@ import { auth, firestore, removeImage, uploadImgToStorageAndReturnDownloadLink }
 import { addDoc, collection, deleteDoc, doc, getDoc, setDoc } from 'firebase/firestore';
 import { IconButton, TextField } from '@mui/material';
 import { PencilIcon } from '../components/Icons';
-import { serverURL } from '../App';
+import { CurrentUserContext, serverURL } from '../App';
 import { BTBLoader } from '../components/Feedback';
 import { UploadImageCard } from '../libraries/Web-Legos/components/Images';
 import { getFileNameByCurrentTime, openFileBrowser } from '../libraries/Web-Legos/api/files';
@@ -39,12 +39,17 @@ export default function HomePage() {
   const [formModalOpen, setFormModalOpen] = useState(false);                      // Whether form modal is open
   const [testimonialModalOpen, setTestimonialModalOpen] = useState(false);        // Whether focused testimonial modal is open
   const [offeringModalOpen, setOfferingModalOpen] = useState(false);              // Whether focused class offering modal is open
-  const [userCanEditTestimonials, setUserCanEditTestimonials] = useState(false);  // Whether current user can edit testimonials
-  const [userCanEditOfferings, setUserCanEditOfferings] = useState(false);        // Whether current user can edit class offerings
   const [testimonialEdit, setTestimonialEdit] = useState(false);                  // Whether current user is currently editing a testimonial
   const [offeringEdit, setOfferingEdit] = useState(false);                        // Whether current user is currently editing a class offering
   const [testimonialData, setTestimonialData] = useState(null);                   // Data for all testimonials from DB
   const [offeringData, setOfferingData] = useState(null);                         // Data for all class offerings from DB
+
+  // Get current user from context
+  const { currentUser } = useContext(CurrentUserContext);
+
+  // User Permissions
+  const userCanEditOfferings = currentUser ? currentUser.offerings : false;
+  const userCanEditTestimonials = currentUser ? currentUser.testimonials : false;
 
   /**
    * Close all modals and reload the page. This is intended for use after some edit is confirmed.
@@ -56,42 +61,6 @@ export default function HomePage() {
     setOfferingModalOpen(false);
     window.location.reload();
   }
-
-  // Add a listener for authentication state changes once the component has mounted
-  useEffect(() => {
-    auth.onAuthStateChanged(async (authUser) => {
-      if (authUser) {
-        // Whenever we change users, fetch new permissions
-        fetchUserPermissions();
-      } else {
-        // If the user signed-out, set both permissions to false
-        setUserCanEditTestimonials(false);
-        setUserCanEditOfferings(false);
-      }
-    })
-  }, [])
-
-  /**
-   * Contact {@link firestore} for current user's permissions, then set relevant states
-   */
-  function fetchUserPermissions() {
-    const docRef = doc(firestore, "users", auth.currentUser.uid);
-    getDoc(docRef).then((doc) => {
-      if (doc.exists()) {
-        const data = doc.data();
-        setUserCanEditTestimonials(data.testimonials);
-        setUserCanEditOfferings(data.offerings);
-      }
-    })
-  }
-
-  // Fetch current user's edit permissions after component mount
-  useEffect(() => {
-    // Only fetch credentials of the user is signed in
-    if (auth.currentUser) {
-      fetchUserPermissions();
-    }
-  }, [])
 
   // Fetch current class offerings and testimonials after component mount
   useEffect(() => {
@@ -280,7 +249,7 @@ export default function HomePage() {
               </BTBCarousel>
             </div>
           </div>
-        { userCanEditOfferings && <AddTestimonialButton /> }
+        { userCanEditTestimonials && <AddTestimonialButton /> }
       </section>
       <ScheduleBar open={formModalOpen} setOpen={setFormModalOpen} />
     </div>
