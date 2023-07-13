@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import HomePage from "./routes/HomePage";
 import Footer from './components/Footer';
 import About from './routes/About';
-import Services from './routes/Services';
+import Services from './routes/Services2';
 import Contact from './routes/Contact';
 import ThankYou from './routes/ThankYou';
 
