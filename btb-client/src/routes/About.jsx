@@ -15,7 +15,7 @@ import { ScheduleBar, } from "../components/Forms";
 
 // API Imports
 import { auth, firestore, removeImage, uploadImgToStorageAndReturnDownloadLink, } from '../api/firebase';
-import { UploadImageCard } from '../libraries/Web-Legos/components/Images';
+import { UploadImageCard, WLImage } from '../libraries/Web-Legos/components/Images';
 import { ImageCompressor } from '../libraries/Web-Legos/api/images';
 import { getFileExtension, getFileNameByCurrentTime, openFileBrowser } from '../libraries/Web-Legos/api/files';
 import { TextBlock, WLHeader, WLTextBlock } from '../libraries/Web-Legos/components/Text';
@@ -110,7 +110,7 @@ export default function About() {
             <WLTextBlock editable={userCanEditText} size="$lg" className={textBlockClasses} firestoreId="developing-all-learners" />
           </div>
           <div className="col-xxl-6 col-xl-12" >
-            <img src={`${serverURL}images/about-us-homework-space2.jpg`} className="img-shadow" alt="about-us-homework-space" style={{width: "100%", height: "100%", maxWidth: "80vw" ,objectFit: "cover"}} />
+            <WLImage firestoreId="developing-all-learners" editable={userCanEditImages} shadow halfWidth/>
           </div>
         </div>
       </section>
@@ -118,7 +118,7 @@ export default function About() {
       <section className="container-fluid p-lg-5 p-2 py-5" id="meet-the-team">
         <div className="row d-flex flex-row justify-content-center align-items-center">
           <div className="col-xxl-3 col-xl-6">
-            <img src={`${serverURL}images/nancy-mager.jpg`} className="img-shadow img-round" alt="nancy-mager" />
+            <WLImage firestoreId="nancy-mager" editable={userCanEditImages} shadow round />
           </div>
           <div className="col-xxl-6 col-xl-12 px-2 px-lg-5 about-text">
               <WLHeader editable={userCanEditText} firestoreId="meet-the-director-header" color="primary" headerLevel={1} />
@@ -138,14 +138,14 @@ export default function About() {
             <WLTextBlock editable={userCanEditText} size="$lg" className={textBlockClasses} firestoreId="our-methods" color="white" />
           </div>
           <div className="col-xl-6 d-none d-xl-flex" >
-            <img src={`${serverURL}images/they-feast.jpeg`} className="img-shadow" alt="our-methods" style={{padding: "1rem", height: "100%", width: "50vw", objectFit: "cover"}}/>
+            <WLImage firestoreId="our-methods" editable={userCanEditImages} shadow imgCss={{padding: "1rem", height: "100%", width: "50vw", objectFit: "cover"}}/>
           </div>
         </div>
       </section>
       <section className="container-fluid p-lg-5 p-2 py-5 section-header" id="our-learning-center">
         <div className="row">
           <div className="col-xl-6 col-lg-12" >
-            <img src={`${serverURL}images/about-our-center-wall3.jpg`} className="img-shadow" alt="about-us-homework-space" style={{width: "auto", height: "100%", objectFit: "cover"}} />
+            <WLImage firestoreId="our-learning-center" editable={userCanEditImages} shadow halfWidth/>
           </div>
           <div className="col-xl-6 col-lg-12 about-text">
             <WLHeader editable={userCanEditText} firestoreId="our-learning-center-header" color="primary" headerLevel={1} />

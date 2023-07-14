@@ -4,9 +4,6 @@ import { Button, Card, Collapse, Grid, Link, Spacer, Text } from "@nextui-org/re
 
 import "../assets/style/services.css"
 import { PageHeader, } from '../components/Bar';
-import afterSchool from "../assets/images/after-school.jpg"
-import dyslexia from "../assets/images/wilson-reading-tutoring.jpg"
-import tutoring from "../assets/images/tutoring-placeholder.jpg"
 import { btbOrange } from '../assets/style/colors';
 import CheckIcon from '@mui/icons-material/Check';
 
@@ -15,6 +12,7 @@ import { WLHeader, WLTextBlock } from '../libraries/Web-Legos/components/Text';
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, firestore } from '../api/firebase';
 import { CurrentUserContext } from '../App';
+import { WLImage } from '../libraries/Web-Legos/components/Images';
 
 
 export default function Services() {
@@ -54,7 +52,7 @@ export default function Services() {
             <WLTextBlock firestoreId="after-school" editable={userCanEditText} />
           </div>
           <div className="col-xxl-6 col-xl-12">
-            <img src={afterSchool} alt="after-school" className="service-image img-shadow"/>
+            <WLImage firestoreId="after-school" className="service-image" editable={userCanEditImages} shadow halfWidth/>
           </div>
         </div>
         <div className="row">
@@ -97,7 +95,7 @@ export default function Services() {
             <WLTextBlock firestoreId="1-on-1-tutoring" editable={userCanEditText} />
           </div>
           <div className="col-xxl-6 col-xl-12">
-            <img src={tutoring} alt="private-tutoring" className="service-image img-shadow"/>
+            <WLImage firestoreId="1-on-1-tutoring" className="service-image" editable={userCanEditImages} shadow halfWidth/>
           </div>
         </div>
         <div className="row">
@@ -135,7 +133,7 @@ export default function Services() {
             <WLTextBlock firestoreId="wilson-tutoring" editable={userCanEditText} />
           </div>
           <div className="col-xxl-6 col-xl-12">
-            <img src={dyslexia} alt="wilson-tutoring" className="service-image img-shadow"/>
+            <WLImage firestoreId="wilson-tutoring" className="service-image" editable={userCanEditImages} shadow halfWidth/>
           </div>
         </div>
         <div className="row">

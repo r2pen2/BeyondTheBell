@@ -92,6 +92,7 @@ section {
 .edit:hover {
   opacity: .5;
   border: 2px solid black;
+  cursor: pointer;
 }
 
 .indent {

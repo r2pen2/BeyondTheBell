@@ -8,6 +8,7 @@ const fs = require('fs');
 const db = require('./firebase.js');
 
 const siteText = require("./libraries/Server-Legos/siteText.js");
+const siteImages = require("./libraries/Server-Legos/siteImages.js");
 
 // Init express application
 const app = express();
@@ -72,6 +73,8 @@ app.use(express.static(__dirname + "/server/static/"));
 
 // Server site text
 app.use("/site-text", siteText);
+// Server site images
+app.use("/site-images", siteImages);
 
 // Serve React build
 app.use(express.static(__dirname + "/btb-client/build"));
