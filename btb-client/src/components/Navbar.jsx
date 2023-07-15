@@ -98,13 +98,18 @@ export function Navbar() {
       variant="sticky"
       maxWidth="xl"
     > 
-      <div className="d-flex flex-row align-items-center justify-content-start gap-2">  
+      <div className="d-flex flex-row align-items-center justify-content-start gap-2" style={{flex: 1}}>  
         <NextUINavbar.Toggle className="px-2 d-inline d-lg-none"/>
-        <BrandLarge />
+        <div className="d-none d-lg-inline">
+          <BrandLarge />
+        </div>
         <Divider className="d-none d-xxl-inline mx-2" css={{width: "3rem"}}/>
         <NavbarSocials />
       </div>
-      <div className="d-flex flex-row align-items-center justify-content-center gap-2" >
+      <div className="d-flex d-lg-none flex-row align-items-center justify-content-center gap-2" style={{flex: 1}} >
+        <BrandLarge />
+      </div>
+      <div className="d-flex flex-row align-items-center justify-content-end gap-2" style={{flex: 1}} >
         <NavbarPages />
         <NavbarScheduleDropdown />
         <NavbarScheduleDropdownSmall />
