@@ -690,7 +690,7 @@ export default function HomePage() {
         >
           <Card.Body className="w-100 p-2 d-flex flex-row align-items-center justify-content-between" style={{overflowY: "hidden"}}>
             <img src={serverURL + o.image} alt={o.title} style={{width: "40%", minHeight: "100%", objectFit:"cover"}} className="img-shadow"/>
-            <div className="d-none d-sm-flex w-100 h-100 flex-column px-2 py-2 text-center justify-content-between">
+            <div className="d-none d-sm-flex w-100 h-100 flex-column px-2 py-2 text-center justify-content-around">
               <div className="d-flex flex-column align-items-center justify-content-center">
                 <Text b>
                   {o.title}
@@ -705,7 +705,7 @@ export default function HomePage() {
                 </Button>
               </div>
             </div>
-            <div className="d-flex d-sm-none w-100 h-100 flex-column px-2 py-2 text-center justify-content-between">
+            <div className="d-flex d-sm-none w-100 h-100 flex-column px-2 py-2 text-center justify-content-around">
               <div className="d-flex flex-column align-items-center justify-content-center">
                 <Text b size="$sm">
                   {o.title}
