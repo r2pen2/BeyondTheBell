@@ -4,6 +4,7 @@ import React from 'react'
 import "../assets/style/bar.css";
 
 import "../libraries/Web-Legos/assets/style/text.css";
+import { WLHeader } from '../libraries/Web-Legos/components/Text';
 
 export function PageHeader({text, sections}) {
   
@@ -34,9 +35,9 @@ export function PageHeader({text, sections}) {
 
   return (
     <section className="orange-bar">
-      <Text h1 color="white" className="web-legos-scaling-header">
+      <WLHeader color="white">
         {text}
-      </Text>
+      </WLHeader>
       { sections && (
         <div className="container">
           <div className="row d-flex flex-row justify-content-center">

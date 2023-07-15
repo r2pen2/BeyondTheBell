@@ -21,8 +21,6 @@ import { getFileExtension, getFileNameByCurrentTime, openFileBrowser } from '../
 import { TextBlock, WLHeader, WLTextBlock } from '../libraries/Web-Legos/components/Text';
 import { WLCenteredColumn, WLResponsiveSection, WLResponsiveSectionEditable } from '../libraries/Web-Legos/components/Layout';
 
-const textBlockClasses = "px-4 px-md-5";
-
 export default function About() {
 
   // Fetch current team members after component mount
@@ -106,7 +104,7 @@ export default function About() {
       />
       <WLResponsiveSectionEditable firestoreId="developing-all-learners" editable={userCanEditText}/>
       <div className="rainbow-line" />
-      <WLResponsiveSectionEditable textRight firestoreId="meet-the-director" editable={userCanEditText} image={<WLImage firestoreId="meet-the-director" editable={userCanEditImages} shadow round />}/>
+      <WLResponsiveSectionEditable columnWidthLeft="4" columnWidthRight="8" textRight firestoreId="meet-the-director" editable={userCanEditText} image={<WLImage firestoreId="meet-the-director" editable={userCanEditImages} shadow round />}/>
       <WLCenteredColumn>
         <WLHeader editable={userCanEditText} firestoreId="our-staff-header" color="primary" headerLevel={1} />
         <div className="w-100 row d-flex flex-row justify-content-center align-items-center">
@@ -114,7 +112,7 @@ export default function About() {
         </div>
         { userCanEditStaff && <AddStaffButton /> }
       </WLCenteredColumn>
-      <WLResponsiveSectionEditable className="d-xl-none d-inline" justifyLeft="start" sectionClasses="bg-blue" textColor="white" firestoreId="our-methods" editable={userCanEditText} /> 
+      <WLResponsiveSectionEditable stackHeader justifyLeft="start" sectionClasses="bg-blue" textColor="white" firestoreId="our-methods" editable={userCanEditText} /> 
       <WLResponsiveSectionEditable textRight={true} firestoreId="our-learning-center" editable={userCanEditText} />
       <ScheduleBar open={formModalOpen} setOpen={setFormModalOpen} />
     </div>
