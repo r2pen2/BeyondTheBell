@@ -127,7 +127,8 @@ export default function About() {
           </WLCenteredColumn>
         }
       />
-      <WLResponsiveSectionEditable justifyLeft="start" sectionClasses="bg-blue" textColor="white" firestoreId="our-methods" editable={userCanEditText} image={<WLImage firestoreId="our-methods" editable={userCanEditImages} shadow imgCss={{padding: "1rem", height: "100%", width: "50vw", objectFit: "cover"}}/>}/> 
+      <WLResponsiveSectionEditable className="d-none d-xl-inline" justifyLeft="start" sectionClasses="bg-blue" textColor="white" firestoreId="our-methods" editable={userCanEditText} image={<WLImage firestoreId="our-methods" editable={userCanEditImages} shadow imgCss={{padding: "1rem", height: "100%", width: "50vw", objectFit: "cover"}}/>}/> 
+      <WLResponsiveSectionEditable className="d-xl-none d-inline" justifyLeft="start" sectionClasses="bg-blue" textColor="white" firestoreId="our-methods" editable={userCanEditText} /> 
       <WLResponsiveSectionEditable textRight={true} firestoreId="our-learning-center" editable={userCanEditText} />
       <ScheduleBar open={formModalOpen} setOpen={setFormModalOpen} />
     </div>
