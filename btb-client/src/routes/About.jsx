@@ -1,7 +1,5 @@
 // Library Imports
-import { addDoc, collection, deleteDoc, doc, getDoc, setDoc, } from 'firebase/firestore';
-import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
-import { IconButton, TextField, } from '@mui/material';
+import { addDoc, collection, deleteDoc, doc, setDoc, } from 'firebase/firestore';
 import { Button, Card, Modal, Text, Textarea, } from "@nextui-org/react";
 import { useContext, useEffect, useState, } from 'react'
 
@@ -10,16 +8,17 @@ import "../assets/style/about.css";
 
 // Component Imports
 import { CurrentUserContext, serverURL, } from '../App';
-import { PageHeader, } from '../components/Bar';
 import { ScheduleBar, } from "../components/Forms";
 
 // API Imports
-import { auth, firestore, removeImage, uploadImgToStorageAndReturnDownloadLink, } from '../api/firebase';
+import { firestore, removeImage, uploadImgToStorageAndReturnDownloadLink, } from '../api/firebase';
 import { UploadImageCard, WLImage } from '../libraries/Web-Legos/components/Images';
 import { ImageCompressor } from '../libraries/Web-Legos/api/images';
-import { getFileExtension, getFileNameByCurrentTime, openFileBrowser } from '../libraries/Web-Legos/api/files';
-import { TextBlock, WLHeader, WLTextBlock } from '../libraries/Web-Legos/components/Text';
-import { WLCenteredColumn, WLLoading, WLResponsiveSection, WLResponsiveSectionEditable, WLSpinnerPage } from '../libraries/Web-Legos/components/Layout';
+import { getFileNameByCurrentTime, openFileBrowser } from '../libraries/Web-Legos/api/files';
+import { WLHeader, } from '../libraries/Web-Legos/components/Text';
+import { WLCenteredColumn, WLResponsiveSectionEditable, WLSpinnerPage } from '../libraries/Web-Legos/components/Layout';
+import { TextField } from '@mui/material';
+import { AboutBlockHeader } from '../components/Bar';
 
 export default function About() {
 
@@ -86,27 +85,7 @@ export default function About() {
           </div>
         </Modal.Footer>
       </Modal>
-      <PageHeader 
-        text="About Beyond the Bell"
-        sections={[
-          {
-            title: "Developing All Learners",
-            id: "developing-all-learners"
-          },
-          {
-            title: "Meet The Team",
-            id: "meet-the-director"
-          },
-          {
-            title: "Our Methods",
-            id: "our-methods"
-          },
-          {
-            title: "Our Learning Center",
-            id: "our-learning-center"
-          },
-        ]}
-      />
+      <AboutBlockHeader />
       <WLResponsiveSectionEditable setLoaded={setdevelopingAllLearnersLoaded} firestoreId="developing-all-learners" editable={userCanEditText}/>
       <div className="rainbow-line" />
       <WLResponsiveSectionEditable setLoaded={setMeetTheTeamLoaded} columnWidthLeft="4" columnWidthRight="8" textRight firestoreId="meet-the-director" editable={userCanEditText} image={<WLImage firestoreId="meet-the-director" editable={userCanEditImages} shadow round />}/>

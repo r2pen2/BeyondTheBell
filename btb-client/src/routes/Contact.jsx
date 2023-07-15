@@ -5,10 +5,10 @@ import { Button, Input, Modal, Text, Textarea } from "@nextui-org/react";
 import ReCAPTCHA from "react-google-recaptcha";
 
 import "../assets/style/services.css"
-import { PageHeader, } from '../components/Bar';
 import { WLHeader, WLText } from '../libraries/Web-Legos/components/Text';
 import { CurrentUserContext } from '../App';
-import { WLLoading, WLSpinnerPage } from '../libraries/Web-Legos/components/Layout';
+import { WLSpinnerPage } from '../libraries/Web-Legos/components/Layout';
+import { ContactBlockHeader } from '../components/Bar';
 
 export default function Contact() {
   
@@ -81,7 +81,7 @@ export default function Contact() {
           />
         </Modal.Body>
       </Modal>
-      <PageHeader text="Contact / Register" />
+      <ContactBlockHeader />
       <section className="d-flex flex-row justify-content-center m-5">
         <div className="gap-2 d-flex flex-column align-items-start justify-content-center w-80">
           <div className="container-fluid d-flex flex-column">

@@ -9,8 +9,8 @@ import Carousel from "react-material-ui-carousel";
 import "../assets/style/homepage.css"
 import { FormModal, ScheduleBar } from '../components/Forms';
 
-import { auth, firestore, removeImage, uploadImgToStorageAndReturnDownloadLink } from '../api/firebase';
-import { addDoc, collection, deleteDoc, doc, getDoc, setDoc } from 'firebase/firestore';
+import { firestore, removeImage, uploadImgToStorageAndReturnDownloadLink } from '../api/firebase';
+import { addDoc, collection, deleteDoc, doc, setDoc } from 'firebase/firestore';
 import { IconButton, TextField } from '@mui/material';
 import { PencilIcon } from '../components/Icons';
 import { CurrentUserContext, serverURL } from '../App';
@@ -18,7 +18,7 @@ import { BTBLoader } from '../components/Feedback';
 import { UploadImageCard } from '../libraries/Web-Legos/components/Images';
 import { getFileNameByCurrentTime, openFileBrowser } from '../libraries/Web-Legos/api/files';
 import { WLHeader } from '../libraries/Web-Legos/components/Text';
-import { WLLoading, WLSpinnerPage } from '../libraries/Web-Legos/components/Layout';
+import { WLSpinnerPage } from '../libraries/Web-Legos/components/Layout';
 
 
 export default function HomePage() {

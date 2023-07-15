@@ -1,19 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 
-import { Button, Card, Collapse, Grid, Link, Loading, Spacer, Text } from "@nextui-org/react";
+import { Card, Text } from "@nextui-org/react";
 
 import "../assets/style/services.css"
-import { PageHeader, } from '../components/Bar';
 import { btbOrange } from '../assets/style/colors';
 import CheckIcon from '@mui/icons-material/Check';
 
 import { ScheduleBar } from '../components/Forms';
-import { WLHeader, WLTextBlock } from '../libraries/Web-Legos/components/Text';
-import { doc, getDoc } from 'firebase/firestore';
-import { auth, firestore } from '../api/firebase';
+import { WLHeader } from '../libraries/Web-Legos/components/Text';
 import { CurrentUserContext } from '../App';
-import { WLImage } from '../libraries/Web-Legos/components/Images';
-import { WLLoading, WLResponsiveSectionEditable, WLSpinnerPage } from '../libraries/Web-Legos/components/Layout';
+import { WLResponsiveSectionEditable, WLSpinnerPage } from '../libraries/Web-Legos/components/Layout';
+import { ServicesBlockHeader } from '../components/Bar';
 
 
 export default function Services() {
@@ -32,23 +29,7 @@ export default function Services() {
 
   return (
     <WLSpinnerPage dependencies={[afterSchoolLoaded, tutoringLoaded, wilsonTutoringLoaded]}>
-      <PageHeader 
-        text="Our Services"
-        sections={[
-          {
-            title: "After School Programs",
-            id: "after-school",
-          },
-          {
-            title: "1 on 1 Tutoring",
-            id: "1-on-1-tutoring",
-          },
-          {
-            title: "Dyslexia Therapy",
-            id: "wilson-tutoring",
-          },
-        ]}
-      />
+      <ServicesBlockHeader />
       <WLResponsiveSectionEditable 
         setLoaded={setAfterSchoolLoaded}
         firestoreId="after-school" 

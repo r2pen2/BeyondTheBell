@@ -1,53 +1,10 @@
-import { Button, Link, Text } from '@nextui-org/react'
 import React from 'react'
 
 import "../assets/style/bar.css";
 
 import "../libraries/Web-Legos/assets/style/text.css";
-import { WLHeader } from '../libraries/Web-Legos/components/Text';
-
-export function PageHeader({text, sections}) {
-  
-  function renderButtons() {
-    if (!sections) { return; }
-    return sections.map((section, index) => {
-
-      function handleClick() {
-        if (section.openCollapse) {
-          section.openCollapse();
-        } else {
-          window.location.hash = "";
-          window.location.hash = `#${section.id}`;
-        }
-      }
-
-      return (
-        <div key={index} className="col-lg-3 col-md-12 d-flex flex-column align-items-center">
-          <Link block key={index} color="white" size="md" onClick={handleClick}>
-            <Text color="white">
-              {section.title}
-            </Text>
-          </Link>
-        </div>
-      )
-    })
-  }
-
-  return (
-    <section className="orange-bar">
-      <WLHeader color="white">
-        {text}
-      </WLHeader>
-      { sections && (
-        <div className="container">
-          <div className="row d-flex flex-row justify-content-center">
-            { renderButtons() }
-          </div>
-        </div>
-      ) }
-    </section>
-  )
-}
+import { WLBlockHeader } from '../libraries/Web-Legos/components/Text';
+import { blockHeaderColor } from '../assets/style/colors';
 
 export function OrangeBar(props) {
   return (
@@ -55,4 +12,41 @@ export function OrangeBar(props) {
       {props.children}
     </section>
   )
+}
+
+export function AboutBlockHeader() {
+  return (
+    <WLBlockHeader 
+      text="About Beyond the Bell"
+      color={blockHeaderColor}
+    >
+      <WLBlockHeader.Section sectionId="developing-all-learners" title="Developing All Learners" />
+      <WLBlockHeader.Section sectionId="meet-the-director" title="Meet The Team" />
+      <WLBlockHeader.Section sectionId="our-methods" title="Our Methods" />
+      <WLBlockHeader.Section sectionId="our-learning-center" title="Our Learning Center" />
+    </WLBlockHeader>
+  )
+}
+
+
+export function ContactBlockHeader() {
+  return <WLBlockHeader color={blockHeaderColor} text="Contact / Register" />;
+}
+
+export function ServicesBlockHeader() {
+  return (
+    <WLBlockHeader
+      color={blockHeaderColor} 
+      text="Our Services"
+    >
+      <WLBlockHeader.Section sectionId="after-school" title="After School Programs" />
+      <WLBlockHeader.Section sectionId="1-on-1-tutoring" title="1 on 1 Tutoring" />
+      <WLBlockHeader.Section sectionId="wilson-tutoring" title="Dyslexia Therapy" />
+    </WLBlockHeader>
+  )
+
+}
+
+export function ThankYouBlockHeader() {
+  return <WLBlockHeader color={blockHeaderColor} text="Thank You" />;
 }
