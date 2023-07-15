@@ -3,6 +3,8 @@ import React from 'react'
 
 import "../assets/style/bar.css";
 
+import "../libraries/Web-Legos/assets/style/text.css";
+
 export function PageHeader({text, sections}) {
   
   function renderButtons() {
@@ -32,7 +34,7 @@ export function PageHeader({text, sections}) {
 
   return (
     <section className="orange-bar">
-      <Text h1 color="white">
+      <Text h1 color="white" className="web-legos-scaling-header">
         {text}
       </Text>
       { sections && (

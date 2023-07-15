@@ -92,7 +92,7 @@ export default function About() {
           },
           {
             title: "Meet The Team",
-            id: "meet-the-team"
+            id: "meet-the-director"
           },
           {
             title: "Our Methods",
@@ -106,28 +106,14 @@ export default function About() {
       />
       <WLResponsiveSectionEditable firestoreId="developing-all-learners" editable={userCanEditText}/>
       <div className="rainbow-line" />
-      <WLResponsiveSection 
-        sectionId="meet-the-team"
-        leftContent={
-          <WLImage firestoreId="nancy-mager" editable={userCanEditImages} shadow round />
-        }
-        rightContent={
-          <WLCenteredColumn>          
-            <WLHeader editable={userCanEditText} firestoreId="meet-the-director-header" color="primary" headerLevel={1} />
-            <WLTextBlock editable={userCanEditText} size="$lg" className={textBlockClasses} firestoreId="meet-the-director" />
-          </WLCenteredColumn>
-        }
-        bottomContent={
-          <WLCenteredColumn>
-            <WLHeader editable={userCanEditText} firestoreId="our-staff-header" color="primary" headerLevel={1} />
-            <div className="w-100 row d-flex flex-row justify-content-center align-items-center">
-              { renderTeam() }
-            </div>
-            { userCanEditStaff && <AddStaffButton /> }
-          </WLCenteredColumn>
-        }
-      />
-      <WLResponsiveSectionEditable className="d-none d-xl-inline" justifyLeft="start" sectionClasses="bg-blue" textColor="white" firestoreId="our-methods" editable={userCanEditText} image={<WLImage firestoreId="our-methods" editable={userCanEditImages} shadow imgCss={{padding: "1rem", height: "100%", width: "50vw", objectFit: "cover"}}/>}/> 
+      <WLResponsiveSectionEditable textRight firestoreId="meet-the-director" editable={userCanEditText} image={<WLImage firestoreId="meet-the-director" editable={userCanEditImages} shadow round />}/>
+      <WLCenteredColumn>
+        <WLHeader editable={userCanEditText} firestoreId="our-staff-header" color="primary" headerLevel={1} />
+        <div className="w-100 row d-flex flex-row justify-content-center align-items-center">
+          { renderTeam() }
+        </div>
+        { userCanEditStaff && <AddStaffButton /> }
+      </WLCenteredColumn>
       <WLResponsiveSectionEditable className="d-xl-none d-inline" justifyLeft="start" sectionClasses="bg-blue" textColor="white" firestoreId="our-methods" editable={userCanEditText} /> 
       <WLResponsiveSectionEditable textRight={true} firestoreId="our-learning-center" editable={userCanEditText} />
       <ScheduleBar open={formModalOpen} setOpen={setFormModalOpen} />
