@@ -1,4 +1,4 @@
-import { useState, } from 'react'
+import { useContext, useState, } from 'react'
 
 import { Button, Input, Modal, Text, Textarea } from "@nextui-org/react";
 
@@ -6,6 +6,8 @@ import ReCAPTCHA from "react-google-recaptcha";
 
 import "../assets/style/services.css"
 import { PageHeader, } from '../components/Bar';
+import { WLHeader, WLText } from '../libraries/Web-Legos/components/Text';
+import { CurrentUserContext } from '../App';
 
 export default function Contact() {
   
@@ -81,16 +83,16 @@ export default function Contact() {
 
 function ContactForm() {
 
+  const {currentUser} = useContext(CurrentUserContext);
+
+  const userCanEditText = currentUser ? currentUser.op : false;
+
   return (
     <div className="gap-2 d-flex flex-column align-items-start justify-content-center">
       <div className="container-fluid d-flex flex-column">
         <div className="row">
-          <Text h1 align="start">
-            We Would Love To Hear From You!
-          </Text>
-          <Text align="start">
-            Do you want to see how you can take the next step in supporting your child’s educational growth? Drop us a line with any questions. We’re here to help!
-          </Text>
+          <WLHeader align="start" firestoreId="contact-header" editable={userCanEditText}/>
+          <WLText align="start" firestoreId="contact-subtitle" editable={userCanEditText}/>
         </div>
         <div className="row pt-2">
           <Input clearable bordered label="Your Name" fullWidth css={{display: "flex", alignItems: "start"}} />

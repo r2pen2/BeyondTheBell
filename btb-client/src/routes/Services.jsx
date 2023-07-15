@@ -52,9 +52,7 @@ export default function Services() {
           <div className="row">
             <div className="col px-xl-5 py-5">
               <div className="container-fluid">
-                <Text h2 color="primary">
-                  Why Sign Up?
-                </Text>
+                <WLHeader headerLevel={2} color="primary" firestoreId="sign-up-header" editable={userCanEditText}/>
                 <div className="row">
                   <div className="col-xl-6 col-lg-12">
                     <SignUpReason>
@@ -89,10 +87,8 @@ export default function Services() {
         bottomContent={  
           <div className="row">
             <div className="col px-xl-5 py-5">
-              <div className="container-fluid">
-                <Text h2 color="primary">
-                  Why Sign Up?
-                </Text>
+              <div className="container-fluid">              
+                <WLHeader headerLevel={2} color="primary" firestoreId="sign-up-header" editable={userCanEditText}/>
                 <div className="row">
                   <div className="col-xl-6 col-lg-12">
                     <SignUpReason>
@@ -123,9 +119,7 @@ export default function Services() {
           <div className="row">
             <div className="col px-xl-5 py-5">
               <div className="container-fluid">
-                <Text h2 color="primary">
-                  Why Sign Up?
-                </Text>
+                <WLHeader headerLevel={2} color="primary" firestoreId="sign-up-header" editable={userCanEditText}/>
                 <div className="row">
                   <div className="col-xxl-4 col-xl-6 col-lg-12">
                     <SignUpReason>
