@@ -8,14 +8,12 @@ import { auth, signInWithGoogle } from '../api/firebase';
 import { firestore } from '../api/firebase';
 import { getDoc, doc, setDoc } from 'firebase/firestore';
 
-import { Copyright } from "../libraries/Web-Legos/components/Footer";
 import { CurrentUserContext } from '../App';
+import { WLText, WLCopyright } from '../libraries/Web-Legos/components/Text';
 
 export default function Footer() {
 
   const [currentSignIn, setCurrentSignIn] = useState(null);
-
-  const {currentUser, setCurrentUser} = useContext(CurrentUserContext);
 
   useEffect(() => {
     auth.onAuthStateChanged(u => {
@@ -44,10 +42,7 @@ export default function Footer() {
                 email: authUser.email,
                 op: false,
               }
-              setCurrentUser(newUser);
               setDoc(doc(firestore, "users", authUser.uid), newUser);
-            } else {
-              setCurrentUser(docSnap.data());
             }
           })
         }
@@ -62,58 +57,10 @@ export default function Footer() {
     <footer>
       <img src={footerBackground} className="footer-background" alt="footer-background" />
       <div className="footer-content w-100" >
-        <div className="container-fluid mt-3 mb-3 d-flex flex-column align-items-center">
-          <div className="row d-flex flex-row w-100 align-items-center gap-5 justify-content-center">
-            <div className="col-lg-12 col-xl-3 d-flex flex-column align-items-center">
-              <img src={logo} alt="logo-transparent" className="m-2" style={{width: 150, height: 150}}/>
-              <Text h2>
-                Beyond the Bell Education
-              </Text>
-              <Text>
-                3 Man-Mar Drive #14 <br /> Plainville, MA 02762
-              </Text>
-              <Text>
-                questions@beyondthebelleducation.com <br /> (508) 316-4751
-              </Text>
-            </div>
-            <div className="col-lg-12 col-xl-4 d-flex flex-column align-items-center">
-              <Text h2>
-                Hours
-              </Text>
-              <Text>
-                Monday - Friday 8am to 6pm
-              </Text>
-              <Text>
-                Other hours available by appointment
-              </Text>
-            </div>
-            <div className="col-lg-12 col-xl-3 d-flex flex-column align-items-center">
-              <Text>
-                <Link block color="primary" href="/home">
-                  Home
-                </Link>
-              </Text>
-              <Text>
-                <Link block color="primary" href="/about">
-                  Who We Are
-                </Link>
-              </Text>
-              <Text>
-                <Link block color="primary" href="/services">
-                  Services
-                </Link>
-              </Text>
-              <Text>
-                <Link block color="primary" href="contact">
-                  Contact Us
-                </Link>
-              </Text>
-            </div>
-          </div>
-        </div>
+        <FooterContent />
         <div className="fill-line mb-3" />
         <div className="d-flex flex-column gap-2 m-2 align-items-center">          
-          <Copyright year="2023" name="Beyond the Bell Educational Services"/>
+          <FooterCopyright />
           <Button light onClick={handleSignInClick}>
             {currentSignIn ? `Signed in as ${currentSignIn.displayName}` : "Admin Login"}
           </Button>
@@ -121,4 +68,64 @@ export default function Footer() {
       </div>
     </footer>
   )
+}
+
+function FooterContent() {
+
+  const {currentUser} = useContext(CurrentUserContext)
+
+  const userCanEditText = currentUser ? currentUser.op : false;
+
+  return (
+    
+    <div className="container-fluid mt-3 mb-3 d-flex flex-column align-items-center">
+    <div className="row d-flex flex-row w-100 align-items-center gap-5 justify-content-center">
+      <div className="col-lg-12 col-xl-3 d-flex flex-column align-items-center">
+        <img src={logo} alt="logo-transparent" className="m-2" style={{width: 150, height: 150}}/>
+        <Text h2>
+          Beyond the Bell Education
+        </Text>
+        <WLText firestoreId="footer-contact" editable={userCanEditText} />
+      </div>
+      <div className="col-lg-12 col-xl-4 d-flex flex-column align-items-center">
+        <Text h2>
+          Hours
+        </Text>
+        <WLText firestoreId="footer-hours" editable={userCanEditText} />
+      </div>
+      <div className="col-lg-12 col-xl-3 d-flex flex-column align-items-center">
+        <Text>
+          <Link block color="primary" href="/home">
+            Home
+          </Link>
+        </Text>
+        <Text>
+          <Link block color="primary" href="/about">
+            Who We Are
+          </Link>
+        </Text>
+        <Text>
+          <Link block color="primary" href="/services">
+            Services
+          </Link>
+        </Text>
+        <Text>
+          <Link block color="primary" href="contact">
+            Contact Us
+          </Link>
+        </Text>
+      </div>
+    </div>
+  </div>
+  )
+}
+
+function FooterCopyright() {
+
+  const {currentUser} = useContext(CurrentUserContext)
+
+  const userCanEditText = currentUser ? currentUser.op : false;
+
+  return  <WLCopyright editable={userCanEditText}/>;
+  
 }

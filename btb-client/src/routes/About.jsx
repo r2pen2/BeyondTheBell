@@ -19,6 +19,7 @@ import { UploadImageCard, WLImage } from '../libraries/Web-Legos/components/Imag
 import { ImageCompressor } from '../libraries/Web-Legos/api/images';
 import { getFileExtension, getFileNameByCurrentTime, openFileBrowser } from '../libraries/Web-Legos/api/files';
 import { TextBlock, WLHeader, WLTextBlock } from '../libraries/Web-Legos/components/Text';
+import { WLCenteredColumn, WLResponsiveSection, WLResponsiveSectionEditable } from '../libraries/Web-Legos/components/Layout';
 
 const textBlockClasses = "px-4 px-md-5";
 
@@ -103,56 +104,31 @@ export default function About() {
           },
         ]}
       />
-      <section className="container-fluid p-lg-5 py-5 p-2" id="developing-all-learners">
-        <div className="row">
-          <div className="col-xxl-6 col-xl-12 about-text">
-            <WLHeader editable={userCanEditText} firestoreId="developing-all-learners-header" color="primary" headerLevel={1} />
-            <WLTextBlock editable={userCanEditText} size="$lg" className={textBlockClasses} firestoreId="developing-all-learners" />
-          </div>
-          <div className="col-xxl-6 col-xl-12" >
-            <WLImage firestoreId="developing-all-learners" editable={userCanEditImages} shadow halfWidth/>
-          </div>
-        </div>
-      </section>
+      <WLResponsiveSectionEditable firestoreId="developing-all-learners" editable={userCanEditText}/>
       <div className="rainbow-line" />
-      <section className="container-fluid p-lg-5 p-2 py-5" id="meet-the-team">
-        <div className="row d-flex flex-row justify-content-center align-items-center">
-          <div className="col-xxl-3 col-xl-6">
-            <WLImage firestoreId="nancy-mager" editable={userCanEditImages} shadow round />
-          </div>
-          <div className="col-xxl-6 col-xl-12 px-2 px-lg-5 about-text">
-              <WLHeader editable={userCanEditText} firestoreId="meet-the-director-header" color="primary" headerLevel={1} />
-              <WLTextBlock editable={userCanEditText} size="$lg" className={textBlockClasses} firestoreId="meet-the-director" />
-          </div>
-        </div>
-        <WLHeader editable={userCanEditText} firestoreId="our-staff-header" color="primary" headerLevel={1} />
-        <div className="row d-flex flex-row justify-content-center align-items-center">
-          { renderTeam() }
-        </div>
-        { userCanEditStaff && <AddStaffButton /> }
-      </section>
-      <section className="container-fluid bg-blue" id="our-methods">
-        <div className="row">
-          <div className="col-xl-6 col-lg-12 about-text">
-            <WLHeader editable={userCanEditText} firestoreId="our-methods-header" color="white" headerLevel={1} />
-            <WLTextBlock editable={userCanEditText} size="$lg" className={textBlockClasses} firestoreId="our-methods" color="white" />
-          </div>
-          <div className="col-xl-6 d-none d-xl-flex" >
-            <WLImage firestoreId="our-methods" editable={userCanEditImages} shadow imgCss={{padding: "1rem", height: "100%", width: "50vw", objectFit: "cover"}}/>
-          </div>
-        </div>
-      </section>
-      <section className="container-fluid p-lg-5 p-2 py-5 section-header" id="our-learning-center">
-        <div className="row">
-          <div className="col-xl-6 col-lg-12" >
-            <WLImage firestoreId="our-learning-center" editable={userCanEditImages} shadow halfWidth/>
-          </div>
-          <div className="col-xl-6 col-lg-12 about-text">
-            <WLHeader editable={userCanEditText} firestoreId="our-learning-center-header" color="primary" headerLevel={1} />
-            <WLTextBlock editable={userCanEditText} size="$lg" className={textBlockClasses} firestoreId="our-learning-center" />
-          </div>
-        </div>
-      </section>
+      <WLResponsiveSection 
+        sectionId="meet-the-team"
+        leftContent={
+          <WLImage firestoreId="nancy-mager" editable={userCanEditImages} shadow round />
+        }
+        rightContent={
+          <WLCenteredColumn>          
+            <WLHeader editable={userCanEditText} firestoreId="meet-the-director-header" color="primary" headerLevel={1} />
+            <WLTextBlock editable={userCanEditText} size="$lg" className={textBlockClasses} firestoreId="meet-the-director" />
+          </WLCenteredColumn>
+        }
+        bottomContent={
+          <WLCenteredColumn>
+            <WLHeader editable={userCanEditText} firestoreId="our-staff-header" color="primary" headerLevel={1} />
+            <div className="w-100 row d-flex flex-row justify-content-center align-items-center">
+              { renderTeam() }
+            </div>
+            { userCanEditStaff && <AddStaffButton /> }
+          </WLCenteredColumn>
+        }
+      />
+      <WLResponsiveSectionEditable justifyLeft="start" sectionClasses="bg-blue" textColor="white" firestoreId="our-methods" editable={userCanEditText} image={<WLImage firestoreId="our-methods" editable={userCanEditImages} shadow imgCss={{padding: "1rem", height: "100%", width: "50vw", objectFit: "cover"}}/>}/> 
+      <WLResponsiveSectionEditable textRight={true} firestoreId="our-learning-center" editable={userCanEditText} />
       <ScheduleBar open={formModalOpen} setOpen={setFormModalOpen} />
     </div>
   )
