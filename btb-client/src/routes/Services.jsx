@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 
-import { Button, Card, Collapse, Grid, Link, Spacer, Text } from "@nextui-org/react";
+import { Button, Card, Collapse, Grid, Link, Loading, Spacer, Text } from "@nextui-org/react";
 
 import "../assets/style/services.css"
 import { PageHeader, } from '../components/Bar';
@@ -13,10 +13,14 @@ import { doc, getDoc } from 'firebase/firestore';
 import { auth, firestore } from '../api/firebase';
 import { CurrentUserContext } from '../App';
 import { WLImage } from '../libraries/Web-Legos/components/Images';
-import { WLResponsiveSectionEditable } from '../libraries/Web-Legos/components/Layout';
+import { WLLoading, WLResponsiveSectionEditable } from '../libraries/Web-Legos/components/Layout';
 
 
 export default function Services() {
+
+  const [afterSchoolLoaded, setAfterSchoolLoaded] = useState(false);
+  const [tutoringLoaded, setTutoringLoaded] = useState(false);
+  const [wilsonTutoringLoaded, setWilsonTutoringLoaded] = useState(false);
 
   // Get current user from context
   const { currentUser } = useContext(CurrentUserContext);
@@ -28,6 +32,7 @@ export default function Services() {
 
   return (
     <div className="d-flex flex-column">
+      { !afterSchoolLoaded && !tutoringLoaded && !wilsonTutoringLoaded && <WLLoading /> }
       <PageHeader 
         text="Our Services"
         sections={[
@@ -46,6 +51,7 @@ export default function Services() {
         ]}
       />
       <WLResponsiveSectionEditable 
+        setLoaded={setAfterSchoolLoaded}
         firestoreId="after-school" 
         editable={userCanEditText}
         bottomContent={
@@ -82,6 +88,7 @@ export default function Services() {
       />
       <div className="rainbow-line" />
       <WLResponsiveSectionEditable 
+        setLoaded={setTutoringLoaded}
         firestoreId="1-on-1-tutoring" 
         editable={userCanEditText} 
         bottomContent={  
@@ -113,6 +120,7 @@ export default function Services() {
       />
       <div className="rainbow-line" />
       <WLResponsiveSectionEditable 
+        setLoaded={setWilsonTutoringLoaded}
         firestoreId="wilson-tutoring" 
         editable={userCanEditText}
         bottomContent={

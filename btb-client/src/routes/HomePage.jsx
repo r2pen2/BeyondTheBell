@@ -18,6 +18,7 @@ import { BTBLoader } from '../components/Feedback';
 import { UploadImageCard } from '../libraries/Web-Legos/components/Images';
 import { getFileNameByCurrentTime, openFileBrowser } from '../libraries/Web-Legos/api/files';
 import { WLHeader } from '../libraries/Web-Legos/components/Text';
+import { WLLoading } from '../libraries/Web-Legos/components/Layout';
 
 
 export default function HomePage() {
@@ -98,9 +99,12 @@ export default function HomePage() {
     setOfferingEdit(false);
   }
 
+  const [testimonialHeaderLoaded, setTestimonialHeaderloaded] = useState(false);
+  const [offeringsHeaderLoaded, setOfferingsHeaderloaded] = useState(false);
 
   return (
     <div className="d-flex flex-column">
+      { !testimonialHeaderLoaded && !offeringsHeaderLoaded && <WLLoading /> }
       <Modal 
         closeButton
         width="80vw"
@@ -201,7 +205,7 @@ export default function HomePage() {
       </section>
       <div className="rainbow-line" />
       <section className="container-fluid d-flex flex-column align-items-center py-5">  
-        <WLHeader color="primary" editable={userCanEditText} firestoreId="class-offerings-header" />
+        <WLHeader color="primary" editable={userCanEditText} firestoreId="class-offerings-header" setLoaded={setOfferingsHeaderloaded}/>
         <div className="d-xxl-flex d-none w-100 align-items-center flex-row justify-content-center">
           <BTBCarousel>
             { renderOfferings(4) }  
@@ -223,7 +227,7 @@ export default function HomePage() {
         { userCanEditOfferings && <AddOfferingButton /> }
       </section>
       <section className="bg-blue px-1 py-5">
-          <WLHeader editable={userCanEditText} firestoreId="testimonials-header" color="white"/>
+          <WLHeader editable={userCanEditText} firestoreId="testimonials-header" color="white"  setLoaded={setTestimonialHeaderloaded}/>
           <div className="container-fluid my-5" >
             <div className="d-xxl-flex d-none w-100 align-items-center flex-row justify-content-center">
               <BTBCarousel>

@@ -8,14 +8,23 @@ import "../assets/style/services.css"
 import { PageHeader, } from '../components/Bar';
 import { WLHeader, WLText } from '../libraries/Web-Legos/components/Text';
 import { CurrentUserContext } from '../App';
+import { WLLoading } from '../libraries/Web-Legos/components/Layout';
 
 export default function Contact() {
   
+  const [contactHeaderLoaded, setContactHeaderLoaded] = useState(false);
+  const [contactSubtitleLoaded, setContactSubtitleLoaded] = useState(false);
+
   const [recaptchaModalOpen, setRecaptchaModalOpen] = useState(false);
 
   function sendForm() {
     // Send
   }
+
+
+  const {currentUser} = useContext(CurrentUserContext);
+
+  const userCanEditText = currentUser ? currentUser.op : false;
 
   function handleCaptchaComplete(v) {
     if (v.length < 1) {
@@ -54,6 +63,7 @@ export default function Contact() {
 
   return (
     <div className="d-flex flex-column align-items-center">
+      { !contactHeaderLoaded && !contactSubtitleLoaded && <WLLoading /> }
       <Modal
         blur
         open={recaptchaModalOpen}
@@ -74,53 +84,40 @@ export default function Contact() {
       </Modal>
       <PageHeader text="Contact / Register" />
       <section className="d-flex flex-row justify-content-center m-5 w-80">
-        <ContactForm/>
+        <div className="gap-2 d-flex flex-column align-items-start justify-content-center">
+          <div className="container-fluid d-flex flex-column">
+            <div className="row">
+              <WLHeader setLoaded={setContactHeaderLoaded} align="start" firestoreId="contact-header" editable={userCanEditText} />
+              <WLText setLoaded={setContactSubtitleLoaded} align="start" firestoreId="contact-subtitle" editable={userCanEditText} />
+            </div>
+            <div className="row pt-2">
+              <Input clearable bordered label="Your Name" fullWidth css={{display: "flex", alignItems: "start"}} />
+            </div>
+            <div className="row">
+              <div className="col-lg-6 col-md-12 pt-2">
+                <Input clearable bordered label="Your phone" fullWidth css={{display: "flex", alignItems: "start"}} />
+              </div>      
+              <div className="col-lg-6 col-md-12 pt-2">
+                <Input clearable bordered label="Your email" fullWidth css={{display: "flex", alignItems: "start"}} />
+              </div>      
+            </div>
+            <div className="row pt-2">
+              <Input clearable bordered label="Preferred contact method" fullWidth css={{display: "flex", alignItems: "start"}} />
+            </div>
+            <div className="row pt-2">
+              <Input clearable bordered label="City, State" fullWidth css={{display: "flex", alignItems: "start"}} />
+            </div>
+            <div className="row pt-2">
+              <Textarea bordered label="How can we help?" placeholder="Tell us what you're looking for." fullWidth css={{display: "flex", alignItems: "start"}} />
+            </div>
+          </div>
+          <div className="d-flex justify-content-center w-100 mt-3">
+            <Button color="primary" shadow onPress={() => setRecaptchaModalOpen(true)}>
+              Submit
+            </Button>
+          </div>
+        </div>
       </section>
     </div>
   )
-
-  
-
-function ContactForm() {
-
-  const {currentUser} = useContext(CurrentUserContext);
-
-  const userCanEditText = currentUser ? currentUser.op : false;
-
-  return (
-    <div className="gap-2 d-flex flex-column align-items-start justify-content-center">
-      <div className="container-fluid d-flex flex-column">
-        <div className="row">
-          <WLHeader align="start" firestoreId="contact-header" editable={userCanEditText}/>
-          <WLText align="start" firestoreId="contact-subtitle" editable={userCanEditText}/>
-        </div>
-        <div className="row pt-2">
-          <Input clearable bordered label="Your Name" fullWidth css={{display: "flex", alignItems: "start"}} />
-        </div>
-        <div className="row">
-          <div className="col-lg-6 col-md-12 pt-2">
-            <Input clearable bordered label="Your phone" fullWidth css={{display: "flex", alignItems: "start"}} />
-          </div>      
-          <div className="col-lg-6 col-md-12 pt-2">
-            <Input clearable bordered label="Your email" fullWidth css={{display: "flex", alignItems: "start"}} />
-          </div>      
-        </div>
-        <div className="row pt-2">
-          <Input clearable bordered label="Preferred contact method" fullWidth css={{display: "flex", alignItems: "start"}} />
-        </div>
-        <div className="row pt-2">
-          <Input clearable bordered label="City, State" fullWidth css={{display: "flex", alignItems: "start"}} />
-        </div>
-        <div className="row pt-2">
-          <Textarea bordered label="How can we help?" placeholder="Tell us what you're looking for." fullWidth css={{display: "flex", alignItems: "start"}} />
-        </div>
-      </div>
-      <div className="d-flex justify-content-center w-100 mt-3">
-        <Button color="primary" shadow onPress={() => setRecaptchaModalOpen(true)}>
-          Submit
-        </Button>
-      </div>
-    </div>
-  )
-}
 }
