@@ -17,6 +17,7 @@ import { CurrentUserContext, serverURL } from '../App';
 import { BTBLoader } from '../components/Feedback';
 import { UploadImageCard } from '../libraries/Web-Legos/components/Images';
 import { getFileNameByCurrentTime, openFileBrowser } from '../libraries/Web-Legos/api/files';
+import { WLHeader } from '../libraries/Web-Legos/components/Text';
 
 
 export default function HomePage() {
@@ -50,6 +51,7 @@ export default function HomePage() {
   // User Permissions
   const userCanEditOfferings = currentUser ? currentUser.offerings : false;
   const userCanEditTestimonials = currentUser ? currentUser.testimonials : false;
+  const userCanEditText = currentUser ? currentUser.op : false;
 
   /**
    * Close all modals and reload the page. This is intended for use after some edit is confirmed.
@@ -199,12 +201,7 @@ export default function HomePage() {
       </section>
       <div className="rainbow-line" />
       <section className="container-fluid d-flex flex-column align-items-center py-5">  
-        <Text h1 color="primary" className="d-none d-md-inline">
-          What's Happening Now At BTB
-        </Text>
-        <Text h3 color="primary" className="d-inline d-md-none">
-          What's Happening Now At BTB
-        </Text>
+        <WLHeader color="primary" editable={userCanEditText} firestoreId="class-offerings-header" />
         <div className="d-xxl-flex d-none w-100 align-items-center flex-row justify-content-center">
           <BTBCarousel>
             { renderOfferings(4) }  
@@ -226,12 +223,7 @@ export default function HomePage() {
         { userCanEditOfferings && <AddOfferingButton /> }
       </section>
       <section className="bg-blue px-1 py-5">
-          <Text h1 color="white" className="d-none d-md-inline">
-            What Parents Are Saying
-          </Text>
-          <Text h3 color="white" className="d-inline d-md-none">
-            What Parents Are Saying
-          </Text>
+          <WLHeader editable={userCanEditText} firestoreId="testimonials-header" color="white"/>
           <div className="container-fluid my-5" >
             <div className="d-xxl-flex d-none w-100 align-items-center flex-row justify-content-center">
               <BTBCarousel>

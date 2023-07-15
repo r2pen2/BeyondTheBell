@@ -1,6 +1,6 @@
 // Library Imports
 import React from 'react';
-import { Navbar as NextUINavbar, Dropdown, Text, Image, Button, Link } from "@nextui-org/react";
+import { Navbar as NextUINavbar, Dropdown, Text, Image, Button, Link, Divider } from "@nextui-org/react";
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import EmailIcon from '@mui/icons-material/Email';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -15,6 +15,7 @@ import logoBlack from "../assets/images/logoTransparentBlack.png";
 // Style Imports
 import "../assets/style/navbar.css";
 import "../assets/style/layout.css";
+import { btbOrange } from '../assets/style/colors';
 
 const navbarItemFontSize = "20px";
 
@@ -29,11 +30,13 @@ export function NavbarPages() {
   }
 
   return (
-    <NextUINavbar.Content enableCursorHighlight activeColor="primary" hideIn='xs'>
+    <NextUINavbar.Content enableCursorHighlight activeColor="primary" className="d-none d-lg-flex flex-row justify-content-end px-2">
       <NextUINavbar.Link 
         isActive={checkLinkActive("home")}
         href="home"
         itemCss={{fontSize: navbarItemFontSize}}
+        className="mx-1"
+        css={{display: "inline-block", whiteSpace: "nowrap"}}
       >
         Home
       </NextUINavbar.Link>
@@ -41,6 +44,8 @@ export function NavbarPages() {
         isActive={checkLinkActive("about")}
         href="about"
         itemCss={{fontSize: navbarItemFontSize}}
+        className="mx-1"
+        css={{display: "inline-block", whiteSpace: "nowrap"}}
       >
         Who We Are
       </NextUINavbar.Link>
@@ -48,6 +53,8 @@ export function NavbarPages() {
         isActive={checkLinkActive("services")}
         href="services"
         itemCss={{fontSize: navbarItemFontSize}}
+        className="mx-1"
+        css={{display: "inline-block", whiteSpace: "nowrap"}}
       >
         Services
       </NextUINavbar.Link>
@@ -55,6 +62,8 @@ export function NavbarPages() {
         isActive={checkLinkActive("contact")}
         href="contact"
         itemCss={{fontSize: navbarItemFontSize}}
+        className="mx-1"
+        css={{display: "inline-block", whiteSpace: "nowrap"}}
       >
         Contact
       </NextUINavbar.Link>
@@ -64,7 +73,6 @@ export function NavbarPages() {
 
 export function Navbar() {
 
-  
   const collapseItems = [
     {
       name: "Home",
@@ -89,14 +97,15 @@ export function Navbar() {
       height="80px"
       variant="sticky"
       maxWidth="xl"
-    >
-      <NextUINavbar.Toggle showIn="xs" css={{flex: 1}} className="px-2"/>
-      <BrandSmall />
-      <BrandLarge />
-      <BrandCentered />
-      <NavbarPages />
-      <div className="d-flex flex-row align-items-center justify-content-center gap-2 px-2 w-25" >
+    > 
+      <div className="d-flex flex-row align-items-center justify-content-start gap-2">  
+        <NextUINavbar.Toggle className="px-2 d-inline d-lg-none"/>
+        <BrandLarge />
+        <Divider className="d-none d-xxl-inline mx-2" css={{width: "3rem"}}/>
         <NavbarSocials />
+      </div>
+      <div className="d-flex flex-row align-items-center justify-content-center gap-2" >
+        <NavbarPages />
         <NavbarScheduleDropdown />
         <NavbarScheduleDropdownSmall />
       </div>
@@ -120,38 +129,12 @@ export function Navbar() {
   )
 }
 
-function BrandSmall() {
-  return (
-    <NextUINavbar.Brand
-      showIn="sm"
-      hideIn="xs"
-      css={{flex: 1}}
-    >
-      <div 
-        className="navbar-brand-content"
-        onClick={() => window.location = "/"}
-      >
-        <Image
-          width={40}
-          height={40}
-          src={logoBlack}
-          alt="logo-black"
-        />
-      </div>
-    </NextUINavbar.Brand>
-  )
-}
-
 function BrandLarge() {
   return (
     <NextUINavbar.Brand
-      hideIn="sm"
-      css={{width: "25%", flex: 3}}
+      className="d--flex flex-row justify-content-start gap-2 "
+      onClick={() => window.location = "/"}
     >
-      <div 
-        className="navbar-brand-content"
-        onClick={() => window.location = "/"}
-      >
         <Image
           width={40}
           height={40}
@@ -161,33 +144,6 @@ function BrandLarge() {
         <Text b css={{fontSize: 20, marginLeft: "0.5em"}}>
           Beyond The Bell
         </Text>
-      </div>
-    </NextUINavbar.Brand>
-  )
-}
-
-function BrandCentered() {
-  return (
-    <NextUINavbar.Brand
-      showIn="xs"
-      css={{flex: 3}}
-    >
-      <div className="d-flex flex-row justify-content-center w-100">
-        <div 
-          className="navbar-brand-content"
-          onClick={() => window.location = "/"}
-        >
-          <Image
-            width={40}
-            height={40}
-            src={logoBlack}
-            alt="logo-black"
-          />
-          <Text b css={{fontSize: 20, marginLeft: "0.5em"}}>
-            Beyond The Bell
-          </Text>
-        </div>
-      </div>
     </NextUINavbar.Brand>
   )
 }
@@ -195,34 +151,32 @@ function BrandCentered() {
 function NavbarSocials() {
 
   return (
-    <NextUINavbar.Content hideIn="md" enableCursorHighlight activeColor="primary">
-      <div className="d-flex flex-row align-items-center justify-content-center w-100 gap-2">
-        <Button
-          light
-          auto
-          icon={<LocalPhoneIcon />}
-          onClick={() => window.open(callLink)}
-        />
-        <Button
-          light
-          auto
-          icon={<EmailIcon />}
-          onClick={() => window.open(mailLink)}
-        />
-        <Button
-          light
-          auto
-          icon={<LocationOnIcon />}
-          onClick={() => window.open(mapsLink, "_blank")}
-        />
-        <Button
-          light
-          auto
-          icon={<FacebookIcon />}
-          onClick={() => window.open(facebookLink, "_blank")}
-        />
-      </div>
-    </NextUINavbar.Content>
+    <div className="d-none d-xxl-flex gap-2">
+      <Button
+        light
+        auto
+        icon={<LocalPhoneIcon />}
+        onClick={() => window.open(callLink)}
+      />
+      <Button
+        light
+        auto
+        icon={<EmailIcon />}
+        onClick={() => window.open(mailLink)}
+      />
+      <Button
+        light
+        auto
+        icon={<LocationOnIcon />}
+        onClick={() => window.open(mapsLink, "_blank")}
+      />
+      <Button
+        light
+        auto
+        icon={<FacebookIcon />}
+        onClick={() => window.open(facebookLink, "_blank")}
+      />
+    </div>
   )
 }
 
@@ -253,20 +207,18 @@ function NavbarScheduleDropdown() {
   }
 
   return (
-    <NextUINavbar.Content css={{flex: 1}} className="d-none d-md-flex flex-row w-100 justify-content-end px-2">
+    <NextUINavbar.Content className="d-none d-lg-flex flex-row justify-content-end px-2">
       <Dropdown isBordered>
         <NextUINavbar.Item
           css={{
           fontSize: navbarItemFontSize
         }}>
-          <Dropdown.Button
-            shadow
-          >
+          <Dropdown.Button bordered>
             Schedule
           </Dropdown.Button>
         </NextUINavbar.Item>
         <Dropdown.Menu
-          aria-label="BTB About"
+          aria-label="btb-schedule"
           css={{
             $$dropdownMenuWidth: "340px",
             $$dropdownItemHeight: "70px",
@@ -349,16 +301,13 @@ function NavbarScheduleDropdownSmall() {
   }
 
   return (
-    <NextUINavbar.Content css={{flex: 1}} className="d-flex d-md-none flex-row w-100 justify-content-end px-2">
+    <NextUINavbar.Content className="d-flex d-lg-none flex-row justify-content-end">
       <Dropdown isBordered>
         <NextUINavbar.Item
           css={{
           fontSize: navbarItemFontSize
         }}>
-          <Dropdown.Button
-            shadow
-          >
-          </Dropdown.Button>
+          <Dropdown.Button bordered iconRight={<svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32"><path fill={btbOrange} d="M700-80v-120H580v-60h120v-120h60v120h120v60H760v120h-60Zm-520-80q-24 0-42-18t-18-42v-540q0-24 18-42t42-18h65v-60h65v60h260v-60h65v60h65q24 0 42 18t18 42v302q-15-2-30-2t-30 2v-112H180v350h320q0 15 3 30t8 30H180Zm0-470h520v-130H180v130Zm0 0v-130 130Z"/></svg>} />
         </NextUINavbar.Item>
         <Dropdown.Menu
           aria-label="BTB About"

@@ -9,7 +9,7 @@ import { firestore } from '../api/firebase';
 import { getDoc, doc, setDoc } from 'firebase/firestore';
 
 import { CurrentUserContext } from '../App';
-import { WLText, WLCopyright } from '../libraries/Web-Legos/components/Text';
+import { WLText, WLCopyright, WLHeader } from '../libraries/Web-Legos/components/Text';
 
 export default function Footer() {
 
@@ -82,15 +82,15 @@ function FooterContent() {
     <div className="row d-flex flex-row w-100 align-items-center gap-5 justify-content-center">
       <div className="col-lg-12 col-xl-3 d-flex flex-column align-items-center">
         <img src={logo} alt="logo-transparent" className="m-2" style={{width: 150, height: 150}}/>
-        <Text h2>
+        <WLHeader headerLevel={2}>
           Beyond the Bell Education
-        </Text>
+        </WLHeader>
         <WLText firestoreId="footer-contact" editable={userCanEditText} />
       </div>
       <div className="col-lg-12 col-xl-4 d-flex flex-column align-items-center">
-        <Text h2>
+        <WLHeader headerLevel={2}>
           Hours
-        </Text>
+        </WLHeader>
         <WLText firestoreId="footer-hours" editable={userCanEditText} />
       </div>
       <div className="col-lg-12 col-xl-3 d-flex flex-column align-items-center">
