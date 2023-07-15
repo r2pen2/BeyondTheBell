@@ -703,7 +703,7 @@ export default function HomePage() {
                 </Button>
               </div>
             </div>
-            <div className="d-flex d-sm-none w-100 flex-column px-2 py-2 text-center justify-content-between">
+            <div className="d-flex d-sm-none w-100 h-100 flex-column px-2 py-2 text-center justify-content-between">
               <Text b size="$sm">
                 {o.title}
               </Text>
