@@ -19,7 +19,7 @@ import { UploadImageCard, WLImage } from '../libraries/Web-Legos/components/Imag
 import { ImageCompressor } from '../libraries/Web-Legos/api/images';
 import { getFileExtension, getFileNameByCurrentTime, openFileBrowser } from '../libraries/Web-Legos/api/files';
 import { TextBlock, WLHeader, WLTextBlock } from '../libraries/Web-Legos/components/Text';
-import { WLCenteredColumn, WLLoading, WLResponsiveSection, WLResponsiveSectionEditable } from '../libraries/Web-Legos/components/Layout';
+import { WLCenteredColumn, WLLoading, WLResponsiveSection, WLResponsiveSectionEditable, WLSpinnerPage } from '../libraries/Web-Legos/components/Layout';
 
 export default function About() {
 
@@ -35,7 +35,7 @@ export default function About() {
   }, [])
 
   const [developingAllLearnersLoaded, setdevelopingAllLearnersLoaded] = useState(false);
-  const [MeetTheTeamLoaded, setMeetTheTeamLoaded] = useState(false);
+  const [meetTheTeamLoaded, setMeetTheTeamLoaded] = useState(false);
   const [ourMethodsLoaded, setourMethodsLoaded] = useState(false);
   const [ourLearningCenterLoaded, setourLearningCenterLoaded] = useState(false);
   
@@ -67,8 +67,7 @@ export default function About() {
   }
 
   return (
-    <div className="d-flex flex-column">
-      { !developingAllLearnersLoaded && !MeetTheTeamLoaded && !ourMethodsLoaded && !ourLearningCenterLoaded && <WLLoading /> }
+    <WLSpinnerPage dependencies={[staffData, developingAllLearnersLoaded, meetTheTeamLoaded, ourMethodsLoaded, ourLearningCenterLoaded]}>
       <Modal 
         closeButton
         width="75vw"
@@ -108,7 +107,7 @@ export default function About() {
           },
         ]}
       />
-      <WLResponsiveSectionEditable firestoreId="developing-all-learners" editable={userCanEditText}/>
+      <WLResponsiveSectionEditable setLoaded={setdevelopingAllLearnersLoaded} firestoreId="developing-all-learners" editable={userCanEditText}/>
       <div className="rainbow-line" />
       <WLResponsiveSectionEditable setLoaded={setMeetTheTeamLoaded} columnWidthLeft="4" columnWidthRight="8" textRight firestoreId="meet-the-director" editable={userCanEditText} image={<WLImage firestoreId="meet-the-director" editable={userCanEditImages} shadow round />}/>
       <WLCenteredColumn>
@@ -121,7 +120,7 @@ export default function About() {
       <WLResponsiveSectionEditable setLoaded={setourMethodsLoaded} stackHeader justifyLeft="start" sectionClasses="bg-blue" textColor="white" firestoreId="our-methods" editable={userCanEditText} /> 
       <WLResponsiveSectionEditable setLoaded={setourLearningCenterLoaded} textRight={true} firestoreId="our-learning-center" editable={userCanEditText} />
       <ScheduleBar open={formModalOpen} setOpen={setFormModalOpen} />
-    </div>
+    </WLSpinnerPage>
   )
 
     function StaffModal() {

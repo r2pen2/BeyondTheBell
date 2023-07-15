@@ -6,7 +6,7 @@ import "../assets/style/services.css"
 import { PageHeader, } from '../components/Bar';
 import { CurrentUserContext, serverURL } from '../App';
 import { WLText } from '../libraries/Web-Legos/components/Text';
-import { WLCenteredColumn, WLLoading } from '../libraries/Web-Legos/components/Layout';
+import { WLCenteredColumn, WLLoading, WLSpinnerPage } from '../libraries/Web-Legos/components/Layout';
 import { WLImage } from '../libraries/Web-Legos/components/Images';
 
 export default function ThankYou() {
@@ -19,13 +19,12 @@ export default function ThankYou() {
 
 
   return (
-    <div className="d-flex flex-column align-items-center">
-      { !thankYouTextLoaded && <WLLoading /> }
+    <WLSpinnerPage itemsCentered dependencies={[thankYouTextLoaded]}>
       <PageHeader text="Thank You" />
-      <section className="d-flex flex-column align-items-center justify-content-center m-5 w-80 gap-2">
+      <section className="d-flex flex-column align-items-center justify-content-center m-5 gap-2">
         <WLText firestoreId="thank-you" editable={userCanEditText} setLoaded={setThankYouTextLoaded}/>
         <WLImage editable={userCanEditText} firestoreId="thank-you" shadow />
       </section>
-    </div>
+    </WLSpinnerPage>
   )
 }

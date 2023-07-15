@@ -8,7 +8,7 @@ import "../assets/style/services.css"
 import { PageHeader, } from '../components/Bar';
 import { WLHeader, WLText } from '../libraries/Web-Legos/components/Text';
 import { CurrentUserContext } from '../App';
-import { WLLoading } from '../libraries/Web-Legos/components/Layout';
+import { WLLoading, WLSpinnerPage } from '../libraries/Web-Legos/components/Layout';
 
 export default function Contact() {
   
@@ -62,8 +62,7 @@ export default function Contact() {
   }
 
   return (
-    <div className="d-flex flex-column align-items-center">
-      { !contactHeaderLoaded && !contactSubtitleLoaded && <WLLoading /> }
+    <WLSpinnerPage itemsCentered dependencies={[contactHeaderLoaded, contactSubtitleLoaded]}>
       <Modal
         blur
         open={recaptchaModalOpen}
@@ -83,8 +82,8 @@ export default function Contact() {
         </Modal.Body>
       </Modal>
       <PageHeader text="Contact / Register" />
-      <section className="d-flex flex-row justify-content-center m-5 w-80">
-        <div className="gap-2 d-flex flex-column align-items-start justify-content-center">
+      <section className="d-flex flex-row justify-content-center m-5">
+        <div className="gap-2 d-flex flex-column align-items-start justify-content-center w-80">
           <div className="container-fluid d-flex flex-column">
             <div className="row">
               <WLHeader setLoaded={setContactHeaderLoaded} align="start" firestoreId="contact-header" editable={userCanEditText} />
@@ -118,6 +117,6 @@ export default function Contact() {
           </div>
         </div>
       </section>
-    </div>
+    </WLSpinnerPage>
   )
 }

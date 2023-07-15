@@ -13,7 +13,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { auth, firestore } from '../api/firebase';
 import { CurrentUserContext } from '../App';
 import { WLImage } from '../libraries/Web-Legos/components/Images';
-import { WLLoading, WLResponsiveSectionEditable } from '../libraries/Web-Legos/components/Layout';
+import { WLLoading, WLResponsiveSectionEditable, WLSpinnerPage } from '../libraries/Web-Legos/components/Layout';
 
 
 export default function Services() {
@@ -31,8 +31,7 @@ export default function Services() {
   const [formModalOpen, setFormModalOpen] = useState(false);
 
   return (
-    <div className="d-flex flex-column">
-      { !afterSchoolLoaded && !tutoringLoaded && !wilsonTutoringLoaded && <WLLoading /> }
+    <WLSpinnerPage dependencies={[afterSchoolLoaded, tutoringLoaded, wilsonTutoringLoaded]}>
       <PageHeader 
         text="Our Services"
         sections={[
@@ -186,7 +185,7 @@ export default function Services() {
         }
       />
       <ScheduleBar open={formModalOpen} setOpen={setFormModalOpen} />
-    </div>
+    </WLSpinnerPage>
   )
 }
 

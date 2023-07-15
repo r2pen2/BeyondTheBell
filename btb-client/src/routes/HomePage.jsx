@@ -18,7 +18,7 @@ import { BTBLoader } from '../components/Feedback';
 import { UploadImageCard } from '../libraries/Web-Legos/components/Images';
 import { getFileNameByCurrentTime, openFileBrowser } from '../libraries/Web-Legos/api/files';
 import { WLHeader } from '../libraries/Web-Legos/components/Text';
-import { WLLoading } from '../libraries/Web-Legos/components/Layout';
+import { WLLoading, WLSpinnerPage } from '../libraries/Web-Legos/components/Layout';
 
 
 export default function HomePage() {
@@ -103,8 +103,7 @@ export default function HomePage() {
   const [offeringsHeaderLoaded, setOfferingsHeaderloaded] = useState(false);
 
   return (
-    <div className="d-flex flex-column">
-      { !testimonialHeaderLoaded && !offeringsHeaderLoaded && <WLLoading /> }
+    <WLSpinnerPage dependencies={[testimonialHeaderLoaded, offeringsHeaderLoaded, testimonialData, offeringData]}>
       <Modal 
         closeButton
         width="80vw"
@@ -248,7 +247,7 @@ export default function HomePage() {
         { userCanEditTestimonials && <AddTestimonialButton /> }
       </section>
       <ScheduleBar open={formModalOpen} setOpen={setFormModalOpen} />
-    </div>
+    </WLSpinnerPage>
   )
 
   function BTBCarousel(props) {
@@ -691,7 +690,7 @@ export default function HomePage() {
         >
           <Card.Body className="w-100 p-2 d-flex flex-row align-items-center justify-content-between" style={{overflowY: "hidden"}}>
             <img src={serverURL + o.image} alt={o.title} style={{width: "40%", minHeight: "100%", objectFit:"cover"}} className="img-shadow"/>
-            <div className="d-none d-sm-flex w-100 flex-column px-2 text-center justify-content-center">
+            <div className="d-none d-sm-flex w-100 flex-column px-2 py-2 text-center justify-content-between">
               <Text b>
                 {o.title}
               </Text>
@@ -704,7 +703,7 @@ export default function HomePage() {
                 </Button>
               </div>
             </div>
-            <div className="d-flex d-sm-none w-100 flex-column px-2 text-center justify-content-center">
+            <div className="d-flex d-sm-none w-100 flex-column px-2 py-2 text-center justify-content-between">
               <Text b size="$sm">
                 {o.title}
               </Text>
