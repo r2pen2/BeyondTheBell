@@ -96,10 +96,6 @@ app.get("/images/*", (req, res) => {
     res.sendFile(__dirname + req._parsedOriginalUrl.path);
 })
 
-app.get("/static/*", (req, res) => {
-    res.sendFile(__dirname + req._parsedOriginalUrl.path);
-})
-
 app.post("/images/*", (req, res) => {
     const targetPath = __dirname + req._parsedUrl.path;
     fs.writeFile(targetPath, req.files.file.data, (err) => {
