@@ -1,5 +1,5 @@
 export const applicationLink = "https://docs.google.com/forms/d/e/1FAIpQLSeI4LFGHAen5CP84SE6dAhD6VqHaQtML4dFhhbCZTaazF_Deg/viewform?usp=sf_link";
-export const schoolContractLink = "/Contract2020-21schoolyearforfamilies.pdf";
+export const schoolContractLink = "/static/Contract2020-21schoolyearforfamilies.pdf";
 export const scholarshipLink = "https://docs.google.com/forms/d/e/1FAIpQLSeQhBUFvcnWncc6es9hFUrlgAFIjjGnmPY1-Ej_3qh8tRWFbQ/viewform?usp=sf_link";
 
 export const callLink = "callto:5083164751";
