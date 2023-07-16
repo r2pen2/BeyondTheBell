@@ -16,6 +16,8 @@ import logoBlack from "../assets/images/logoTransparentBlack.png";
 import "../assets/style/navbar.css";
 import "../assets/style/layout.css";
 import { btbOrange } from '../assets/style/colors';
+import { WLNavSocials } from '../libraries/Web-Legos/components/Navigation';
+import { platformKeys } from '../libraries/Web-Legos/components/Icons';
 
 const navbarItemFontSize = "20px";
 
@@ -103,8 +105,12 @@ export function Navbar() {
         <div className="d-none d-lg-inline">
           <BrandLarge />
         </div>
-        <Divider className="d-none d-xxl-inline mx-2" css={{width: "3rem"}}/>
-        <NavbarSocials />
+        <WLNavSocials lineLeft>
+          <WLNavSocials.Button platformKey={platformKeys.PHONE} size={32} color={iconFills.orange} href={callLink}/>
+          <WLNavSocials.Button platformKey={platformKeys.MAIL} size={32} color={"#D9CE2D"} href={mailLink}/>
+          <WLNavSocials.Button platformKey={platformKeys.FACEBLOCK} size={32} href={facebookLink}/>
+          <WLNavSocials.Button platformKey={platformKeys.LOCATION} size={32} color={iconFills.green} href={mapsLink}/>
+        </WLNavSocials>
       </div>
       <div className="d-flex d-lg-none flex-row align-items-center justify-content-center gap-2" style={{flex: 1}} >
         <BrandLarge />
