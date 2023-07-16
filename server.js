@@ -69,7 +69,7 @@ app.use(bodyParser.json({ limit: "50mb"}));
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb"}));
 
 // Serve static files
-app.use(express.static(__dirname + "/server/static/"));
+app.use(express.static(__dirname + "/static/"));
 
 // Server site text
 app.use("/site-text", siteText);
