@@ -1,9 +1,9 @@
 import { Modal, Button, Text, Card } from "@nextui-org/react"
 
-import { AfterSchoolIcon, ContractIcon, ScholarshipIcon, SchoolDaysIcon, iconFills } from './Icons';
+import { ContractIcon, ScholarshipIcon, SchoolDaysIcon, iconFills } from './Icons';
 
 import LaunchIcon from '@mui/icons-material/Launch';
-import { afterSchoolFormLink, scholarshipLink, schoolContractLink, schoolDayFormLink } from '../api/links';
+import { applicationLink, scholarshipLink, schoolContractLink } from '../api/links';
 import { OrangeBar } from "./Bar";
 import { WLHeader } from "../libraries/Web-Legos/components/Text";
 import { useContext } from "react";
@@ -39,24 +39,13 @@ function FormCard({icon, title, formType, href}) {
   )
 }
 
-export function SchoolDaysFormCard() {
+export function ApplicationFormCard() {
   return (
     <FormCard 
       icon={<SchoolDaysIcon marginRight="1rem" fill={iconFills.orange} size={"3rem"} />}
-      title="School Days at BTB" 
+      title="BTB Student Application" 
       formType="application" 
-      href={schoolDayFormLink}
-    />
-  )
-}
-
-export function AfterSchoolFormCard() {
-  return (
-    <FormCard
-      icon={<AfterSchoolIcon marginRight="1rem" fill={iconFills.red} size={"3rem"} />}
-      title="After School at BTB"
-      formType="application"
-      href={afterSchoolFormLink}
+      href={applicationLink}
     />
   )
 }
@@ -112,10 +101,7 @@ export function FormModal({open, setOpen}) {
     return (
       <div className="d-flex flex-column">
         <div className="mt-2">
-          <SchoolDaysFormCard />
-        </div>
-        <div className="mt-2">
-          <AfterSchoolFormCard />
+          <ApplicationFormCard />
         </div>
         <div className="mt-2">
           <SchoolYearFormCard />

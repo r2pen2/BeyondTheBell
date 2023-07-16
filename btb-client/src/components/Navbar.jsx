@@ -6,9 +6,9 @@ import EmailIcon from '@mui/icons-material/Email';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import FacebookIcon from '@mui/icons-material/Facebook';
 
-import { SchoolDaysIcon, AfterSchoolIcon, ContractIcon, ScholarshipIcon, iconFills } from './Icons';
+import { SchoolDaysIcon, ContractIcon, ScholarshipIcon, iconFills } from './Icons';
 
-import { afterSchoolFormLink, callLink, facebookLink, mapsLink, mailLink, schoolContractLink, schoolDayFormLink, scholarshipLink, } from '../api/links';
+import { callLink, facebookLink, mapsLink, mailLink, schoolContractLink, scholarshipLink, applicationLink, } from '../api/links';
 
 import logoBlack from "../assets/images/logoTransparentBlack.png";
 
@@ -191,11 +191,8 @@ function NavbarScheduleDropdown() {
     console.log(key)
     let link = null;
     switch (key) {
-      case "school-days":
-        link = schoolDayFormLink;
-        break;
-      case "after-school":
-        link = afterSchoolFormLink;
+      case "application":
+        link = applicationLink;
         break;
       case "contract":
         link = schoolContractLink;
@@ -244,18 +241,11 @@ function NavbarScheduleDropdown() {
           onAction={handleDropdownMenuAction}
         >
           <Dropdown.Item
-            key="school-days"
+            key="application"
             description="Click to open application"
             icon={<SchoolDaysIcon fill={iconFills.orange} />}
           >
-            School Days at BTB
-          </Dropdown.Item>
-          <Dropdown.Item
-            key="after-school"
-            description="Click to open application"
-            icon={<AfterSchoolIcon fill={iconFills.red} />}
-          >
-            After School at BTB
+            BTB Student Application
           </Dropdown.Item>
           <Dropdown.Item
             withDivider
@@ -285,11 +275,8 @@ function NavbarScheduleDropdownSmall() {
     console.log(key)
     let link = null;
     switch (key) {
-      case "school-days":
-        link = schoolDayFormLink;
-        break;
-      case "after-school":
-        link = afterSchoolFormLink;
+      case "application":
+        link = applicationLink;
         break;
       case "contract":
         link = schoolContractLink;
@@ -336,18 +323,11 @@ function NavbarScheduleDropdownSmall() {
           onAction={handleDropdownMenuAction}
         >
           <Dropdown.Item
-            key="school-days"
+            key="application"
             description="Click to open application"
             icon={<SchoolDaysIcon fill={iconFills.orange} />}
           >
-            School Days at BTB
-          </Dropdown.Item>
-          <Dropdown.Item
-            key="after-school"
-            description="Click to open application"
-            icon={<AfterSchoolIcon fill={iconFills.red} />}
-          >
-            After School at BTB
+            BTB Student Application
           </Dropdown.Item>
           <Dropdown.Item
             withDivider

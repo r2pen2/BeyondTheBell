@@ -1,6 +1,3 @@
-import { btbOrange } from "../assets/style/colors";
-
-
 export const iconFills = {
   orange: "#f05c21",
   red: "#f0214e",
