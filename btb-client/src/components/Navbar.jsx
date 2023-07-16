@@ -1,14 +1,12 @@
 // Library Imports
 import React from 'react';
-import { Navbar as NextUINavbar, Dropdown, Text, Image, Button, Link, Divider } from "@nextui-org/react";
-import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
-import EmailIcon from '@mui/icons-material/Email';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import FacebookIcon from '@mui/icons-material/Facebook';
+import { Navbar as NextUINavbar, Dropdown, Text, Image, Link } from "@nextui-org/react";
 
 import { SchoolDaysIcon, ContractIcon, ScholarshipIcon, iconFills } from './Icons';
 
 import { callLink, facebookLink, mapsLink, mailLink, schoolContractLink, scholarshipLink, applicationLink, } from '../api/links';
+
+import { iconColors } from "../libraries/Web-Legos/components/Icons";
 
 import logoBlack from "../assets/images/logoTransparentBlack.png";
 
@@ -108,7 +106,7 @@ export function Navbar() {
         <WLNavSocials lineLeft>
           <WLNavSocials.Button platformKey={platformKeys.PHONE} color={iconFills.orange} href={callLink}/>
           <WLNavSocials.Button platformKey={platformKeys.MAIL} color={"#AB1CD6"} href={mailLink}/>
-          <WLNavSocials.Button platformKey={platformKeys.FACEBLOCK} href={facebookLink}/>
+          <WLNavSocials.Button platformKey={platformKeys.FACEBLOCK} color={iconColors.facebook} href={facebookLink}/>
           <WLNavSocials.Button platformKey={platformKeys.LOCATION} color={iconFills.green} href={mapsLink}/>
         </WLNavSocials>
       </div>
@@ -156,38 +154,6 @@ function BrandLarge() {
           Beyond The Bell
         </Text>
     </NextUINavbar.Brand>
-  )
-}
-
-function NavbarSocials() {
-
-  return (
-    <div className="d-none d-xxl-flex gap-2">
-      <Button
-        light
-        auto
-        icon={<LocalPhoneIcon />}
-        onClick={() => window.open(callLink)}
-      />
-      <Button
-        light
-        auto
-        icon={<EmailIcon />}
-        onClick={() => window.open(mailLink)}
-      />
-      <Button
-        light
-        auto
-        icon={<LocationOnIcon />}
-        onClick={() => window.open(mapsLink, "_blank")}
-      />
-      <Button
-        light
-        auto
-        icon={<FacebookIcon />}
-        onClick={() => window.open(facebookLink, "_blank")}
-      />
-    </div>
   )
 }
 
