@@ -106,10 +106,10 @@ export function Navbar() {
           <BrandLarge />
         </div>
         <WLNavSocials lineLeft>
-          <WLNavSocials.Button platformKey={platformKeys.PHONE} size={32} color={iconFills.orange} href={callLink}/>
-          <WLNavSocials.Button platformKey={platformKeys.MAIL} size={32} color={"#D9CE2D"} href={mailLink}/>
-          <WLNavSocials.Button platformKey={platformKeys.FACEBLOCK} size={32} href={facebookLink}/>
-          <WLNavSocials.Button platformKey={platformKeys.LOCATION} size={32} color={iconFills.green} href={mapsLink}/>
+          <WLNavSocials.Button platformKey={platformKeys.PHONE} color={iconFills.orange} href={callLink}/>
+          <WLNavSocials.Button platformKey={platformKeys.MAIL} color={"#D9CE2D"} href={mailLink}/>
+          <WLNavSocials.Button platformKey={platformKeys.FACEBLOCK} href={facebookLink}/>
+          <WLNavSocials.Button platformKey={platformKeys.LOCATION} color={iconFills.green} href={mapsLink}/>
         </WLNavSocials>
       </div>
       <div className="d-flex d-lg-none flex-row align-items-center justify-content-center gap-2" style={{flex: 1}} >

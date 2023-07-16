@@ -10,6 +10,10 @@ import { getDoc, doc, setDoc } from 'firebase/firestore';
 
 import { CurrentUserContext } from '../App';
 import { WLText, WLCopyright, WLHeader } from '../libraries/Web-Legos/components/Text';
+import { WLFooterSocials } from '../libraries/Web-Legos/components/Footer';
+import { platformKeys } from '../libraries/Web-Legos/components/Icons';
+import { iconFills } from './Icons';
+import { callLink, facebookLink, mailLink, mapsLink } from '../api/links';
 
 export default function Footer() {
 
@@ -92,6 +96,12 @@ function FooterContent() {
           Hours
         </WLHeader>
         <WLText firestoreId="footer-hours" editable={userCanEditText} />
+        <WLFooterSocials lineTop>
+            <WLFooterSocials.Button platformKey={platformKeys.PHONE} size={48} color={iconFills.orange} href={callLink}/>
+            <WLFooterSocials.Button platformKey={platformKeys.MAIL} size={48} color={"#D9CE2D"} href={mailLink}/>
+            <WLFooterSocials.Button platformKey={platformKeys.FACEBLOCK} size={48} href={facebookLink}/>
+            <WLFooterSocials.Button platformKey={platformKeys.LOCATION} size={48} color={iconFills.green} href={mapsLink}/>
+        </WLFooterSocials>
       </div>
       <div className="col-lg-12 col-xl-3 d-flex flex-column align-items-center">
         <Text>
