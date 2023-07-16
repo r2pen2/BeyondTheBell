@@ -97,10 +97,10 @@ function FooterContent() {
         </WLHeader>
         <WLText firestoreId="footer-hours" editable={userCanEditText} />
         <WLFooterSocials lineTop>
-            <WLFooterSocials.Button platformKey={platformKeys.PHONE} size={48} color={iconFills.orange} href={callLink}/>
-            <WLFooterSocials.Button platformKey={platformKeys.MAIL} size={48} color={"#D9CE2D"} href={mailLink}/>
-            <WLFooterSocials.Button platformKey={platformKeys.FACEBLOCK} size={48} href={facebookLink}/>
-            <WLFooterSocials.Button platformKey={platformKeys.LOCATION} size={48} color={iconFills.green} href={mapsLink}/>
+            <WLFooterSocials.Button platformKey={platformKeys.PHONE} color={iconFills.orange} href={callLink}/>
+            <WLFooterSocials.Button platformKey={platformKeys.MAIL} color={"#AB1CD6"} href={mailLink}/>
+            <WLFooterSocials.Button platformKey={platformKeys.FACEBLOCK} href={facebookLink}/>
+            <WLFooterSocials.Button platformKey={platformKeys.LOCATION} color={iconFills.green} href={mapsLink}/>
         </WLFooterSocials>
       </div>
       <div className="col-lg-12 col-xl-3 d-flex flex-column align-items-center">

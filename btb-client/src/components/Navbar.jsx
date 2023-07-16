@@ -107,7 +107,7 @@ export function Navbar() {
         </div>
         <WLNavSocials lineLeft>
           <WLNavSocials.Button platformKey={platformKeys.PHONE} color={iconFills.orange} href={callLink}/>
-          <WLNavSocials.Button platformKey={platformKeys.MAIL} color={"#D9CE2D"} href={mailLink}/>
+          <WLNavSocials.Button platformKey={platformKeys.MAIL} color={"#AB1CD6"} href={mailLink}/>
           <WLNavSocials.Button platformKey={platformKeys.FACEBLOCK} href={facebookLink}/>
           <WLNavSocials.Button platformKey={platformKeys.LOCATION} color={iconFills.green} href={mapsLink}/>
         </WLNavSocials>
