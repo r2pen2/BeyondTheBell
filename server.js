@@ -3,7 +3,6 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const fileUpload = require("express-fileupload")
 const fs = require('fs');
 const db = require('./firebase.js');
 
@@ -15,7 +14,6 @@ const app = express();
 
 // Allow for CORS and file upload
 app.use(cors());
-app.use(fileUpload());
 
 /** Always up-to-date testimonial data from Firebase */
 let testimonialData = [];
