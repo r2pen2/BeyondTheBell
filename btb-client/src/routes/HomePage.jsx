@@ -148,17 +148,18 @@ export default function HomePage() {
         >
           Welcome to
         </Text>
-        <Text 
-          h1
-          css={{ 
-            fontSize: "5rem",
-            filter: "drop-shadow(2px 2px 5px black)",
-            textGradient: "45deg, $yellow600 -20%, $btbOrange600 100%",
-          }}
-          className="d-none d-md-inline"
-        >
-          Beyond The Bell <br /> <span className='d-none d-xxl-inline'>Educational Services</span>
-        </Text>
+        <div style={{backgroundColor: "rgba(255, 255, 255, 0.8)", width: "100%"}}>
+          <Text 
+            h1
+            css={{ 
+              fontSize: "5rem",
+              textGradient: "45deg, $yellow600 -20%, $btbOrange600 100%",
+            }}
+            className="d-none d-md-inline"
+          >
+            Beyond The Bell <br /> <span className='d-none d-xxl-inline'>Educational Services</span>
+          </Text>
+        </div>
         <Text 
           h1
           css={{
