@@ -82,8 +82,8 @@ export default function Contact() {
         </Modal.Body>
       </Modal>
       <ContactBlockHeader />
-      <section className="d-flex flex-row justify-content-center m-5">
-        <div className="gap-2 d-flex flex-column align-items-start justify-content-center w-80">
+      <section className="d-flex flex-row justify-content-center">
+        <div className="gap-2 d-flex flex-column align-items-start justify-content-center contact-form w-100 mx-2 my-5 mx-md-5"  style={{maxWidth: 1400}}>
           <div className="container-fluid d-flex flex-column">
             <div className="row">
               <WLHeader setLoaded={setContactHeaderLoaded} align="start" firestoreId="contact-header" editable={userCanEditText} />

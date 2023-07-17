@@ -2,9 +2,9 @@
 import React from 'react';
 import { Navbar as NextUINavbar, Dropdown, Text, Image, Link } from "@nextui-org/react";
 
-import { SchoolDaysIcon, ContractIcon, ScholarshipIcon, iconFills } from './Icons';
+import { SchoolDaysIcon, ScholarshipIcon, iconFills } from './Icons';
 
-import { callLink, facebookLink, mapsLink, mailLink, schoolContractLink, scholarshipLink, applicationLink, } from '../api/links';
+import { callLink, facebookLink, mapsLink, mailLink, scholarshipLink, applicationLink, } from '../api/links';
 
 import { iconColors } from "../libraries/Web-Legos/components/Icons";
 
@@ -14,7 +14,7 @@ import logoBlack from "../assets/images/logoTransparentBlack.png";
 import "../assets/style/navbar.css";
 import "../assets/style/layout.css";
 import { btbOrange } from '../assets/style/colors';
-import { WLNavSocials } from '../libraries/Web-Legos/components/Navigation';
+import { WLNavDropdownMenu, WLNavSocials } from '../libraries/Web-Legos/components/Navigation';
 import { platformKeys } from '../libraries/Web-Legos/components/Icons';
 
 const navbarItemFontSize = "20px";
@@ -158,86 +158,38 @@ function BrandLarge() {
 }
 
 function NavbarScheduleDropdown() {
-
-  function handleDropdownMenuAction(key) {
-    console.log(key)
-    let link = null;
-    switch (key) {
-      case "application":
-        link = applicationLink;
-        break;
-      case "contract":
-        link = schoolContractLink;
-        break;
-      case "scholarship":
-        link = scholarshipLink;
-        break;
-      default:
-        break;
-    }
-    if (link) {
-      window.open(link, "_blank");
-    }
-  }
-
   return (
-    <NextUINavbar.Content className="d-none d-lg-flex flex-row justify-content-end px-2">
-      <Dropdown isBordered>
-        <NextUINavbar.Item
-          css={{
-          fontSize: navbarItemFontSize
-        }}>
-          <Dropdown.Button bordered>
-            Schedule
-          </Dropdown.Button>
-        </NextUINavbar.Item>
-        <Dropdown.Menu
-          aria-label="btb-schedule"
-          css={{
-            $$dropdownMenuWidth: "340px",
-            $$dropdownItemHeight: "70px",
-            "& .nextui-dropdown-item": {
-              py: "$4",
-              // dropdown item left icon
-              svg: {
-                color: "$secondary",
-                mr: "$4",
-              },
-              // dropdown item title
-              "& .nextui-dropdown-item-content": {
-                w: "100%",
-                fontWeight: "$semibold",
-              },
-            },
-          }}
-          onAction={handleDropdownMenuAction}
-        >
-          <Dropdown.Item
-            key="application"
-            description="Click to open application"
-            icon={<SchoolDaysIcon fill={iconFills.orange} />}
-          >
-            BTB Student Application
-          </Dropdown.Item>
-          <Dropdown.Item
-            withDivider
-            key="contract"
-            description="Click to open contract"
-            icon={<ContractIcon fill={iconFills.blue} />}
-          >
-            Contract for 2020/21 School Year
-          </Dropdown.Item>
-          <Dropdown.Item
-            withDivider
-            key="scholarship"
-            description="Click to open application"
-            icon={<ScholarshipIcon fill={iconFills.green} />}
-          >
-            The Little Fiddle Scholarship
-          </Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
-    </NextUINavbar.Content>
+    <WLNavDropdownMenu 
+      buttonBordered 
+      buttonText="Schedule" 
+      buttonFontSize={navbarItemFontSize}
+      links={[
+        {
+          key: "application",
+          href: applicationLink
+        },
+        {
+          key: "scholarship",
+          href: scholarshipLink
+        },
+      ]}
+    >
+      <Dropdown.Item
+        key="application"
+        description="Click to open application"
+        icon={<SchoolDaysIcon fill={iconFills.orange} />}
+      >
+        BTB Student Application
+      </Dropdown.Item>
+      <Dropdown.Item
+        withDivider
+        key="scholarship"
+        description="Click to open application"
+        icon={<ScholarshipIcon fill={iconFills.green} />}
+      >
+        The Little Fiddle Scholarship
+      </Dropdown.Item>
+    </WLNavDropdownMenu>
   )
 }
 
@@ -249,9 +201,6 @@ function NavbarScheduleDropdownSmall() {
     switch (key) {
       case "application":
         link = applicationLink;
-        break;
-      case "contract":
-        link = schoolContractLink;
         break;
       case "scholarship":
         link = scholarshipLink;
@@ -300,14 +249,6 @@ function NavbarScheduleDropdownSmall() {
             icon={<SchoolDaysIcon fill={iconFills.orange} />}
           >
             BTB Student Application
-          </Dropdown.Item>
-          <Dropdown.Item
-            withDivider
-            key="contract"
-            description="Click to open contract"
-            icon={<ContractIcon fill={iconFills.blue} />}
-          >
-            Contract for 2020/21 School Year
           </Dropdown.Item>
           <Dropdown.Item
             withDivider
