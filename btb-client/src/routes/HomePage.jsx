@@ -178,7 +178,7 @@ export default function HomePage() {
             maxWidth: 580,
           }}
         >
-          Educational enrichment, social and executive functions skills, and academic tutoring for today's learners.
+          Educational enrichment, social skills and executive functioning groups, academic tutoring, and advocacy and consulting for families and schools.
         </Text>
         <div className="d-flex flex-row align-items-center gap-5 mt-5">
           <Button

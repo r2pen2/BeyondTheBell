@@ -14,7 +14,7 @@ import logoBlack from "../assets/images/logoTransparentBlack.png";
 import "../assets/style/navbar.css";
 import "../assets/style/layout.css";
 import { btbOrange } from '../assets/style/colors';
-import { WLNavDropdownMenu, WLNavSocials } from '../libraries/Web-Legos/components/Navigation';
+import { WLNav, WLNavBrandCenter, WLNavBrandLeft, WLNavDropdownMenu, WLNavSocials } from '../libraries/Web-Legos/components/Navigation';
 import { platformKeys } from '../libraries/Web-Legos/components/Icons';
 
 const navbarItemFontSize = "20px";
@@ -93,31 +93,28 @@ export function Navbar() {
   ];
 
   return (
-    <NextUINavbar 
+    <WLNav 
       height="80px"
       variant="sticky"
       maxWidth="xl"
     > 
-      <div className="d-flex flex-row align-items-center justify-content-start gap-2" style={{flex: 1}}>  
-        <NextUINavbar.Toggle className="px-2 d-inline d-lg-none"/>
-        <div className="d-none d-lg-inline">
-          <BrandLarge />
-        </div>
+      <WLNav.Left>  
+        <WLNav.Toggle/>
+        <WLNavBrandLeft source={logoBlack} title="Beyond The Bell" showIn="lg" />
         <WLNavSocials lineLeft>
           <WLNavSocials.Button platformKey={platformKeys.PHONE} color={iconFills.orange} href={callLink}/>
           <WLNavSocials.Button platformKey={platformKeys.MAIL} color={"#AB1CD6"} href={mailLink}/>
           <WLNavSocials.Button platformKey={platformKeys.FACEBLOCK} color={iconColors.facebook} href={facebookLink}/>
           <WLNavSocials.Button platformKey={platformKeys.LOCATION} color={iconFills.green} href={mapsLink}/>
         </WLNavSocials>
-      </div>
-      <div className="d-flex d-lg-none flex-row align-items-center justify-content-center gap-2" style={{flex: 1}} >
-        <BrandLarge />
-      </div>
-      <div className="d-flex flex-row align-items-center justify-content-end gap-2" style={{flex: 1}} >
+      </WLNav.Left>
+      <WLNav.Center >
+        <WLNavBrandCenter source={logoBlack} title="Beyond The Bell" hideIn="lg" />
+      </WLNav.Center>
+      <WLNav.Right >
         <NavbarPages />
         <NavbarScheduleDropdown />
-        <NavbarScheduleDropdownSmall />
-      </div>
+      </WLNav.Right>
       
       <NextUINavbar.Collapse >
         {collapseItems.map((item, index) => (
@@ -134,32 +131,15 @@ export function Navbar() {
           </NextUINavbar.CollapseItem>
         ))}
       </NextUINavbar.Collapse>
-    </NextUINavbar>
-  )
-}
-
-function BrandLarge() {
-  return (
-    <NextUINavbar.Brand
-      className="d--flex flex-row justify-content-start gap-2 "
-      onClick={() => window.location = "/"}
-    >
-        <Image
-          width={40}
-          height={40}
-          src={logoBlack}
-          alt="logo-black"
-        />
-        <Text b css={{fontSize: 20, marginLeft: "0.5em"}}>
-          Beyond The Bell
-        </Text>
-    </NextUINavbar.Brand>
+    </WLNav>
   )
 }
 
 function NavbarScheduleDropdown() {
   return (
-    <WLNavDropdownMenu 
+    <WLNavDropdownMenu
+      hideTextIn="lg"
+      buttonIcon={<svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32"><path fill={btbOrange} d="M700-80v-120H580v-60h120v-120h60v120h120v60H760v120h-60Zm-520-80q-24 0-42-18t-18-42v-540q0-24 18-42t42-18h65v-60h65v60h260v-60h65v60h65q24 0 42 18t18 42v302q-15-2-30-2t-30 2v-112H180v350h320q0 15 3 30t8 30H180Zm0-470h520v-130H180v130Zm0 0v-130 130Z"/></svg>} 
       buttonBordered 
       buttonText="Schedule" 
       buttonFontSize={navbarItemFontSize}
