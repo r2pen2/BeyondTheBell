@@ -175,9 +175,10 @@ export default function HomePage() {
           color="white"
           css={{ 
             textShadow: "0px 0px 5px black",
+            maxWidth: 580,
           }}
         >
-          Educational enrichment, social and executive functions skills,<br/> and academic tutoring for today's learners.
+          Educational enrichment, social and executive functions skills, and academic tutoring for today's learners.
         </Text>
         <div className="d-flex flex-row align-items-center gap-5 mt-5">
           <Button
