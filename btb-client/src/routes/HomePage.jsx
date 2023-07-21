@@ -150,7 +150,9 @@ export default function HomePage() {
         </Text>
         <Text 
           h1
-          css={{ 
+          css={{
+            fontWeight: 600,
+            letterSpacing: "-2px", 
             fontSize: "5rem",
             filter: "drop-shadow(2px 2px 5px black)",
             textGradient: "45deg, $yellow600 -20%, $btbOrange600 100%",
@@ -162,6 +164,7 @@ export default function HomePage() {
         <Text 
           h1
           css={{
+            fontWeight: 600,
             fontSize: "3rem",
             filter: "drop-shadow(2px 2px 5px black)",
             textGradient: "45deg, $yellow600 -20%, $btbOrange600 100%",

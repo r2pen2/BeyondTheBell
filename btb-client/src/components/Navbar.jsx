@@ -113,7 +113,9 @@ export function Navbar() {
       </WLNav.Center>
       <WLNav.Right >
         <NavbarPages />
-        <NavbarScheduleDropdown />
+        <NextUINavbar.Content css={{padding: 0}}>        
+          <NavbarScheduleDropdown />
+        </NextUINavbar.Content>
       </WLNav.Right>
       
       <NextUINavbar.Collapse >
@@ -170,76 +172,5 @@ function NavbarScheduleDropdown() {
         The Little Fiddle Scholarship
       </Dropdown.Item>
     </WLNavDropdownMenu>
-  )
-}
-
-function NavbarScheduleDropdownSmall() {
-
-  function handleDropdownMenuAction(key) {
-    console.log(key)
-    let link = null;
-    switch (key) {
-      case "application":
-        link = applicationLink;
-        break;
-      case "scholarship":
-        link = scholarshipLink;
-        break;
-      default:
-        break;
-    }
-    if (link) {
-      window.open(link, "_blank");
-    }
-  }
-
-  return (
-    <NextUINavbar.Content className="d-flex d-lg-none flex-row justify-content-end">
-      <Dropdown isBordered>
-        <NextUINavbar.Item
-          css={{
-          fontSize: navbarItemFontSize
-        }}>
-          <Dropdown.Button bordered iconRight={<svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32"><path fill={btbOrange} d="M700-80v-120H580v-60h120v-120h60v120h120v60H760v120h-60Zm-520-80q-24 0-42-18t-18-42v-540q0-24 18-42t42-18h65v-60h65v60h260v-60h65v60h65q24 0 42 18t18 42v302q-15-2-30-2t-30 2v-112H180v350h320q0 15 3 30t8 30H180Zm0-470h520v-130H180v130Zm0 0v-130 130Z"/></svg>} />
-        </NextUINavbar.Item>
-        <Dropdown.Menu
-          aria-label="BTB About"
-          css={{
-            $$dropdownMenuWidth: "340px",
-            $$dropdownItemHeight: "70px",
-            "& .nextui-dropdown-item": {
-              py: "$4",
-              // dropdown item left icon
-              svg: {
-                color: "$secondary",
-                mr: "$4",
-              },
-              // dropdown item title
-              "& .nextui-dropdown-item-content": {
-                w: "100%",
-                fontWeight: "$semibold",
-              },
-            },
-          }}
-          onAction={handleDropdownMenuAction}
-        >
-          <Dropdown.Item
-            key="application"
-            description="Click to open application"
-            icon={<SchoolDaysIcon fill={iconFills.orange} />}
-          >
-            BTB Student Application
-          </Dropdown.Item>
-          <Dropdown.Item
-            withDivider
-            key="scholarship"
-            description="Click to open application"
-            icon={<ScholarshipIcon fill={iconFills.green} />}
-          >
-            The Little Fiddle Scholarship
-          </Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
-    </NextUINavbar.Content>
   )
 }
