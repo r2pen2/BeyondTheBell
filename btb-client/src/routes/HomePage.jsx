@@ -19,6 +19,8 @@ import { UploadImageCard } from '../libraries/Web-Legos/components/Images';
 import { getFileNameByCurrentTime, openFileBrowser } from '../libraries/Web-Legos/api/files';
 import { WLHeader } from '../libraries/Web-Legos/components/Text';
 import { WLSpinnerPage } from '../libraries/Web-Legos/components/Layout';
+import { WLAliceCarousel, createCarouselBreakpoints } from "../libraries/Web-Legos/components/Content";
+import { sortByOrder } from '../libraries/Web-Legos/api/models.ts';
 
 
 export default function HomePage() {
@@ -43,8 +45,8 @@ export default function HomePage() {
   const [offeringModalOpen, setOfferingModalOpen] = useState(false);              // Whether focused class offering modal is open
   const [testimonialEdit, setTestimonialEdit] = useState(false);                  // Whether current user is currently editing a testimonial
   const [offeringEdit, setOfferingEdit] = useState(false);                        // Whether current user is currently editing a class offering
-  const [testimonialData, setTestimonialData] = useState(null);                   // Data for all testimonials from DB
-  const [offeringData, setOfferingData] = useState(null);                         // Data for all class offerings from DB
+  const [testimonialData, setTestimonialData] = useState([]);                   // Data for all testimonials from DB
+  const [offeringData, setOfferingData] = useState([]);                           // Data for all class offerings from DB
 
   // Get current user from context
   const { currentUser } = useContext(CurrentUserContext);
@@ -71,14 +73,14 @@ export default function HomePage() {
     fetch(`${serverURL}offerings`).then(res => {
       res.json().then(data => {
         // Get json from HTTP response and set data state
-        setOfferingData(data);
+        setOfferingData(sortByOrder(data));
       })
     })
     fetch(`${serverURL}testimonials`).then(res => {
       // Ask server for current testimonials
       res.json().then(data => {
         // Get json from HTTP response and set data state
-        setTestimonialData(data);
+        setTestimonialData(sortByOrder(data));
       })
     })
   }, [])
@@ -209,20 +211,15 @@ export default function HomePage() {
       <div className="rainbow-line" />
       <section className="container-fluid d-flex flex-column align-items-center py-5">  
         <WLHeader color="primary" editable={userCanEditText} firestoreId="class-offerings-header" setLoaded={setOfferingsHeaderloaded}/>
-        <div className="d-xxl-flex d-none w-100 align-items-center flex-row justify-content-center">
-          <BTBCarousel>
-            { renderOfferings(4) }  
-          </BTBCarousel>
-        </div>
-        <div className="d-xl-flex d-xxl-none d-none w-100 align-items-center flex-row justify-content-center">
-          <BTBCarousel>
-            { renderOfferings(3) }  
-          </BTBCarousel>
-        </div>
-        <div className="d-lg-flex d-xl-none d-none w-100 align-items-center flex-row justify-content-center">
-          <BTBCarousel>
-            { renderOfferings(2) }  
-          </BTBCarousel>
+        <div className="d-none d-lg-flex flex-column align-items-center justify-content-center px-xxl-5 px-xl-4 px-md-3 px-2" style={{width: "100%", overflow: "visible"}}>
+          <WLAliceCarousel 
+            controlsStrategy="responsive"
+            pagination
+            paginationTop
+            scaleActive="0.9"
+            breakpoints={createCarouselBreakpoints(2,2,2,2,3,4)}
+            items={offeringData.map((o,i)=><ClassOffering offering={o} key={i} />)}
+          />
         </div>
         <div className="d-lg-none d-flex flex-column d-lg-none align-items-center w-100">
           { renderOfferingsList() }
@@ -232,20 +229,14 @@ export default function HomePage() {
       <section className="bg-blue px-1 py-5">
           <WLHeader editable={userCanEditText} firestoreId="testimonials-header" color="white"  setLoaded={setTestimonialHeaderloaded}/>
           <div className="container-fluid my-5" >
-            <div className="d-xxl-flex d-none w-100 align-items-center flex-row justify-content-center">
-              <BTBCarousel>
-                { renderTestimonials(3) }  
-              </BTBCarousel>
-            </div>
-            <div className="d-lg-flex d-xxl-none d-none w-100 align-items-center flex-row justify-content-center">
-              <BTBCarousel>
-                { renderTestimonials(2) }  
-              </BTBCarousel>
-            </div>
-            <div className="d-lg-none d-flex w-100 align-items-center flex-row justify-content-center">
-              <BTBCarousel>
-                { renderTestimonials(1) }  
-              </BTBCarousel>
+            <div className="d-flex flex-column align-items-center justify-content-center px-xxl-5 px-xl-4 px-md-3 px-2" style={{width: "100%", overflow: "visible"}}>
+              <WLAliceCarousel 
+                controlsStrategy="responsive"
+                pagination
+                scaleActive="0.9"
+                breakpoints={createCarouselBreakpoints(1,null,null,2,null,3)}
+                items={testimonialData.map((t,i)=><Testimonial testimonial={t} key={i} />)}
+              />
             </div>
           </div>
         { userCanEditTestimonials && <AddTestimonialButton /> }
@@ -253,14 +244,6 @@ export default function HomePage() {
       <ScheduleBar open={formModalOpen} setOpen={setFormModalOpen} />
     </WLSpinnerPage>
   )
-
-  function BTBCarousel(props) {
-    return (
-      <Carousel swipe={false} autoPlay={false} animation="slide" navButtonsAlwaysVisible className="w-100 px-3" >
-        {props.children}
-      </Carousel>
-    )
-  }
 
   function TestimonialModal() {
     
@@ -731,63 +714,9 @@ export default function HomePage() {
     })
   }
 
-  function renderOfferings(itemsPerCarousel) {
-    
-    // Guard clauses
-    if (!offeringData) { return <BTBLoader />; }  // Offering data has not been fetched yet
-
-    const offeringPages = splitArray(offeringData.sort((a, b) => a.order - b.order), itemsPerCarousel);
-    
-    function renderPage(op) {
-
-      return op.map((o, index) => {
-        return <ClassOffering offering={o} key={`o-${index}`}/>
-      })
-    }
-
-    return offeringPages.map((op, index) => {
-      return (
-        <div className="w-100 d-flex flex-row justify-content-center gap-2 px-5" style={{minHeight: "600px"}} key={`op-${index}`}>
-          { renderPage(op) }
-        </div>
-      )
-    })
-  }
-
-  function renderTestimonials(itemsPerCarousel) {
-
-    // Guard clauses
-    if (!testimonialData) { return <BTBLoader />; }  // Testimonial data has not been fetched yet
-
-    const testimonialPages = splitArray(testimonialData.sort((a, b) => a.order - b.order), itemsPerCarousel);
-    
-    function renderPage(tp) {
-
-      return tp.map((t, index) => {
-        return <Testimonial testimonial={t} key={`o-${index}`}/>
-      })
-    }
-
-    return testimonialPages.map((tp, index) => {
-      return (
-        <div className="w-100 d-flex flex-row justify-content-center gap-2 line-underneath px-1" key={`tp-${index}`}>
-            { renderPage(tp) }
-        </div>
-      )
-    })
-  }
-
-  function splitArray(inputArray, chunkSize) {
-    let result = [];
-    for (var i = 0; i < inputArray.length; i += chunkSize) {
-        result.push(inputArray.slice(i, i + chunkSize));
-    }
-    return result;
-  }
-
   function Testimonial(props) {
 
-    function handleTestimonialPress() {
+    function handleTestimonialPress(event) {
       setTestimonialModalOpen(true);
       setCurrentTestimonial(props.testimonial);
     }
@@ -810,12 +739,13 @@ export default function HomePage() {
     return (
       <div 
         className={`p-3`}
-        style={{flex: 1, minHeight: "550px"}}
+        style={{flex: 1}}
       >
         <Card 
           isPressable 
           isHoverable 
           css={{
+            minHeight: 450,
             height: "100%",
           }}
             onPress={handleTestimonialPress}
@@ -904,7 +834,8 @@ export default function HomePage() {
   
 function ClassOffering({offering}) {
 
-  function handleOfferingPress() {
+  function handleOfferingPress(event) {
+    event.stopPropagation()
     setOfferingModalOpen(true);
     setCurrentOffering(offering);
   }
@@ -925,14 +856,14 @@ function ClassOffering({offering}) {
   }
 
   return (
-    <div className={`p-3`} style={{height: "500px", flex: 1}}>
-      <Card isHoverable isPressable css={{height: "500px"}} className="d-flex flex-column justify-content-between" onClick={handleOfferingPress}>
+    <div className={`p-3`} style={{ height: "100%", flex: 1}}>
+      <Card isHoverable isPressable className="d-flex flex-column justify-content-between" onClick={handleOfferingPress}>
         <Card.Image
           src={serverURL + offering.image}
           objectFit='cover'
           width="100%"
+          height={250}
           alt={offering.title}
-          height="100%"
         />
         <div className="d-flex flex-column align-items-center gap-2 p-2">
           <Text b>          
