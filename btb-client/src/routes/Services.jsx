@@ -34,24 +34,31 @@ export default function Services() {
         setLoaded={setAfterSchoolLoaded}
         firestoreId="social-skills" 
         editable={userCanEditText}
+        stackHeader
         bottomContent={
-          <div className="d-flex flex-column align-items-center justify-content-center" style={{maxWidth: 1400}}>
-            <WLHeader headerLevel={2} color="primary" firestoreId="social-skills-details-header" editable={userCanEditText}/>
-            <Divider />
-            <WLText editable={userCanEditText} firestoreId="social-skills-details" />
-          </div>
-        }
+            <div className="py-2 py-lg-5 d-flex flex-column align-items-center justify-content-center w-100">
+              <div className="d-flex flex-column align-items-center justify-content-center" style={{maxWidth: 1400}}>
+                <WLHeader headerLevel={2} color="primary" firestoreId="social-skills-details-header" editable={userCanEditText}/>
+                <Divider />
+                <WLText editable={userCanEditText} firestoreId="social-skills-details" />
+              </div>
+            </div>
+          }
       />
       <div className="rainbow-line" />
       <WLResponsiveSectionEditable 
         setLoaded={setTutoringLoaded}
         firestoreId="1-on-1-tutoring" 
         editable={userCanEditText} 
+        textRight
+        stackHeader
         bottomContent={  
-          <div className="d-flex flex-column align-items-center justify-content-center" style={{maxWidth: 1400}}>
-            <WLHeader headerLevel={2} color="primary" firestoreId="1-on-1-tutoring-details-header" editable={userCanEditText}/>
-            <Divider />
-            <WLText editable={userCanEditText} firestoreId="1-on-1-tutoring-details" />
+          <div className="py-2 py-lg-5 d-flex flex-column align-items-center justify-content-center w-100">
+            <div className="d-flex flex-column align-items-center justify-content-center" style={{maxWidth: 1400}}>
+              <WLHeader headerLevel={2} color="primary" firestoreId="1-on-1-tutoring-details-header" editable={userCanEditText}/>
+              <Divider />
+              <WLText editable={userCanEditText} firestoreId="1-on-1-tutoring-details" />
+            </div>
           </div>
         }
       />
@@ -60,32 +67,18 @@ export default function Services() {
         setLoaded={setWilsonTutoringLoaded}
         firestoreId="wilson-tutoring" 
         editable={userCanEditText}
+        stackHeader
         bottomContent={
-          <div className="d-flex flex-column align-items-center justify-content-center" style={{maxWidth: 1400}}>
-            <WLHeader headerLevel={2} color="primary" firestoreId="wilson-tutoring-details-header" editable={userCanEditText}/>
-            <Divider />
-            <WLText editable={userCanEditText} firestoreId="wilson-tutoring-details" />
+          <div className="py-2 py-lg-5 d-flex flex-column align-items-center justify-content-center w-100">
+            <div className="d-flex flex-column align-items-center justify-content-center" style={{maxWidth: 1400}}>
+              <WLHeader headerLevel={2} color="primary" firestoreId="wilson-tutoring-details-header" editable={userCanEditText}/>
+              <Divider />
+              <WLText editable={userCanEditText} firestoreId="wilson-tutoring-details" />
+            </div>
           </div>
         }
       />
       <ScheduleBar open={formModalOpen} setOpen={setFormModalOpen} />
     </WLSpinnerPage>
-  )
-}
-
-function SignUpReason(props) {
-  return (
-    <div className="d-flex flex-row align-items-center px-xl-2 py-2 h-100">
-      <Card isHoverable css={{height: "100%"}}>
-        <Card.Body>
-          <div className="d-flex flex-row align-items-center h-100 gap-2">
-            <CheckIcon fontSize="12px" htmlColor={btbOrange} />
-            <Text css={{height:"100%", marginTop: 0, marginBottom: 0}} className="d-flex flex-column justify-content-center">
-              {props.children}
-            </Text>
-          </div>
-        </Card.Body>
-      </Card>
-    </div>
   )
 }
