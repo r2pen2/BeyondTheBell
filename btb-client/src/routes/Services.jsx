@@ -35,7 +35,7 @@ export default function Services() {
             <div className="py-5 d-flex flex-column align-items-center justify-content-center w-100">
               <div className="d-flex flex-column align-items-center justify-content-center" style={{maxWidth: 1400}}>
                 <WLHeader headerLevel={2} color="primary" firestoreId="social-skills-details-header" editable={userCanEditText}/>
-                <Divider />
+                <Divider css={{marginBottom: "2rem"}}/>
                 <WLText editable={userCanEditText} firestoreId="social-skills-details" />
               </div>
             </div>
@@ -51,7 +51,7 @@ export default function Services() {
           <div className="py-5 d-flex flex-column align-items-center justify-content-center w-100">
             <div className="d-flex flex-column align-items-center justify-content-center" style={{maxWidth: 1400}}>
               <WLHeader headerLevel={2} color="primary" firestoreId="1-on-1-tutoring-details-header" editable={userCanEditText}/>
-              <Divider />
+              <Divider css={{marginBottom: "2rem"}}/>
               <WLText editable={userCanEditText} firestoreId="1-on-1-tutoring-details" />
             </div>
           </div>
@@ -67,7 +67,7 @@ export default function Services() {
           <div className="py-5 d-flex flex-column align-items-center justify-content-center w-100">
             <div className="d-flex flex-column align-items-center justify-content-center" style={{maxWidth: 1400}}>
               <WLHeader headerLevel={2} color="primary" firestoreId="wilson-tutoring-details-header" editable={userCanEditText}/>
-              <Divider />
+              <Divider css={{marginBottom: "2rem"}}/>
               <WLText editable={userCanEditText} firestoreId="wilson-tutoring-details" />
             </div>
           </div>
