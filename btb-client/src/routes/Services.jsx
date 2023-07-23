@@ -35,7 +35,7 @@ export default function Services() {
         firestoreId="social-skills" 
         editable={userCanEditText}
         bottomContent={
-          <div className="d-flex flex-row align-items-center justify-content-center" style={{maxWidth: 1400}}>
+          <div className="d-flex flex-column align-items-center justify-content-center" style={{maxWidth: 1400}}>
             <WLHeader headerLevel={2} color="primary" firestoreId="social-skills-details-header" editable={userCanEditText}/>
             <Divider />
             <WLText editable={userCanEditText} firestoreId="social-skills-details" />
@@ -48,7 +48,7 @@ export default function Services() {
         firestoreId="1-on-1-tutoring" 
         editable={userCanEditText} 
         bottomContent={  
-          <div className="d-flex flex-row align-items-center justify-content-center" style={{maxWidth: 1400}}>
+          <div className="d-flex flex-column align-items-center justify-content-center" style={{maxWidth: 1400}}>
             <WLHeader headerLevel={2} color="primary" firestoreId="1-on-1-tutoring-details-header" editable={userCanEditText}/>
             <Divider />
             <WLText editable={userCanEditText} firestoreId="1-on-1-tutoring-details" />
@@ -61,7 +61,7 @@ export default function Services() {
         firestoreId="wilson-tutoring" 
         editable={userCanEditText}
         bottomContent={
-          <div className="d-flex flex-row align-items-center justify-content-center" style={{maxWidth: 1400}}>
+          <div className="d-flex flex-column align-items-center justify-content-center" style={{maxWidth: 1400}}>
             <WLHeader headerLevel={2} color="primary" firestoreId="wilson-tutoring-details-header" editable={userCanEditText}/>
             <Divider />
             <WLText editable={userCanEditText} firestoreId="wilson-tutoring-details" />
