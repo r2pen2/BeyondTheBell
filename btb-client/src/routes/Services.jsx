@@ -1,19 +1,13 @@
 import React, { useContext, useState } from 'react'
 
-import { Card, Divider, Text } from "@nextui-org/react";
+import { Divider } from "@nextui-org/react";
 
 import "../assets/style/services.css"
-import { btbOrange } from '../assets/style/colors';
-import CheckIcon from '@mui/icons-material/Check';
-
 import { ScheduleBar } from '../components/Forms';
 import { WLHeader, WLText } from '../libraries/Web-Legos/components/Text';
 import { CurrentUserContext } from '../App';
 import { WLResponsiveSectionEditable, WLSpinnerPage } from '../libraries/Web-Legos/components/Layout';
 import { ServicesBlockHeader } from '../components/Bar';
-
-import grayWaveTop from "../assets/images/gradient/GrayWaveTop.svg";
-import grayWaveBottom from "../assets/images/gradient/GrayWaveBottom.svg";
 
 export default function Services() {
 
@@ -37,17 +31,14 @@ export default function Services() {
         firestoreId="social-skills" 
         editable={userCanEditText}
         stackHeader
-        bottomContent={[
-              <img style={{width: "100%", objectFit: "cover"}} src={grayWaveTop} alt="gray-wave-top" />,
-            <div className="d-flex flex-column align-items-center justify-content-center w-100" style={{backgroundColor: "#f5f5f5"}}>
+        bottomContent={
+            <div className="py-5 d-flex flex-column align-items-center justify-content-center w-100">
               <div className="d-flex flex-column align-items-center justify-content-center" style={{maxWidth: 1400}}>
                 <WLHeader headerLevel={2} color="primary" firestoreId="social-skills-details-header" editable={userCanEditText}/>
                 <Divider />
                 <WLText editable={userCanEditText} firestoreId="social-skills-details" />
               </div>
-            </div>,
-              <img style={{width: "100%", objectFit: "cover"}} src={grayWaveBottom} alt="gray-wave-bottom" />
-            ]
+            </div>
           }
       />
       <div className="rainbow-line"/>
@@ -56,17 +47,14 @@ export default function Services() {
         firestoreId="1-on-1-tutoring" 
         editable={userCanEditText} 
         stackHeader
-        bottomContent={  [
-            <img style={{width: "100%", objectFit: "cover"}} src={grayWaveTop} alt="gray-wave-top" />,
-          <div className="d-flex flex-column align-items-center justify-content-center w-100" style={{backgroundColor: "#f5f5f5"}}>
+        bottomContent={
+          <div className="py-5 d-flex flex-column align-items-center justify-content-center w-100">
             <div className="d-flex flex-column align-items-center justify-content-center" style={{maxWidth: 1400}}>
               <WLHeader headerLevel={2} color="primary" firestoreId="1-on-1-tutoring-details-header" editable={userCanEditText}/>
               <Divider />
               <WLText editable={userCanEditText} firestoreId="1-on-1-tutoring-details" />
             </div>
-          </div>,
-            <img style={{width: "100%", objectFit: "cover"}} src={grayWaveBottom} alt="gray-wave-bottom" />
-          ]
+          </div>
         }
       />
       <div className="rainbow-line"/>
@@ -75,16 +63,14 @@ export default function Services() {
         firestoreId="wilson-tutoring" 
         editable={userCanEditText}
         stackHeader
-        bottomContent={[
-            <img style={{width: "100%", objectFit: "cover"}} src={grayWaveTop} alt="gray-wave-top" />,
-          <div style={{paddingBottom: "2rem", backgroundColor: "#f5f5f5"}} className="d-flex flex-column align-items-center justify-content-center w-100">
+        bottomContent={
+          <div className="py-5 d-flex flex-column align-items-center justify-content-center w-100">
             <div className="d-flex flex-column align-items-center justify-content-center" style={{maxWidth: 1400}}>
               <WLHeader headerLevel={2} color="primary" firestoreId="wilson-tutoring-details-header" editable={userCanEditText}/>
               <Divider />
               <WLText editable={userCanEditText} firestoreId="wilson-tutoring-details" />
             </div>
-          </div>,
-          ]
+          </div>
         }
       />
       <ScheduleBar open={formModalOpen} setOpen={setFormModalOpen} />
