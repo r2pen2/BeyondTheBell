@@ -58,7 +58,7 @@ export default function Gallery() {
           buttonBlock
           paginationTop
           scaleActive
-          breakpoints={createCarouselBreakpoints(1, null, null, null, 2)}
+          breakpoints={createCarouselBreakpoints(1, 2, null, 3, 4)}
           items={galleryPictures.map((g, i) => <GalleryPictureCard galleryPicture={g} key={i} />)}
         />
       </section>
