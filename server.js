@@ -5,7 +5,9 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const fs = require('fs');
 const db = require('./firebase.js');
+const fileUpload = require('express-fileupload');
 
+const siteModels = require("./libraries/Server-Legos/siteModels.js")
 const siteText = require("./libraries/Server-Legos/siteText.js");
 const siteImages = require("./libraries/Server-Legos/siteImages.js");
 
@@ -14,6 +16,7 @@ const app = express();
 
 // Allow for CORS and file upload
 app.use(cors());
+app.use(fileUpload());
 
 /** Always up-to-date testimonial data from Firebase */
 let testimonialData = [];
@@ -73,6 +76,8 @@ app.use(express.static(__dirname + "/static/"));
 app.use("/site-text", siteText);
 // Server site images
 app.use("/site-images", siteImages);
+// Server site models
+app.use("/site-models", siteModels);
 
 // Serve React build
 app.use(express.static(__dirname + "/btb-client/build"));

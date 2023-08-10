@@ -30,7 +30,11 @@ export function AboutBlockHeader() {
 
 
 export function ContactBlockHeader() {
-  return <WLBlockHeader color={blockHeaderColor} text="Contact / Register" />;
+  return <WLBlockHeader short color={blockHeaderColor} text="Contact / Register" />;
+}
+
+export function GalleryBlockHeader() {
+  return <WLBlockHeader short color={blockHeaderColor} text="Gallery" />;
 }
 
 export function ServicesBlockHeader() {
@@ -48,5 +52,5 @@ export function ServicesBlockHeader() {
 }
 
 export function ThankYouBlockHeader() {
-  return <WLBlockHeader color={blockHeaderColor} text="Thank You" />;
+  return <WLBlockHeader short color={blockHeaderColor} text="Thank You" />;
 }

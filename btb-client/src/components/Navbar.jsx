@@ -67,6 +67,15 @@ export function NavbarPages() {
       >
         Contact
       </NextUINavbar.Link>
+      <NextUINavbar.Link 
+        isActive={checkLinkActive("gallery")}
+        href="gallery"
+        itemCss={{fontSize: navbarItemFontSize}}
+        className="mx-1"
+        css={{display: "inline-block", whiteSpace: "nowrap"}}
+      >
+        Gallery
+      </NextUINavbar.Link>
     </NextUINavbar.Content>
   )
 }
@@ -89,6 +98,10 @@ export function Navbar() {
     {
       name: "Contact",
       href: "contact",
+    },
+    {
+      name: "Gallery",
+      href: "gallery",
     },
   ];
 
