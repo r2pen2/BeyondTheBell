@@ -52,8 +52,6 @@ export default function Gallery() {
       <ModelEditModal open={modelEditModalOpen} setOpen={setModelEditModalOpen} model={currentModel} />
       <GalleryBlockHeader />
       <section className="d-flex flex-column align-items-center justify-content-center px-2 px-lg-5">
-        <WLHeader firestoreId="gallery-header" editable={userCanEditText}/>
-        <WLText firestoreId="gallery-description" editable={userCanEditText}/>
         <AddModelButton model={GalleryPicture} setCurrentModel={setCurrentModel} setEditModalOpen={setModelEditModalOpen} userCanEdit={userCanEditText} />
         <WLAliceCarousel
           pagination
