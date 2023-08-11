@@ -10,6 +10,7 @@ const fileUpload = require('express-fileupload');
 const siteModels = require("./libraries/Server-Legos/siteModels.js")
 const siteText = require("./libraries/Server-Legos/siteText.js");
 const siteImages = require("./libraries/Server-Legos/siteImages.js");
+const siteRules = require("./libraries/Server-Legos/siteRules.js")
 
 // Init express application
 const app = express();
@@ -78,6 +79,8 @@ app.use("/site-text", siteText);
 app.use("/site-images", siteImages);
 // Server site models
 app.use("/site-models", siteModels);
+// Server site rules
+app.use("/site-rules", siteRules);
 
 // Serve React build
 app.use(express.static(__dirname + "/btb-client/build"));
