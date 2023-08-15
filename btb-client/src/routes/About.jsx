@@ -88,6 +88,9 @@ export default function About() {
       <AboutBlockHeader />
       <WLResponsiveSectionEditable setLoaded={setdevelopingAllLearnersLoaded} firestoreId="developing-all-learners" editable={userCanEditText}/>
       <div className="rainbow-line" />
+      <WLResponsiveSectionEditable setLoaded={setourMethodsLoaded} stackHeader justifyLeft="start" sectionClasses="bg-blue" textColor="white" firestoreId="our-methods" editable={userCanEditText} /> 
+      <WLResponsiveSectionEditable setLoaded={setourLearningCenterLoaded} textRight={true} firestoreId="our-learning-center" editable={userCanEditText} />
+      <div className="rainbow-line" />
       <WLResponsiveSectionEditable setLoaded={setMeetTheTeamLoaded} columnWidthLeft="4" columnWidthRight="8" textRight firestoreId="meet-the-director" editable={userCanEditText} image={<WLImage firestoreId="meet-the-director" editable={userCanEditImages} shadow round />}/>
       <WLCenteredColumn>
         <WLHeader editable={userCanEditText} firestoreId="our-staff-header" color="primary" headerLevel={1} />
@@ -96,8 +99,6 @@ export default function About() {
         </div>
         { userCanEditStaff && <AddStaffButton /> }
       </WLCenteredColumn>
-      <WLResponsiveSectionEditable setLoaded={setourMethodsLoaded} stackHeader justifyLeft="start" sectionClasses="bg-blue" textColor="white" firestoreId="our-methods" editable={userCanEditText} /> 
-      <WLResponsiveSectionEditable setLoaded={setourLearningCenterLoaded} textRight={true} firestoreId="our-learning-center" editable={userCanEditText} />
       <ScheduleBar open={formModalOpen} setOpen={setFormModalOpen} />
     </WLSpinnerPage>
   )
