@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 
-import { Button, Text, Card, Modal, Textarea } from "@nextui-org/react";
+import { Button, Text, Card, Modal, Textarea, Divider } from "@nextui-org/react";
 
 import { ImageCompressor } from "../libraries/Web-Legos/api/images";
 
@@ -21,6 +21,8 @@ import { WLHeader } from '../libraries/Web-Legos/components/Text';
 import { WLSpinnerPage } from '../libraries/Web-Legos/components/Layout';
 import { WLAliceCarousel, createCarouselBreakpoints } from "../libraries/Web-Legos/components/Content";
 import { sortByOrder } from '../libraries/Web-Legos/api/models.ts';
+
+import logoFull from "../assets/images/LogoFull.png"
 
 
 export default function HomePage() {
@@ -104,6 +106,22 @@ export default function HomePage() {
   const [testimonialHeaderLoaded, setTestimonialHeaderloaded] = useState(false);
   const [offeringsHeaderLoaded, setOfferingsHeaderloaded] = useState(false);
 
+  function SpinningLogo() {
+    
+    const [spinning, setSpinning] = useState(false);
+
+    function spin() {
+      setSpinning(true);
+      setTimeout(() => {
+        setSpinning(false);
+      }, 500)
+    }
+
+    return (
+      <img onClick={spin} className={spinning ? "spinning" : ""} src={logoFull} alt="logo-full" style={{maxWidth: 500, maxHeight: 500, height:"100%", width: "100%", filter: "drop-shadow(0px 0px 5px rgba(0,0,0,0.5)"}}/>
+    )
+  }
+
   return (
     <WLSpinnerPage dependencies={[testimonialHeaderLoaded, offeringsHeaderLoaded, testimonialData, offeringData]}>
       <Modal 
@@ -139,73 +157,63 @@ export default function HomePage() {
         </Modal.Footer>
       </Modal>
       <FormModal open={formModalOpen} setOpen={setFormModalOpen} />
-      <section className="home-image d-flex flex-column w-100 align-items-center justify-content-center py-5 px-2">
-        <Text 
-          h2
-          color="white"
-          css={{ 
-            textShadow: "0px 0px 5px black",
-          }}
-          className="d-lg-inline d-none"
-        >
-          Welcome to
-        </Text>
-        <Text 
-          h1
-          css={{
-            fontWeight: 600,
-            letterSpacing: "-2px", 
-            fontSize: "5rem",
-            filter: "drop-shadow(2px 2px 5px black)",
-            textGradient: "45deg, $yellow600 -20%, $btbOrange600 100%",
-          }}
-          className="d-none d-md-inline"
-        >
-          Beyond The Bell <br /> <span className='d-none d-xxl-inline'>Educational Services</span>
-        </Text>
-        <Text 
-          h1
-          css={{
-            fontWeight: 600,
-            fontSize: "3rem",
-            filter: "drop-shadow(2px 2px 5px black)",
-            textGradient: "45deg, $yellow600 -20%, $btbOrange600 100%",
-          }}
-          className="d-inline d-md-none"
-        >
-          Beyond The Bell
-        </Text>
-        <Text 
-          h3
-          color="white"
-          css={{ 
-            textShadow: "0px 0px 5px black",
-            maxWidth: 580,
-          }}
-        >
-          Educational enrichment, social skills and executive functioning groups, academic tutoring, and advocacy and consulting for families and schools.
-        </Text>
-        <div className="d-flex flex-row align-items-center gap-5 mt-5">
-          <Button
-            bordered
-            rounded
-            color="gradient"
-            size="xl"
-            className="d-none d-md-inline"
-            onClick={() => setFormModalOpen(true)}
-          >
-            Schedule
-          </Button>
-          <Button
-            bordered
-            rounded
-            size="lg"
-            color="gradient"
-            className="d-md-none d-inline"
-            onClick={() => setFormModalOpen(true)}
-          >
-            Schedule
-          </Button>
+      <section className="home-image w-100 py-5 px-2">
+        <div className="container">
+        <div className="row px-2 d-flex flex-row align-items-center justify-content-center">
+          <div className="col-xxl-5 col-lg-6 col-12 d-flex flex-column align-items-center justify-content-center">
+            <SpinningLogo />
+          </div>
+          <div className="col-xxl-5 col-lg-6 col-12 py-3 flex-column align-items-center justify-content-center">
+            <div className="d-flex flex-column align-items-center justify-content-center">
+            <Text 
+              h1
+              css={{
+                fontWeight: 600,
+                letterSpacing: "-2px", 
+                fontSize: "3rem",
+                filter: "drop-shadow(2px 2px 5px black)",
+                textGradient: "45deg, $yellow600 -20%, $btbOrange600 100%",
+              }}
+              className="d-none d-lg-inline"
+            >
+              Beyond The Bell Educational Services
+            </Text>
+            <Text 
+              h3
+              color="white"
+              css={{ 
+                textShadow: "0px 0px 5px black",
+                maxWidth: 580,
+              }}
+            >
+              Educational enrichment, social skills and executive functioning groups, academic tutoring, and advocacy and consulting for families and schools.
+            </Text>
+          <div className="d-flex flex-row align-items-center gap-5 mt-5">
+            <Button
+              bordered
+              rounded
+              color="gradient"
+              size="xl"
+              className="d-none d-md-inline"
+              onClick={() => setFormModalOpen(true)}
+            >
+              Schedule
+            </Button>
+            <Button
+              bordered
+              rounded
+              size="lg"
+              color="gradient"
+              className="d-md-none d-inline"
+              onClick={() => setFormModalOpen(true)}
+            >
+              Schedule
+            </Button>
+          </div>
+            </div>        
+          </div>
+        </div>
+
         </div>
       </section>
       <div className="rainbow-line" />
