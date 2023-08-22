@@ -843,7 +843,6 @@ export default function HomePage() {
 function ClassOffering({offering}) {
 
   function handleOfferingPress(event) {
-    event.stopPropagation()
     setOfferingModalOpen(true);
     setCurrentOffering(offering);
   }
