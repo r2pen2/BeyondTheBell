@@ -11,6 +11,7 @@ const siteModels = require("./libraries/Server-Legos/siteModels.js")
 const siteText = require("./libraries/Server-Legos/siteText.js");
 const siteImages = require("./libraries/Server-Legos/siteImages.js");
 const siteRules = require("./libraries/Server-Legos/siteRules.js")
+const siteMail = require("./libraries/Server-Legos/siteMail.js")
 
 // Init express application
 const app = express();
@@ -81,6 +82,8 @@ app.use("/site-images", siteImages);
 app.use("/site-models", siteModels);
 // Server site rules
 app.use("/site-rules", siteRules);
+// Server site mail
+app.use("/site-mail", siteMail);
 
 // Serve React build
 app.use(express.static(__dirname + "/btb-client/build"));

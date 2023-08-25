@@ -6,7 +6,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 
 import "../assets/style/services.css"
 import { WLHeader, WLText } from '../libraries/Web-Legos/components/Text';
-import { CurrentUserContext } from '../App';
+import { BTBMailManager, CurrentUserContext } from '../App';
 import { WLSpinnerPage } from '../libraries/Web-Legos/components/Layout';
 import { ContactBlockHeader } from '../components/Bar';
 
@@ -18,7 +18,10 @@ export default function Contact() {
   const [recaptchaModalOpen, setRecaptchaModalOpen] = useState(false);
 
   function sendForm() {
-    // Send
+    BTBMailManager.sendMail(
+      "Test Subject",
+      "Test Text"
+    )
   }
 
 

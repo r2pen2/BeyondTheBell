@@ -13,10 +13,13 @@ import Gallery from './routes/Gallery';
 import { createContext, useEffect, useState } from 'react';
 import { auth, firestore } from './api/firebase';
 import { doc, getDoc } from 'firebase/firestore';
+import { MailManager } from './libraries/Web-Legos/api/mail.ts';
 
 export const serverURL = '/';
 
 export const CurrentUserContext = createContext(null);
+
+export const BTBMailManager = new MailManager("btbcontactresponse@gmail.com", "wsozuhnizyirhrde", "joedobbelaar@gmail.com");
 
 function App() {
 
