@@ -18,9 +18,19 @@ export default function Contact() {
   const [recaptchaModalOpen, setRecaptchaModalOpen] = useState(false);
 
   function sendForm() {
+    function getEmailBody() {
+      const body = `Name: ${document.getElementById("name").value}\n` + 
+      `Phone: ${document.getElementById("phone").value}\n` +
+      `Email: ${document.getElementById("email").value}\n` +
+      `Contact Method: ${document.getElementById("contact").value}\n` +
+      `Location: ${document.getElementById("location").value}\n` +
+      `Message: ${document.getElementById("message").value}`
+      return body;
+    }
+
     BTBMailManager.sendMail(
-      "Test Subject",
-      "Test Text"
+      `New BTB Form Submission from ${document.getElementById("name").value}`,
+      getEmailBody()
     )
   }
 
@@ -93,24 +103,24 @@ export default function Contact() {
               <WLText setLoaded={setContactSubtitleLoaded} align="start" firestoreId="contact-subtitle" editable={userCanEditText} />
             </div>
             <div className="row pt-2">
-              <Input clearable bordered label="Your Name" fullWidth css={{display: "flex", alignItems: "start"}} />
+              <Input id="name" clearable bordered label="Your Name" fullWidth css={{display: "flex", alignItems: "start"}} />
             </div>
             <div className="row">
               <div className="col-lg-6 col-md-12 pt-2">
-                <Input clearable bordered label="Your phone" fullWidth css={{display: "flex", alignItems: "start"}} />
+                <Input id="phone" clearable bordered label="Your phone" fullWidth css={{display: "flex", alignItems: "start"}} />
               </div>      
               <div className="col-lg-6 col-md-12 pt-2">
-                <Input clearable bordered label="Your email" fullWidth css={{display: "flex", alignItems: "start"}} />
+                <Input id="email" clearable bordered label="Your email" fullWidth css={{display: "flex", alignItems: "start"}} />
               </div>      
             </div>
             <div className="row pt-2">
-              <Input clearable bordered label="Preferred contact method" fullWidth css={{display: "flex", alignItems: "start"}} />
+              <Input id="contact" clearable bordered label="Preferred contact method" fullWidth css={{display: "flex", alignItems: "start"}} />
             </div>
             <div className="row pt-2">
-              <Input clearable bordered label="City, State" fullWidth css={{display: "flex", alignItems: "start"}} />
+              <Input id="location" clearable bordered label="City, State" fullWidth css={{display: "flex", alignItems: "start"}} />
             </div>
             <div className="row pt-2">
-              <Textarea bordered label="How can we help?" placeholder="Tell us what you're looking for." fullWidth css={{display: "flex", alignItems: "start"}} />
+              <Textarea id="message" bordered label="How can we help?" placeholder="Tell us what you're looking for." fullWidth css={{display: "flex", alignItems: "start"}} />
             </div>
           </div>
           <div className="d-flex justify-content-center w-100 mt-3">
