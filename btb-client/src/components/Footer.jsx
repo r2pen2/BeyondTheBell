@@ -10,7 +10,7 @@ import { getDoc, doc, setDoc } from 'firebase/firestore';
 
 import { CurrentUserContext } from '../App';
 import { WLText, WLCopyright, WLHeader } from '../libraries/Web-Legos/components/Text';
-import { WLFooterSocials } from '../libraries/Web-Legos/components/Footer';
+import { WLFooterSignature, WLFooterSocials } from '../libraries/Web-Legos/components/Footer';
 import { platformKeys } from '../libraries/Web-Legos/components/Icons';
 import { iconFills } from './Icons';
 import { callLink, facebookLink, mailLink, mapsLink } from '../api/links';
@@ -69,6 +69,7 @@ export default function Footer() {
             {currentSignIn ? `Signed in as ${currentSignIn.displayName}` : "Admin Login"}
           </Button>
         </div>
+        <WLFooterSignature />
       </div>
     </footer>
   )

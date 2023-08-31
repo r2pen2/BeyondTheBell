@@ -58,7 +58,9 @@ export const theme = createTheme({
       textSecondary: lightGray,
     },
     space: {},
-    fonts: {},
+    fonts: {
+      sans: "Josefin Sans"
+    },
     fontSizes: {
       xs: '.75rem', 
       sm: '0.875rem', 
