@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const fs = require('fs');
 const db = require('./firebase.js');
+require('dotenv').config();
 const fileUpload = require('express-fileupload');
 
 const siteModels = require("./libraries/Server-Legos/siteModels.js")
