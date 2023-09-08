@@ -83,7 +83,7 @@ app.use("/site-models", siteModels);
 // Server site rules
 app.use("/site-rules", siteRules);
 // Server site mail
-const siteMailManager = new SiteMailManager("btbcontactresponse@gmail.com", "wsozuhnizyirhrde");
+const siteMailManager = new SiteMailManager("btbcontactresponse@gmail.com", process.env.BTBEMAILPASSWORD);
 const siteMailRouter = siteMailManager.getRouter();
 app.use("/site-mail", siteMailRouter);
 
