@@ -19,7 +19,7 @@ export const serverURL = '/';
 
 export const CurrentUserContext = createContext(null);
 
-export const BTBMailManager = new MailManager("btbcontactresponse@gmail.com", "wsozuhnizyirhrde");
+export const BTBMailManager = new MailManager();
 BTBMailManager.addRecipientEmail("joedobbelaar@gmail.com");
 BTBMailManager.addRecipientEmail("btbcontactresponse@gmail.com");
 BTBMailManager.addRecipientEmail("nancy@beyondthebelleducation.com");
