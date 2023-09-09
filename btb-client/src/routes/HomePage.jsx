@@ -224,7 +224,6 @@ export default function HomePage() {
             controlsStrategy="responsive"
             pagination
             paginationTop
-            scaleActive="0.9"
             breakpoints={createCarouselBreakpoints(2,2,2,2,3,4)}
             items={offeringData.map((o,i)=><ClassOffering offering={o} key={i} />)}
           />
@@ -241,7 +240,6 @@ export default function HomePage() {
               <WLAliceCarousel 
                 controlsStrategy="responsive"
                 pagination
-                scaleActive="0.9"
                 breakpoints={createCarouselBreakpoints(1,null,null,2,null,3)}
                 items={testimonialData.map((t,i)=><Testimonial testimonial={t} key={i} />)}
               />
