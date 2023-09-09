@@ -861,8 +861,8 @@ function ClassOffering({offering}) {
   }
 
   return (
-    <div className={`p-3`} style={{ height: "100%", flex: 1, minHeight: 400}}>
-      <Card isHoverable isPressable className="d-flex flex-column justify-content-between" onClick={handleOfferingPress}>
+    <div className={`p-3`} style={{ height: "100%", flex: 1}}>
+      <Card isHoverable css={{height: "100%",minHeight: 500}} isPressable className="d-flex flex-column justify-content-between" onClick={handleOfferingPress}>
         <Card.Image
           src={serverURL + offering.image}
           objectFit='cover'
