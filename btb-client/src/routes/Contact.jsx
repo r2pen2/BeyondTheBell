@@ -9,6 +9,7 @@ import { WLHeader, WLText } from '../libraries/Web-Legos/components/Text';
 import { BTBMailManager, CurrentUserContext } from '../App';
 import { WLSpinnerPage } from '../libraries/Web-Legos/components/Layout';
 import { ContactBlockHeader } from '../components/Bar';
+import { FormResponse } from '../libraries/Web-Legos/api/admin.ts';
 
 export default function Contact() {
   
@@ -32,6 +33,17 @@ export default function Contact() {
       `New BTB Form Submission from ${document.getElementById("name").value}`,
       getEmailBody()
     )
+
+    const res = new FormResponse();
+    res.content["Name"] =  document.getElementById("name").value;
+    res.content["Email"] =  document.getElementById("email").value;
+    res.content["Phone Number"] =  document.getElementById("phone").value;
+    res.content["Preferred Contact Method"] =  document.getElementById("contact").value;
+    res.content["City, State"] =  document.getElementById("location").value;
+    res.content["Message"] =  document.getElementById("message").value;
+    res.shortStrings.formId = "contact-us";
+    res.shortStrings.formTitle = "Contact Us";
+    res.sendFormData();
   }
 
 
