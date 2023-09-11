@@ -12,7 +12,7 @@ const siteModels = require("./libraries/Server-Legos/siteModels.js")
 const siteText = require("./libraries/Server-Legos/siteText.js");
 const siteImages = require("./libraries/Server-Legos/siteImages.js");
 const siteRules = require("./libraries/Server-Legos/siteRules.js")
-const siteForms = require("./libraries/Server-Legos/siteForms.js")
+const SiteFormManager = require("./libraries/Server-Legos/siteForms.js")
 const SiteMailManager = require("./libraries/Server-Legos/siteMail.js")
 
 // Init express application
@@ -89,7 +89,9 @@ const siteMailManager = new SiteMailManager("btbcontactresponse@gmail.com", proc
 const siteMailRouter = siteMailManager.getRouter();
 app.use("/site-mail", siteMailRouter);
 // Server site forms
-app.use("/site-forms", siteForms);
+const siteFormManager = new SiteFormManager(process.env.BTBFORMKEY);
+const siteFormRouter = siteFormManager.getRouter();
+app.use("/site-forms", siteFormRouter);
 
 // Serve React build
 app.use(express.static(__dirname + "/btb-client/build"));
