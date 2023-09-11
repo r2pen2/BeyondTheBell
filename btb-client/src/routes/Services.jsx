@@ -5,9 +5,10 @@ import { Divider } from "@nextui-org/react";
 import "../assets/style/services.css"
 import { ScheduleBar } from '../components/Forms';
 import { WLHeader, WLText } from '../libraries/Web-Legos/components/Text';
-import { CurrentUserContext } from '../App';
+import { AuthenticationManagerContext, CurrentSignInContext } from '../App';
 import { WLResponsiveSectionEditable, WLSpinnerPage } from '../libraries/Web-Legos/components/Layout';
 import { ServicesBlockHeader } from '../components/Bar';
+import { useEffect } from 'react';
 
 export default function Services() {
 
@@ -16,10 +17,14 @@ export default function Services() {
   const [wilsonTutoringLoaded, setWilsonTutoringLoaded] = useState(false);
 
   // Get current user from context
-  const { currentUser } = useContext(CurrentUserContext);
+  const { currentSignIn } = useContext(CurrentSignInContext);
+  const { authenticationManager } = useContext(AuthenticationManagerContext);
 
   // User Permissions
-  const userCanEditText = currentUser ? currentUser.op : false;
+  const [userCanEditText, setUserCanEditText] = useState(false);
+  useEffect(() => {
+    authenticationManager.getPermission(currentSignIn, "siteText").then(p => setUserCanEditText(p))
+  }, [authenticationManager, currentSignIn]);
 
   const [formModalOpen, setFormModalOpen] = useState(false);
 

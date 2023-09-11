@@ -7,7 +7,7 @@ import { useContext, useEffect, useState, } from 'react'
 import "../assets/style/about.css";
 
 // Component Imports
-import { CurrentUserContext, serverURL, } from '../App';
+import { AuthenticationManagerContext, CurrentSignInContext, serverURL, } from '../App';
 import { ScheduleBar, } from "../components/Forms";
 
 // API Imports
@@ -52,11 +52,18 @@ export default function About() {
 
   const [teamMemberModalOpen, setTeamMemberModalOpen] = useState(false);
 
-  const { currentUser } = useContext(CurrentUserContext)
+  const { currentSignIn } = useContext(CurrentSignInContext)
+  const { authenticationManager } = useContext(AuthenticationManagerContext)
+  
+  useEffect(() => {
+    authenticationManager.getPermission(currentSignIn, "siteText").then(p => setUserCanEditText(p));
+    authenticationManager.getPermission(currentSignIn, "siteImages").then(p => setUserCanEditImages(p));
+    authenticationManager.getPermission(currentSignIn, "staff").then(p => setUserCanEditStaff(p));
+  }, [authenticationManager, currentSignIn]);
 
-  const userCanEditStaff = currentUser ? currentUser.staff : false;
-  const userCanEditText = currentUser ? currentUser.op : false;
-  const userCanEditImages = currentUser ? currentUser.op : false;
+  const [userCanEditStaff, setUserCanEditStaff] = useState(false);
+  const [userCanEditText, setUserCanEditText] = useState(false);
+  const [userCanEditImages, setUserCanEditImages] = useState(false);
 
   const [staffEdit, setStaffEdit] = useState(false);
 

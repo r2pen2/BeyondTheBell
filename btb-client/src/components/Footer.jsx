@@ -8,54 +8,18 @@ import { auth, signInWithGoogle } from '../api/firebase';
 import { firestore } from '../api/firebase';
 import { getDoc, doc, setDoc } from 'firebase/firestore';
 
-import { CurrentUserContext } from '../App';
+import { AuthenticationManagerContext, CurrentSignInContext } from '../App';
 import { WLText, WLCopyright, WLHeader } from '../libraries/Web-Legos/components/Text';
 import { WLFooterSignature, WLFooterSocials } from '../libraries/Web-Legos/components/Footer';
 import { platformKeys } from '../libraries/Web-Legos/components/Icons';
 import { iconFills } from './Icons';
 import { callLink, facebookLink, mailLink, mapsLink } from '../api/links';
+import { FooterAuthButton } from '../libraries/Web-Legos/components/Auth';
 
 export default function Footer() {
 
-  const [currentSignIn, setCurrentSignIn] = useState(null);
-
-  useEffect(() => {
-    auth.onAuthStateChanged(u => {
-      setCurrentSignIn(u);
-    })
-  }, [])
-
-  function handleSignInClick() {
-    if (auth.currentUser) {
-      signOut(auth);
-      setCurrentSignIn(null);
-    } else {
-      signInWithGoogle().then(authUser => {
-        setCurrentSignIn(authUser);
-        if (authUser) {
-          const uid = authUser.uid;
-          const docRef = doc(firestore, "users", uid);
-          getDoc(docRef).then((docSnap) => {
-            if (!docSnap.exists()) {
-              // User does not exist
-              const newUser = {
-                testimonials: false,
-                offerings: false,
-                staff: false,
-                displayName: authUser.displayName,
-                email: authUser.email,
-                op: false,
-              }
-              setDoc(doc(firestore, "users", authUser.uid), newUser);
-            }
-          })
-        }
-      }).catch((err) => {
-        console.warn(err);
-        setCurrentSignIn(null);
-      });
-    }
-  }
+  const {currentSignIn, setCurrentSignIn} = useContext(CurrentSignInContext)
+  const {authenticationManager} = useContext(AuthenticationManagerContext);
   
   return (
     <footer>
@@ -65,9 +29,7 @@ export default function Footer() {
         <div className="fill-line mb-3" />
         <div className="d-flex flex-column gap-2 m-2 align-items-center">          
           <FooterCopyright />
-          <Button light onClick={handleSignInClick}>
-            {currentSignIn ? `Signed in as ${currentSignIn.displayName}` : "Admin Login"}
-          </Button>
+          <FooterAuthButton authManager={authenticationManager} currentSignIn={currentSignIn} setCurrentSignIn={setCurrentSignIn}/>
         </div>
         <WLFooterSignature />
       </div>
@@ -75,11 +37,26 @@ export default function Footer() {
   )
 }
 
+function FooterCopyright() {
+  const [userCanEditText, setUserCanEditText] = useState(false);
+  const {currentSignIn} = useContext(CurrentSignInContext);
+  const {authenticationManager} = useContext(AuthenticationManagerContext);
+  useEffect(() => {
+    authenticationManager.getPermission(currentSignIn, "siteText").then(p => setUserCanEditText(p));
+  }, [authenticationManager, currentSignIn]);
+  return <WLCopyright editable={userCanEditText} />
+}
+
 function FooterContent() {
 
-  const {currentUser} = useContext(CurrentUserContext)
+  const {currentSignIn} = useContext(CurrentSignInContext)
+  const {authenticationManager} = useContext(AuthenticationManagerContext);
 
-  const userCanEditText = currentUser ? currentUser.op : false;
+  const [userCanEditText, setUserCanEditText] = useState(false);
+
+  useEffect(() => {
+    authenticationManager.getPermission(currentSignIn, "siteText").then(p => setUserCanEditText(p));
+  }, [authenticationManager, currentSignIn]);
 
   return (
     
@@ -129,14 +106,4 @@ function FooterContent() {
     </div>
   </div>
   )
-}
-
-function FooterCopyright() {
-
-  const {currentUser} = useContext(CurrentUserContext)
-
-  const userCanEditText = currentUser ? currentUser.op : false;
-
-  return  <WLCopyright editable={userCanEditText}/>;
-  
 }

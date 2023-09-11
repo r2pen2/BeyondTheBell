@@ -14,55 +14,43 @@ import { createContext, useEffect, useState } from 'react';
 import { auth, firestore } from './api/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { MailManager } from './libraries/Web-Legos/api/mail.ts';
+import { AuthenticationManager, WLPermissionsConfig } from "./libraries/Web-Legos/api/auth.ts"
 
 export const serverURL = '/';
 
-export const CurrentUserContext = createContext(null);
+export const CurrentSignInContext = createContext(null);
 
 export const BTBMailManager = new MailManager();
 BTBMailManager.addRecipientEmail("joedobbelaar@gmail.com");
-//BTBMailManager.addRecipientEmail("nancy@beyondthebelleducation.com");
+BTBMailManager.addRecipientEmail("nancy@beyondthebelleducation.com");
+
+export const AuthenticationManagerContext = createContext(null);
 
 function App() {
 
+  const permissions = new WLPermissionsConfig({
+    testimonials: "testimonials",
+    offerings: "offerings",
+    staff: "staff",
+  })
+  const authenticationManager = new AuthenticationManager(
+    {
+      apiKey: "AIzaSyCIZYHsbNNMhRviRcaeyrpYDQ73AwLrapk",
+      authDomain: "beyond-the-bell-20097.firebaseapp.com",
+      projectId: "beyond-the-bell-20097",
+      storageBucket: "beyond-the-bell-20097.appspot.com",
+      messagingSenderId: "977570434108",
+      appId: "1:977570434108:web:7a2ba50a64da35619ec739"
+    },
+    permissions
+  )
+  authenticationManager.initialize()
 
-  const [currentUser, setCurrentUser] = useState(null);
-
-  // Add a listener for authentication state changes once the component has mounted
-  useEffect(() => {
-    auth.onAuthStateChanged(async (authUser) => {
-      if (authUser) {
-        // Whenever we change users, fetch new permissions
-        fetchUserPermissions();
-      } else {
-        // If the user signed-out, set both current user to null
-        setCurrentUser(null);
-      }
-    });
-  }, [])
-
-  /**
-   * Contact {@link firestore} for current user's permissions, then set relevant states
-   */
-  function fetchUserPermissions() {
-    const docRef = doc(firestore, "users", auth.currentUser.uid);
-    getDoc(docRef).then((doc) => {
-      if (doc.exists()) {
-        setCurrentUser(doc.data());
-      }
-    });
-  }
-
-  // Fetch current user's edit permissions after component mount
-  useEffect(() => {
-    // Only fetch credentials of the user is signed in
-    if (auth.currentUser) {
-      fetchUserPermissions();
-    }
-  }, []);
+  const [currentSignIn, setCurrentSignIn] = useState(null);
 
   return (
-    <CurrentUserContext.Provider value={{currentUser, setCurrentUser}} >
+    <AuthenticationManagerContext.Provider value={{authenticationManager}} >
+    <CurrentSignInContext.Provider value={{currentSignIn, setCurrentSignIn}} >
       <div className="App d-flex flex-column align-items-center w-100">
       <Router>
         <div className="app-content">
@@ -79,7 +67,8 @@ function App() {
         </div>
       </Router>
       </div>
-    </CurrentUserContext.Provider>
+    </CurrentSignInContext.Provider>
+    </AuthenticationManagerContext.Provider>
   );
 }
 

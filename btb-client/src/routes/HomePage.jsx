@@ -13,7 +13,7 @@ import { firestore, removeImage, uploadImgToStorageAndReturnDownloadLink } from 
 import { addDoc, collection, deleteDoc, doc, setDoc } from 'firebase/firestore';
 import { IconButton, TextField } from '@mui/material';
 import { PencilIcon } from '../components/Icons';
-import { CurrentUserContext, serverURL } from '../App';
+import { AuthenticationManagerContext, CurrentSignInContext, serverURL } from '../App';
 import { BTBLoader } from '../components/Feedback';
 import { UploadImageCard } from '../libraries/Web-Legos/components/Images';
 import { getFileNameByCurrentTime, openFileBrowser } from '../libraries/Web-Legos/api/files';
@@ -50,13 +50,19 @@ export default function HomePage() {
   const [testimonialData, setTestimonialData] = useState([]);                   // Data for all testimonials from DB
   const [offeringData, setOfferingData] = useState([]);                           // Data for all class offerings from DB
 
-  // Get current user from context
-  const { currentUser } = useContext(CurrentUserContext);
-
   // User Permissions
-  const userCanEditOfferings = currentUser ? currentUser.offerings : false;
-  const userCanEditTestimonials = currentUser ? currentUser.testimonials : false;
-  const userCanEditText = currentUser ? currentUser.op : false;
+  const {currentSignIn} = useContext(CurrentSignInContext);
+  const {authenticationManager} = useContext(AuthenticationManagerContext);
+  
+  const [userCanEditText, setUserCanEditText] = useState(false);
+  const [userCanEditOfferings, setUserCanEditOfferings] = useState(false);
+  const [userCanEditTestimonials, setUserCanEditTestimonials] = useState(false);
+
+  useEffect(() => {
+    authenticationManager.getPermission(currentSignIn, "siteText").then(p => setUserCanEditText(p));
+    authenticationManager.getPermission(currentSignIn, "offerings").then(p => setUserCanEditOfferings(p));
+    authenticationManager.getPermission(currentSignIn, "testimonials").then(p => setUserCanEditTestimonials(p));
+  }, [authenticationManager, currentSignIn]);
 
   /**
    * Close all modals and reload the page. This is intended for use after some edit is confirmed.

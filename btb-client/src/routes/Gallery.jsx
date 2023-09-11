@@ -6,7 +6,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 
 import "../assets/style/services.css"
 import { WLHeader, WLText } from '../libraries/Web-Legos/components/Text';
-import { CurrentUserContext } from '../App';
+import { CurrentSignInContext, AuthenticationManagerContext } from '../App';
 import { WLSpinnerPage } from '../libraries/Web-Legos/components/Layout';
 import { GalleryBlockHeader } from '../components/Bar';
 import { SiteModel } from '../libraries/Web-Legos/api/models.ts';
@@ -28,11 +28,15 @@ export default function Gallery() {
     GalleryPicture.getAndSet(setGalleryPictures, setPicturesLoaded);
   }, [])
   
-  // Get current user from context
-  const { currentUser } = useContext(CurrentUserContext);
 
-  // User Permissions
-  const userCanEditText = currentUser ? currentUser.op : false;
+  const {currentSignIn} = useContext(CurrentSignInContext);
+  const {authenticationManager} = useContext(AuthenticationManagerContext);
+  
+  const [userCanEditText, setUserCanEditText] = useState(false);
+
+  useEffect(() => {
+    authenticationManager.getPermission(currentSignIn, "siteText").then(p => setUserCanEditText(p));
+  }, [authenticationManager, currentSignIn]);
 
   function GalleryPictureCard({galleryPicture}) {
     return (

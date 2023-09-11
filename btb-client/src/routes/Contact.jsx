@@ -6,10 +6,11 @@ import ReCAPTCHA from "react-google-recaptcha";
 
 import "../assets/style/services.css"
 import { WLHeader, WLText } from '../libraries/Web-Legos/components/Text';
-import { BTBMailManager, CurrentUserContext } from '../App';
+import { AuthenticationManagerContext, BTBMailManager, CurrentSignInContext } from '../App';
 import { WLSpinnerPage } from '../libraries/Web-Legos/components/Layout';
 import { ContactBlockHeader } from '../components/Bar';
 import { FormResponse } from '../libraries/Web-Legos/api/admin.ts';
+import { useEffect } from 'react';
 
 export default function Contact() {
   
@@ -47,9 +48,14 @@ export default function Contact() {
   }
 
 
-  const {currentUser} = useContext(CurrentUserContext);
+  const {currentSignIn} = useContext(CurrentSignInContext);
+  const {authenticationManager} = useContext(AuthenticationManagerContext);
+  
+  const [userCanEditText, setUserCanEditText] = useState(false);
 
-  const userCanEditText = currentUser ? currentUser.op : false;
+  useEffect(() => {
+    authenticationManager.getPermission(currentSignIn, "siteText").then(p => setUserCanEditText(p));
+  }, [authenticationManager, currentSignIn]);
 
   function handleCaptchaComplete(v) {
     if (v.length < 1) {

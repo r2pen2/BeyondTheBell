@@ -1,20 +1,27 @@
 import React, { useContext, useState } from 'react'
 
 import "../assets/style/services.css"
-import { CurrentUserContext } from '../App';
+import { CurrentSignInContext, AuthenticationManagerContext } from '../App';
 import { WLText } from '../libraries/Web-Legos/components/Text';
 import { WLSpinnerPage } from '../libraries/Web-Legos/components/Layout';
 import { WLImage } from '../libraries/Web-Legos/components/Images';
 import { ThankYouBlockHeader } from '../components/Bar';
+import { useEffect } from 'react';
 
 export default function ThankYou() {
 
-  const {currentUser} = useContext(CurrentUserContext)
 
   const [thankYouTextLoaded, setThankYouTextLoaded] = useState(false);
 
-  const userCanEditText = currentUser ? currentUser.op : false;
+  // Get current user from context
+  const { currentSignIn } = useContext(CurrentSignInContext);
+  const { authenticationManager } = useContext(AuthenticationManagerContext);
 
+  // User Permissions
+  const [userCanEditText, setUserCanEditText] = useState(false);
+  useEffect(() => {
+    authenticationManager.getPermission(currentSignIn, "siteText").then(p => setUserCanEditText(p))
+  }, [authenticationManager, currentSignIn]);
 
   return (
     <WLSpinnerPage itemsCentered dependencies={[thankYouTextLoaded]}>

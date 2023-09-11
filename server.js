@@ -14,6 +14,7 @@ const siteImages = require("./libraries/Server-Legos/siteImages.js");
 const siteRules = require("./libraries/Server-Legos/siteRules.js")
 const SiteFormManager = require("./libraries/Server-Legos/siteForms.js")
 const SiteMailManager = require("./libraries/Server-Legos/siteMail.js")
+const SiteAuthenticationManager = require("./libraries/Server-Legos/siteAuth.js")
 
 // Init express application
 const app = express();
@@ -92,6 +93,10 @@ app.use("/site-mail", siteMailRouter);
 const siteFormManager = new SiteFormManager(process.env.BTBFORMKEY);
 const siteFormRouter = siteFormManager.getRouter();
 app.use("/site-forms", siteFormRouter);
+// Server site authentication
+const siteAuthenticationManager = new SiteAuthenticationManager(process.env.BTBUSERKEY);
+const siteAuthenticationRouter = siteAuthenticationManager.getRouter();
+app.use("/site-auth", siteAuthenticationRouter);
 
 // Serve React build
 app.use(express.static(__dirname + "/btb-client/build"));
