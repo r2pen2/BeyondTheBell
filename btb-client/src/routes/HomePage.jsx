@@ -185,9 +185,10 @@ export default function HomePage() {
               Beyond The Bell Educational Services
             </Text>
             <Text 
-              h3
+              h2
               color="white"
-              css={{ 
+              css={{
+                fontSize: "24px", 
                 textShadow: "0px 0px 5px black",
                 maxWidth: 580,
               }}

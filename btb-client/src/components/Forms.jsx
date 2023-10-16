@@ -4,7 +4,7 @@ import { ScholarshipIcon, SchoolDaysIcon, iconFills } from './Icons';
 
 import { applicationLink, scholarshipLink } from '../api/links';
 import { OrangeBar } from "./Bar";
-import { WLHeader } from "../libraries/Web-Legos/components/Text";
+import { WLHeaderV2 } from "../libraries/Web-Legos/components/Text";
 import { useContext } from "react";
 import { AuthenticationManagerContext, CurrentSignInContext } from "../App";
 import { CardModal } from "../libraries/Web-Legos/components/Modals";
@@ -27,9 +27,9 @@ export function ScheduleBar({open, setOpen}) {
     <div>
       <section>
         <OrangeBar>
-          <WLHeader headerLevel={3} firestoreId="call-to-action" editable={userCanEditText} color="white"/>
+          <WLHeaderV2 size="$xl" firestoreId="call-to-action" editable={userCanEditText} color="white"/>
           <Button size="xl" bordered color="gradient" shadow onClick={() => setOpen(true)}>
-            Schedule A Session
+            Schedule A Sessions
           </Button>
         </OrangeBar>
       </section>
