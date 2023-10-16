@@ -29,7 +29,7 @@ export function ScheduleBar({open, setOpen}) {
         <OrangeBar>
           <WLHeaderV2 size="$2xl" firestoreId="call-to-action" editable={userCanEditText} color="white"/>
           <Button size="xl" bordered color="gradient" shadow onClick={() => setOpen(true)}>
-            Schedule A Sessions
+            Schedule A Session
           </Button>
         </OrangeBar>
       </section>
