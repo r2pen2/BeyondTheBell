@@ -4,7 +4,7 @@ import { Button, Text, Card, Modal, Textarea, Divider } from "@nextui-org/react"
 
 import { ImageCompressor } from "../libraries/Web-Legos/api/images";
 
-import Carousel from "react-material-ui-carousel";
+import {Swoosh, WaveBottom, WaveTop} from "../libraries/Web-Legos/components/Waves.jsx"
 
 import "../assets/style/homepage.css"
 import { FormModal, ScheduleBar } from '../components/Forms';
@@ -223,8 +223,8 @@ export default function HomePage() {
 
         </div>
       </section>
-      <div className="rainbow-line" />
-      <section className="container-fluid d-flex flex-column align-items-center py-5">  
+      <div className="rainbow-line" style={{filter: "drop-shadow(0px -10px 0.75rem #000000aa)"}}/>
+      <section className="container-fluid d-flex flex-column align-items-center py-5" >  
         <WLHeader color="primary" editable={userCanEditText} firestoreId="class-offerings-header" setLoaded={setOfferingsHeaderloaded}/>
         <div className="d-none d-lg-flex flex-column align-items-center justify-content-center px-xxl-5 px-xl-4 px-md-3 px-2" style={{width: "100%", overflow: "visible"}}>
           <WLAliceCarousel 
@@ -240,7 +240,8 @@ export default function HomePage() {
         </div>
         { userCanEditOfferings && <AddOfferingButton /> }
       </section>
-      <section className="bg-blue px-1 py-5">
+      <section className="bg-blue py-5 p-relative">
+        <Swoosh color="white" flipY shadowBottom style={{marginTop: "-3.125rem"}} />
           <WLHeader editable={userCanEditText} firestoreId="testimonials-header" color="white"  setLoaded={setTestimonialHeaderloaded}/>
           <div className="container-fluid my-5" >
             <div className="d-flex flex-column align-items-center justify-content-center px-xxl-5 px-xl-4 px-md-3 px-2" style={{width: "100%", overflow: "visible"}}>
@@ -253,6 +254,7 @@ export default function HomePage() {
             </div>
           </div>
         { userCanEditTestimonials && <AddTestimonialButton /> }
+        {/* <Swoosh color="white" shadowTop flipX style={{marginBottom: "-3.125rem"}} /> */}
       </section>
       <ScheduleBar open={formModalOpen} setOpen={setFormModalOpen} />
     </WLSpinnerPage>
