@@ -22,7 +22,7 @@ export const CurrentSignInContext = createContext(null);
 
 export const BTBMailManager = new MailManager();
 BTBMailManager.addRecipientEmail("joedobbelaar@gmail.com");
-// BTBMailManager.addRecipientEmail("nancy@beyondthebelleducation.com");
+BTBMailManager.addRecipientEmail("nancy@beyondthebelleducation.com");
 
 export const AuthenticationManagerContext = createContext(null);
 
